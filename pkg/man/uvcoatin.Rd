@@ -1,0 +1,33 @@
+\name{uvcoatin}
+\Rdversion{1.1}
+\alias{uvcoatin}
+\docType{data}
+\title{
+%%   ~~ data name/kind ... ~~
+}
+\description{
+%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+}
+\usage{data(uvcoatin)}
+\format{
+  A data frame with 10 observations on the following 3 variables.
+  \describe{
+    \item{\code{a}}{a numeric vector}
+    \item{\code{b}}{a numeric vector}
+    \item{\code{diff}}{a numeric vector}
+  }
+}
+\details{
+%%  ~~ If necessary, more details than the __description__ above ~~
+}
+\source{
+%%  ~~ reference to a publication or URL from which the data were obtained ~~
+}
+\references{
+%%  ~~ possibly secondary sources and usages ~~
+}
+\examples{
+data(uvcoatin)
+## maybe str(uvcoatin) ; plot(uvcoatin) ...
+}
+\keyword{datasets}
