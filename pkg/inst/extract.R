@@ -14,7 +14,7 @@ dsn <- c("absorb", "adhesion2", "adhesion", "alum", "applicat",
          "vitamin", "wash", "water", "webtraff", "webvisit",
          "weight", "whitearea", "yellow", "yield")
 zfile <- system.file("TXT.zip", package = "EngrExpt")
-pkgbase <- "~/src/R-forge/eenew/pkg"
+pkgbase <- "~/src/R-forge/EngrExpt/pkg"
 factorize <- function(x) {
     ndistinct <- length(unique(x))
     if (is.integer(x) && ndistinct < 6 && all(x %in% 0:ndistinct))
@@ -33,8 +33,8 @@ for (nm in dsn) {
     tmp <- do.call(data.frame, lapply(tmp, factorize))
     names(tmp) <- tolower(names(tmp))
     assign(nm, tmp)
-    save(nm, file = file.path(pkgbase, "data", paste(nm, ".rda", sep = '')))
-    prompt(name = nm, filename = file.path(pkgbase, "man", paste(nm, ".Rd", sep = '')))
+    save(list = nm, file = file.path(pkgbase, "data", paste(nm, ".rda", sep = '')))
+#    prompt(name = nm, filename = file.path(pkgbase, "man", paste(nm, ".Rd", sep = '')))
 }
 rm(tmp)
 ls.str()
