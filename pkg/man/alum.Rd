@@ -3,29 +3,32 @@
 \alias{alum}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Aluminum impurity amounts
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  As described in Nelson, Coffin and Copeland (2003), "Over a 2-hour
+  period, twenty-five 200 gm samples were drawn at random from a process
+  that recycles plastic, and the amount of aluminum impurities in the
+  sample in ppm was determined for each sample."
 }
-\usage{data(alum)}
 \format{
   A data frame with 25 observations on the following variable.
   \describe{
     \item{\code{ppm}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(alum)
-## maybe str(alum) ; plot(alum) ...
+str(alum)
+qqmath(~ ppm, alum, xlab = "Standard normal quantiles",
+       aspect = 1, ylab = "Amount of aluminum impurities (ppm)",
+       type = c("g","p"))
+qqmath(~ log(ppm), alum, xlab = "Standard normal quantiles",
+       aspect = 1, ylab = "Natural log of amount of aluminum impurities (log(ppm))",
+       type = c("g","p"))
 }
 \keyword{datasets}

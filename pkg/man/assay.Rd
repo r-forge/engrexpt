@@ -3,12 +3,13 @@
 \alias{assay}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Yield from two processes
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  As described in Nelson, Coffin and Copeland (2003),
+  \dQuote{Two different chemical processes are being considered for
+    producing a resin needed in the manufacture of paint}.
 }
-\usage{data(assay)}
 \format{
   A data frame with 9 observations on the following 2 variables.
   \describe{
@@ -16,17 +17,14 @@
     \item{\code{yield}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(assay)
-## maybe str(assay) ; plot(assay) ...
+str(assay)
+summary(assay)
+dotplot(process ~ yield, assay)
 }
 \keyword{datasets}
