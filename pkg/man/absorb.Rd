@@ -9,7 +9,6 @@
   The average oil absorption of the silica produced in one shift at a
   silica processing plant.
 }
-%\usage{data(absorb)}
 \format{
   A data frame with 102 observations on the following variable.
   \describe{
@@ -22,7 +21,6 @@
   can absorb since silica is often mixed with rubber and oil in various
   applications (battery separators, tires, shoe soles, etc.)" 
 }
-%\source{}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

@@ -18,12 +18,12 @@
   \code{adhesion} is a data frame with 30 observations on the following 2 variables.
   \describe{
     \item{\code{adhesion}}{a numeric vector}
-    \item{\code{ph}}{a numeric vector at three distinct levels}
+    \item{\code{pH}}{a numeric vector at three distinct levels}
   }
   \code{adhesion2} is a data frame with 30 observations on the following 3 variables.
   \describe{
     \item{\code{cat}}{a factor with levels \code{A} \code{B}}
-    \item{\code{ph}}{a numeric vector}
+    \item{\code{pH}}{a numeric vector}
     \item{\code{adhesion}}{a numeric vector}
   }
 }
@@ -34,14 +34,14 @@
 }
 \examples{
 str(adhesion)
-xtabs(~ ph, adhesion)
-xyplot(adhesion ~ ph, adhesion, ylab = "Adhesion of a lens coating",
+xtabs(~ pH, adhesion)
+xyplot(adhesion ~ pH, adhesion, ylab = "Adhesion of a lens coating",
        xlab = "pH", type = c("g", "p", "a"))
-dotplot(as.factor(ph) ~ adhesion, adhesion, ylab = "pH", type =
+dotplot(as.factor(pH) ~ adhesion, adhesion, ylab = "pH", type =
        c("p","a"), xlab = "Adhesion of a lens coating")
 str(adhesion2)
-xtabs(~ cat + ph, adhesion2)
-dotplot(as.factor(ph) ~ adhesion, adhesion2, groups = cat,
+xtabs(~ cat + pH, adhesion2)
+dotplot(as.factor(pH) ~ adhesion, adhesion2, groups = cat,
         type = c("p","a"), ylab = "pH",
         auto.key = list(space = "right", lines = TRUE, title = "Catalyst"))
 }
