@@ -3,29 +3,23 @@
 \alias{webvisit}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Web site visits over a 3-week period
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Web site visits over a 3-week period
 }
-\usage{data(webvisit)}
 \format{
   A data frame with 21 observations on the following variable.
   \describe{
     \item{\code{visits}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(webvisit)
-## maybe str(webvisit) ; plot(webvisit) ...
+str(webvisit)
 }
 \keyword{datasets}

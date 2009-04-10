@@ -3,12 +3,11 @@
 \alias{thinfilm}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Strength of thin film coatings
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Strength of thin film coatings
 }
-\usage{data(thinfilm)}
 \format{
   A data frame with 30 observations on the following 3 variables.
   \describe{
@@ -17,17 +16,12 @@
     \item{\code{maxload}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(thinfilm)
-## maybe str(thinfilm) ; plot(thinfilm) ...
+str(thinfilm)
 }
 \keyword{datasets}

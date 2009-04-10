@@ -3,12 +3,12 @@
 \alias{chemreac}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Yield of a chemical reaction
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  The yield of a chemical reaction was determined in a replicated \eqn{2^3}
+  factorial design.
 }
-\usage{data(chemreac)}
 \format{
   A data frame with 16 observations on the following 4 variables.
   \describe{
@@ -18,17 +18,7 @@
     \item{\code{yield}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
-\references{
-%%  ~~ possibly secondary sources and usages ~~
-}
 \examples{
-data(chemreac)
-## maybe str(chemreac) ; plot(chemreac) ...
+str(chemreac)
 }
 \keyword{datasets}

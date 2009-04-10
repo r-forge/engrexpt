@@ -3,10 +3,12 @@
 \alias{cure}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Yield from a chemical curing process
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Process engineers wish to determine a \dQuote{bake window}, the
+  combination of time and temperature in a curing process, that will
+  maximize the yield of the product.
 }
 \usage{data(cure)}
 \format{
@@ -17,17 +19,12 @@
     \item{\code{yield}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(cure)
-## maybe str(cure) ; plot(cure) ...
+str(cure)
 }
 \keyword{datasets}

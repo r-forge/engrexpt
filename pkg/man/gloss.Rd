@@ -3,12 +3,11 @@
 \alias{gloss}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Gloss of paint on cars
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Gloss of paint on cars
 }
-\usage{data(gloss)}
 \format{
   A data frame with 40 observations on the following 2 variables.
   \describe{
@@ -16,17 +15,12 @@
     \item{\code{gloss}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(gloss)
-## maybe str(gloss) ; plot(gloss) ...
+str(gloss)
 }
 \keyword{datasets}

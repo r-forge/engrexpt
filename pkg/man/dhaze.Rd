@@ -3,10 +3,10 @@
 \alias{dhaze}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Haze of lenses after abrasion
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Haze of lenses after 150 test cycles of abrasion
 }
 \usage{data(dhaze)}
 \format{
@@ -16,17 +16,12 @@
     \item{\code{dhaze}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(dhaze)
-## maybe str(dhaze) ; plot(dhaze) ...
+str(dhaze)
 }
 \keyword{datasets}

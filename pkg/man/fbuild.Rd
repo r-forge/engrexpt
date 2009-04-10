@@ -3,12 +3,11 @@
 \alias{fbuild}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Appearance for film builds
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Appearance for film builds
 }
-\usage{data(fbuild)}
 \format{
   A data frame with 9 observations on the following 2 variables.
   \describe{
@@ -16,17 +15,12 @@
     \item{\code{gloss}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(fbuild)
-## maybe str(fbuild) ; plot(fbuild) ...
+str(fbuild)
 }
 \keyword{datasets}

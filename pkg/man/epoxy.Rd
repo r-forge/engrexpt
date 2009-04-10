@@ -3,30 +3,24 @@
 \alias{epoxy}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Effect of epoxy level on appearance
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Effect of epoxy level on appearance
 }
-\usage{data(epoxy)}
 \format{
   A data frame with 10 observations on the following 2 variables.
   \describe{
-    \item{\code{epoxy}}{a numeric vector}
-    \item{\code{lw}}{a numeric vector}
+    \item{\code{epoxy}}{level of epoxy in formulation}
+    \item{\code{lw}}{longwave measure of appearance}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(epoxy)
-## maybe str(epoxy) ; plot(epoxy) ...
+str(epoxy)
 }
 \keyword{datasets}

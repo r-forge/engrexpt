@@ -3,32 +3,30 @@
 \alias{defoam}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Height of solution with defoamer
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  The height of a solution containing a \dQuote{defoamer} in a 50-ml
+  graduated cylinder after being heated to a particular temperature.
 }
-\usage{data(defoam)}
 \format{
   A data frame with 27 observations on the following 4 variables.
   \describe{
-    \item{\code{conc}}{a factor with levels \code{H} \code{L} \code{M}}
-    \item{\code{ph}}{a factor with levels \code{H} \code{L} \code{M}}
-    \item{\code{temp}}{a factor with levels \code{H} \code{L} \code{M}}
-    \item{\code{height}}{a numeric vector}
+    \item{\code{conc}}{concentration of defoamer - a factor with levels
+      \code{L} < \code{M} < \code{H}}
+    \item{\code{pH}}{pH of defoamer - a factor with levels
+      \code{L} < \code{M} < \code{H}}
+    \item{\code{temp}}{temperature of defoamer - a factor with levels
+      \code{L} < \code{M} < \code{H}}
+    \item{\code{height}}{height of solution in the graduated cylinder}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(defoam)
-## maybe str(defoam) ; plot(defoam) ...
+str(defoam)
 }
 \keyword{datasets}

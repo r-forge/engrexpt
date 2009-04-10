@@ -3,31 +3,21 @@
 \alias{dry}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Moisture content after drying
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Moisture content after drying
 }
-\usage{data(dry)}
 \format{
   A data frame with 16 observations on the following 3 variables.
   \describe{
-    \item{\code{rate}}{a factor with levels \code{BATCH} \code{TUNNEL}}
-    \item{\code{type}}{a factor with levels \code{FAST} \code{SLOW}}
-    \item{\code{response}}{a numeric vector}
+    \item{\code{rate}}{a factor with levels \code{SLOW} and  \code{FAST}}
+    \item{\code{type}}{type of dryer - a factor with levels
+      \code{BATCH} and \code{TUNNEL}}
+    \item{\code{response}}{Moisture content of final product (\%)}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
-\references{
-%%  ~~ possibly secondary sources and usages ~~
-}
 \examples{
-data(dry)
-## maybe str(dry) ; plot(dry) ...
+str(dry)
 }
 \keyword{datasets}

@@ -3,31 +3,29 @@
 \alias{caliper}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Diameters of rods measured by two calipers
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Diameters of 14 metal rods measured once each with each of two calipers.
 }
-\usage{data(caliper)}
 \format{
   A data frame with 14 observations on the following 3 variables.
   \describe{
-    \item{\code{part}}{a numeric vector}
-    \item{\code{calipera}}{a numeric vector}
-    \item{\code{caliperb}}{a numeric vector}
+    \item{\code{part}}{indicator of which part is measured - a factor}
+    \item{\code{calipera}}{measurement with caliper type A}
+    \item{\code{caliperb}}{measurement with caliper type B}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(caliper)
-## maybe str(caliper) ; plot(caliper) ...
+str(caliper)
+show(pl1 <- xyplot(caliperb ~ calipera, caliper, type = c("g","p"), aspect = "iso",
+                   xlab = "Measurement with caliper A",
+                   ylab = "Measurement with caliper B", pch = as.character(caliper$part)))
+show(tmd(pl1))
 }
 \keyword{datasets}

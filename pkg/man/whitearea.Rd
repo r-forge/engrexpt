@@ -3,12 +3,13 @@
 \alias{whitearea}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Comparison of mixing processes
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  The percentage of \dQuote{white area} in a sample of a dark product
+  is used to evaluate how well a white raw material has been mixed
+  into the product.  Data are obtained from two processes.
 }
-\usage{data(whitearea)}
 \format{
   A data frame with 48 observations on the following 2 variables.
   \describe{
@@ -16,17 +17,11 @@
     \item{\code{whitearea}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
-\references{
-%%  ~~ possibly secondary sources and usages ~~
-}
 \examples{
-data(whitearea)
-## maybe str(whitearea) ; plot(whitearea) ...
+str(whitearea)
+qqmath(~ whitearea, whitearea, groups = process, aspect = 1,
+       xlab = "Standard normal quantiles",
+       ylab = "White area")
+t.test(whitearea ~ process, whitearea)
 }
 \keyword{datasets}

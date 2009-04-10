@@ -3,30 +3,34 @@
 \alias{battery}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Battery lifetime in laptop computers
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Data from  a study on the effect of different processors on the
+  battery lifetime in laptop computers.
 }
-\usage{data(battery)}
 \format{
   A data frame with 30 observations on the following 2 variables.
   \describe{
-    \item{\code{type}}{a factor with levels \code{A} \code{B} \code{C}}
+    \item{\code{type}}{processor type - a factor with levels \code{A},
+      \code{B} and \code{C}}
     \item{\code{lifetime}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(battery)
-## maybe str(battery) ; plot(battery) ...
+str(battery)
+densityplot(~ lifetime, battery, groups = type,
+            xlab = "Battery lifetime (hours)",
+            auto.key = list(columns = 3, lines = TRUE))
+densityplot(~ lifetime, battery, groups = type,
+            scales = list(x = list(log = 2)),
+            xlab = "Battery lifetime (hours) - logarithmic scale",
+            auto.key = list(columns = 3, lines = TRUE))
+            
 }
 \keyword{datasets}

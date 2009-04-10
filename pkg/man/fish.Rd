@@ -1,32 +1,28 @@
 \name{fish}
 \Rdversion{1.1}
 \alias{fish}
+\alias{fish2}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Toxin concentrations in fish by site
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Toxin concentrations in fish by site
 }
-\usage{data(fish)}
 \format{
   A data frame with 16 observations on the following 2 variables.
   \describe{
-    \item{\code{site..s1.}}{a factor with levels \code{A} \code{B} \code{C} \code{D}}
+    \item{\code{site}}{a factor with levels \code{A} \code{B} \code{C} \code{D}}
     \item{\code{toxin}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(fish)
-## maybe str(fish) ; plot(fish) ...
+str(fish)
+str(fish2)
 }
 \keyword{datasets}

@@ -3,31 +3,32 @@
 \alias{bath}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Electrical resistance after water bath
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  In a production process the product passes through a water bath.  In
+  this experiment the time spent in the bath and the temperature of the
+  bath were varied to determine their effect on the electrical
+  resistance of the final product.
 }
-\usage{data(bath)}
 \format{
   A data frame with 4 observations on the following 3 variables.
   \describe{
-    \item{\code{time}}{a numeric vector}
-    \item{\code{temp}}{a numeric vector}
-    \item{\code{er}}{a numeric vector}
+    \item{\code{time}}{time in the bath (coded as levels -1 and 1)}
+    \item{\code{temp}}{temperature in the bath (coded as levels -1 and 1)}
+    \item{\code{er}}{electrical resistance of the final produce (ohm/\eqn{m^2})}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(bath)
-## maybe str(bath) ; plot(bath) ...
+str(bath)
+dotplot(ordered(time) ~ er, bath, groups = temp, type = c("p","a"),
+        xlab = expression("Electrical resistance (ohm/" * m^2 * ")"),
+        ylab = "Time in bath (coded)",
+        auto.key = list(columns = 2, lines = TRUE))
 }
 \keyword{datasets}

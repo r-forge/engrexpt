@@ -16,8 +16,6 @@
       the lab technician on a sample from the batch}
   }
 }
-%\details{}
-%\source{}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},
@@ -29,7 +27,7 @@ xtabs(sarea ~ batch + tech, sarea)
 xtabs(sarea ~ reorder(batch, sarea) + reorder(tech, sarea), sarea)
 dotplot(reorder(tech, sarea) ~ sarea, sarea,
         groups = batch, type = c("p","a"), aspect = "xy",
-        ylab = "Technicial",
+        ylab = "Technician",
         xlab = expression("Measured surface area " * (m^2/g) *
                           " of silica batches"),
         auto.key = list(columns = 3, lines = TRUE)

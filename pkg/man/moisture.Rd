@@ -3,12 +3,11 @@
 \alias{moisture}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Moisture content of a silica product
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Moisture content of a silica product
 }
-\usage{data(moisture)}
 \format{
   A data frame with 8 observations on the following 5 variables.
   \describe{
@@ -19,17 +18,12 @@
     \item{\code{moisture}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(moisture)
-## maybe str(moisture) ; plot(moisture) ...
+str(moisture)
 }
 \keyword{datasets}

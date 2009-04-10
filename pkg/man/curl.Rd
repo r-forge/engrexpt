@@ -3,31 +3,27 @@
 \alias{curl}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Curl of transparencies
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  The current formulation of a coating on transparencies used in ink-jet
+  printers causes them to curl.  These data are from experiments
+  conducted on a new formulation of the coating.  
 }
-\usage{data(curl)}
 \format{
   A data frame with 12 observations on the following 3 variables.
   \describe{
-    \item{\code{catalyst}}{a numeric vector}
-    \item{\code{compa}}{a numeric vector}
-    \item{\code{curl}}{a numeric vector}
+    \item{\code{catalyst}}{amount of catalyst}
+    \item{\code{compa}}{amount of component a (the second component)}
+    \item{\code{curl}}{a measure of the curl}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(curl)
-## maybe str(curl) ; plot(curl) ...
+str(curl)
 }
 \keyword{datasets}

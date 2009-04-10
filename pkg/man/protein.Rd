@@ -3,12 +3,11 @@
 \alias{protein}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Assay of protein in blood
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Assay of protein in blood
 }
-\usage{data(protein)}
 \format{
   A data frame with 54 observations on the following 5 variables.
   \describe{
@@ -19,17 +18,12 @@
     \item{\code{protein}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(protein)
-## maybe str(protein) ; plot(protein) ...
+str(protein)
 }
 \keyword{datasets}

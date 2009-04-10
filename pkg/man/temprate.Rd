@@ -3,12 +3,11 @@
 \alias{temprate}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Effect of water bath on moisture content
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Effect of water bath on moisture content
 }
-\usage{data(temprate)}
 \format{
   A data frame with 12 observations on the following 3 variables.
   \describe{
@@ -17,17 +16,12 @@
     \item{\code{response}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(temprate)
-## maybe str(temprate) ; plot(temprate) ...
+str(temprate)
 }
 \keyword{datasets}

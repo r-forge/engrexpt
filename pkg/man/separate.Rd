@@ -3,12 +3,11 @@
 \alias{separate}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Electrical resistance of battery separators
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Electrical resistance of battery separators
 }
-\usage{data(separate)}
 \format{
   A data frame with 24 observations on the following 4 variables.
   \describe{
@@ -18,17 +17,12 @@
     \item{\code{y}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(separate)
-## maybe str(separate) ; plot(separate) ...
+str(separate)
 }
 \keyword{datasets}

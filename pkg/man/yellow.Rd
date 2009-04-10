@@ -3,12 +3,11 @@
 \alias{yellow}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Initial and 1 month color measure of coated lens 
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Initial and 1 month color measure of coated lens 
 }
-\usage{data(yellow)}
 \format{
   A data frame with 23 observations on the following 2 variables.
   \describe{
@@ -16,17 +15,12 @@
     \item{\code{b2}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(yellow)
-## maybe str(yellow) ; plot(yellow) ...
+str(yellow)
 }
 \keyword{datasets}

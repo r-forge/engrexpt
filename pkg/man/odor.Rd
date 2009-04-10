@@ -3,12 +3,11 @@
 \alias{odor}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Odor, yellowing and hardness of optical coating
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Odor, yellowing and hardness of optical coating
 }
-\usage{data(odor)}
 \format{
   A data frame with 35 observations on the following 3 variables.
   \describe{
@@ -17,17 +16,12 @@
     \item{\code{hardness}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(odor)
-## maybe str(odor) ; plot(odor) ...
+str(odor)
 }
 \keyword{datasets}

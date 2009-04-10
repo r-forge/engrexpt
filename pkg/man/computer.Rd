@@ -3,12 +3,12 @@
 \alias{computer}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Repair time of computers
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Data from a study of the repair time for different brands of computers
+  in different configurations.
 }
-\usage{data(computer)}
 \format{
   A data frame with 36 observations on the following 3 variables.
   \describe{
@@ -17,17 +17,12 @@
     \item{\code{time}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(computer)
-## maybe str(computer) ; plot(computer) ...
+str(computer)
 }
 \keyword{datasets}

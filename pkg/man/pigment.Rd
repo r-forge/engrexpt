@@ -3,12 +3,11 @@
 \alias{pigment}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Yellowing of paint for different pigments
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Yellowing of paint for different pigments
 }
-\usage{data(pigment)}
 \format{
   A data frame with 9 observations on the following 3 variables.
   \describe{
@@ -17,17 +16,12 @@
     \item{\code{deltab}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(pigment)
-## maybe str(pigment) ; plot(pigment) ...
+str(pigment)
 }
 \keyword{datasets}

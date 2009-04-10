@@ -3,12 +3,13 @@
 \alias{cement}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Drying times of concrete
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Drying times of different concrete mixes used in a sidewalk.  Mix
+  \sQuote{\code{A}} is the conventional mix.  Mixes \sQuote{\code{B}}
+  and \sQuote{\code{C}} are experimental, and more expensive, mixes.
 }
-\usage{data(cement)}
 \format{
   A data frame with 19 observations on the following 2 variables.
   \describe{
@@ -16,17 +17,16 @@
     \item{\code{time}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(cement)
-## maybe str(cement) ; plot(cement) ...
+str(cement)
+dotplot(reorder(type, time) ~ time, cement, type = c("p","a"), jitter.y = TRUE,
+        xlab = "Time until concrete is dry enough to walk on (hours)",
+        ylab = "Mix type")
+
 }
 \keyword{datasets}

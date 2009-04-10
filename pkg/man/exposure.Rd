@@ -3,30 +3,25 @@
 \alias{exposure}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Appearance of panels after exposure to weather
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Appearance of panels after exposure to weather  
 }
-\usage{data(exposure)}
 \format{
   A data frame with 36 observations on the following 2 variables.
   \describe{
-    \item{\code{form}}{a factor with levels \code{A} \code{B} \code{C}}
-    \item{\code{rating}}{a numeric vector}
+    \item{\code{form}}{formulation of paint - a factor with levels
+      \code{A}, \code{B} and \code{C}}
+    \item{\code{rating}}{appearance rating}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(exposure)
-## maybe str(exposure) ; plot(exposure) ...
+str(exposure)
 }
 \keyword{datasets}

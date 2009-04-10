@@ -3,12 +3,11 @@
 \alias{vitamin}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Calcium levels before and after vitamin supplement
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Calcium levels before and after vitamin supplement
 }
-\usage{data(vitamin)}
 \format{
   A data frame with 49 observations on the following 3 variables.
   \describe{
@@ -17,17 +16,12 @@
     \item{\code{after}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(vitamin)
-## maybe str(vitamin) ; plot(vitamin) ...
+str(vitamin)
 }
 \keyword{datasets}

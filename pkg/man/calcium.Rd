@@ -3,30 +3,30 @@
 \alias{calcium}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Calcium levels before and after taking vitamin
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  The serum calcium levels in 11 test subjects before taking a
+  multi-vitamin containing calcium and three hours after taking the vitamin.
 }
-\usage{data(calcium)}
 \format{
   A data frame with 11 observations on the following 2 variables.
   \describe{
-    \item{\code{hrs0}}{a numeric vector}
-    \item{\code{hrs3}}{a numeric vector}
+    \item{\code{hrs0}}{serum calcium level (mg/dl) at time zero}
+    \item{\code{hrs3}}{serum calcium level (mg/dl) three hours after
+      taking the multi-vitamin containing calcium}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(calcium)
-## maybe str(calcium) ; plot(calcium) ...
+str(calcium)
+show(pl1 <- xyplot(hrs3 ~ hrs0, calcium, type = c("g","p"), aspect = "iso",
+                   xlab = "Calcium level (mg/dl) before taking multi-vitamin",
+                   ylab = "Calcium level (mg/dl) 3 hours after taking multi-vitamin"))
+show(tmd(pl1))
 }
 \keyword{datasets}

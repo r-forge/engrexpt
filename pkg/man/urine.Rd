@@ -3,12 +3,11 @@
 \alias{urine}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Mercury level in employee urine samples
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Mercury level in employee urine samples
 }
-\usage{data(urine)}
 \format{
   A data frame with 12 observations on the following 5 variables.
   \describe{
@@ -19,17 +18,12 @@
     \item{\code{person4}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(urine)
-## maybe str(urine) ; plot(urine) ...
+str(urine)
 }
 \keyword{datasets}

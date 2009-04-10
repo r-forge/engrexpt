@@ -3,29 +3,23 @@
 \alias{weight}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Weight plastic bags held before breaking
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  Weight plastic bags held before breaking
 }
-\usage{data(weight)}
 \format{
   A data frame with 43 observations on the following variable.
   \describe{
     \item{\code{weight}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(weight)
-## maybe str(weight) ; plot(weight) ...
+str(weight)
 }
 \keyword{datasets}

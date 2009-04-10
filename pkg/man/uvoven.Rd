@@ -3,12 +3,11 @@
 \alias{uvoven}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  UV absorbance for lens cured in different ovens
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  UV absorbance for lens cured in different ovens
 }
-\usage{data(uvoven)}
 \format{
   A data frame with 60 observations on the following 2 variables.
   \describe{
@@ -16,17 +15,12 @@
     \item{\code{uv}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(uvoven)
-## maybe str(uvoven) ; plot(uvoven) ...
+str(uvoven)
 }
 \keyword{datasets}

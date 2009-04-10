@@ -3,12 +3,14 @@
 \alias{cheese}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Percentage fat in cheese
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  A manufacturer of cheese supplies a major pizza chain from three
+  different manufacturing locations.  Samples from 6 different batches
+  at each of three different plants were assayed for the percentage fat
+  content.
 }
-\usage{data(cheese)}
 \format{
   A data frame with 90 observations on the following 3 variables.
   \describe{
@@ -17,17 +19,12 @@
     \item{\code{fat}}{a numeric vector}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(cheese)
-## maybe str(cheese) ; plot(cheese) ...
+str(cheese)
 }
 \keyword{datasets}

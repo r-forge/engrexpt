@@ -3,31 +3,29 @@
 \alias{drought}
 \docType{data}
 \title{
-%%   ~~ data name/kind ... ~~
+  Water usage in 2001 and 2002
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+  In 2002, Colorado experienced a drought and many towns on the front
+  range (a geographical district close to the Rocky mountains) issued
+  mandatory or voluntary water restirctions on outdoor watering.  These
+  data are comparative water usage between 2001 and 2002 for five such
+  towns.
 }
-\usage{data(drought)}
 \format{
   A data frame with 5 observations on the following 3 variables.
   \describe{
     \item{\code{town}}{a factor with levels \code{A} \code{B} \code{C} \code{D} \code{E}}
-    \item{\code{j2001}}{a numeric vector}
-    \item{\code{j2002}}{a numeric vector}
+    \item{\code{j2001}}{water usage (millions of gallons) in 2001}
+    \item{\code{j2002}}{water usage (millions of gallons) in 2001}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+  Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
+  \emph{Introductory Statistics for Engineering Experimentation},
+  Elsevier. (Appendix A)
 }
 \examples{
-data(drought)
-## maybe str(drought) ; plot(drought) ...
+str(drought)
 }
 \keyword{datasets}
