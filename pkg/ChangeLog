@@ -1,0 +1,45 @@
+2009-04-11  Douglas Bates <bates@stat.wisc.edu>
+
+	* [r13] DESCRIPTION: New Release
+	* [r12] data/applicat.rda, data/timetemp.rda, data/webtraff.rda,
+	  data/yield.rda, man/absorb.Rd, man/adhesion.Rd, man/alum.Rd,
+	  man/applicat.Rd, man/battery.Rd, man/cement.Rd, man/chemreac.Rd,
+	  man/uvoven.Rd, man/viscosity.Rd, man/vitamin.Rd, man/wash.Rd,
+	  man/water.Rd, man/webtraff.Rd, man/webvisit.Rd, man/weight.Rd,
+	  man/whitearea.Rd, man/yellow.Rd, man/yield.Rd: Convert some numeric
+	  variables to factors; Update documentation
+
+2009-04-10  Douglas Bates <bates@stat.wisc.edu>
+
+	* [r11] data/adhesion.rda, data/adhesion2.rda, man/absorb.Rd,
+	  man/adhesion.Rd: Cleanup; change name ph to pH
+	* [r10] DESCRIPTION: Initial release
+	* [r9] data/bright.rda, data/defoam.rda: Rename variables
+	* [r8] man/bacteria.Rd, man/bath.Rd, man/battery.Rd, man/bright.Rd,
+	  man/calcium.Rd, man/caliper.Rd, man/ccthickn.Rd, man/cement.Rd,
+	  man/cheese.Rd, man/chemreac.Rd, man/computer.Rd, man/cure.Rd,
+	  man/curl.Rd, man/defoam.Rd, man/deink.Rd, man/deink2.Rd, man/dhaze.Rd,
+	  man/diagnostic.Rd, man/diameter.Rd, man/drought.Rd, man/drums.Rd,
+	  man/dry.Rd, man/epoxy.Rd, man/exposure.Rd, man/fbuild.Rd, man/fill.Rd,
+	  man/fillweight.Rd, man/fish.Rd, man/fish2.Rd, man/fluoride.Rd,
+	  man/gloss.Rd, man/labcomp.Rd, man/lw.Rd, man/lwsw.Rd, man/moisture.Rd,
+	  man/mw.Rd, man/odor.Rd, man/oven.Rd, man/ph.Rd, man/phmeas.Rd,
+	  man/pigment.Rd, man/protein.Rd, man/purity.Rd, man/railcar.Rd,
+	  man/railcar2.Rd, man/railcar3.Rd, man/ratings.Rd, man/ratings2.Rd,
+	  man/reflect.Rd, man/safety.Rd, man/sales.Rd, man/sarea.Rd,
+	  man/separate.Rd, man/soap.Rd, man/stab.Rd, man/stretch.Rd,
+	  man/tablets.Rd, man/temprate.Rd, man/tennis.Rd, man/thinfilm.Rd,
+	  man/tpaste.Rd, man/urine.Rd, man/uvcoatin.Rd, man/uvoven.Rd,
+	  man/viscosity.Rd, man/vitamin.Rd, man/wash.Rd, man/water.Rd,
+	  man/webtraff.Rd, man/webvisit.Rd, man/weight.Rd, man/whitearea.Rd,
+	  man/yellow.Rd, man/yield.Rd: Update documentation
+	* [r7] data/break.rda, data/tensile.rda, man/break.Rd, man/tensile.Rd:
+	  Rename break data set as tensile
+
+2009-04-06  Douglas Bates <bates@stat.wisc.edu>
+
+	* [r6] man/alum.Rd, man/applicat.Rd, man/assay.Rd: Update documentation
+	* [r5] data/*: Repeat data set extraction to get the right dataset names
+	* [r4] DESCRIPTION, inst, inst/*: Initial version
+	* [r3] man/adhesion2.Rd: adhesion2 data set is documented in adhesion.Rd
+	* [r2] R, data/*, man/*: Initial version of package
