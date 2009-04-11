@@ -8,7 +8,7 @@ Author:  R port by Douglas Bates <bates@stat.wisc.edu> and
 Description: Datasets from Nelson, Coffin and Copeland
          "Introductory Statistics for Engineering Experimentation"
 	 (Elsevier, 2003) with sample code.
-Depends: R (>= 2.9.0), lattice
+Depends: R (>= 2.8.1), lattice
 LazyLoad: yes
 LazyData: yes
 License: GPL (>=2)
