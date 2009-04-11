@@ -14,9 +14,11 @@
 \format{
   A data frame with 18 observations on the following 3 variables.
   \describe{
-    \item{\code{time}}{a numeric vector}
-    \item{\code{temp.s10.}}{a factor with levels \code{High} \code{Low} \code{Med}}
-    \item{\code{yield}}{a numeric vector}
+    \item{\code{time}}{time - an ordered factor with levels
+      \code{20} < \code{40}}
+    \item{\code{temp}}{temperature - an ordered factor with levels
+      \code{Low} < \code{Med} < \code{High}}
+    \item{\code{yield}}{yield of parts}
   }
 }
 \references{
@@ -26,5 +28,8 @@
 }
 \examples{
 str(cure)
+dotplot(temp ~ yield, cure, groups = time, type = c("p","a"),
+        jitter.y = TRUE, xlab = "Yield of parts")
+summary(fm1 <- lm(yield ~ time * temp, cure))
 }
 \keyword{datasets}

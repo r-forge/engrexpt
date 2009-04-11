@@ -11,9 +11,10 @@
 \format{
   A data frame with 27 observations on the following 3 variables.
   \describe{
-    \item{\code{alkali}}{a numeric vector}
-    \item{\code{hardness}}{a numeric vector}
-    \item{\code{bright}}{a numeric vector}
+    \item{\code{alkali}}{amount of alkali in the solution}
+    \item{\code{hardness}}{hardness of the water - an ordered factor
+      with levels \code{50} < \code{150} < \code{250}}
+    \item{\code{bright}}{a measure of brightness}
   }
 }
 \references{
@@ -23,5 +24,11 @@
 }
 \examples{
 str(deink)
+xtabs(~ alkali + hardness, deink)
+dotplot(hardness ~ bright, deink, groups = alkali,
+        auto.key = list(columns = 3, lines = TRUE),
+        type = c("p","a"), aspect = 'xy',
+        xlab = "Brightness by amount of alkali",
+        ylab = "Hardness of the water")
 }
 \keyword{datasets}

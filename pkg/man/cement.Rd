@@ -24,12 +24,17 @@
 }
 \examples{
 str(cement)
-dotplot(reorder(type, time) ~ time, cement, type = c("p","a"), jitter.y = TRUE,
-        xlab = "Time until concrete is dry enough to walk on (hours)",
-        ylab = "Mix type")
-qqmath(~ time, cement, groups = type, aspect = 'xy', xlab = "Standard normal quantiles",
+dotplot(reorder(type, time) ~ time, cement, type = c("p","a"),
+        jitter.y = TRUE, ylab = "Mix type",
+        xlab = "Time until concrete is dry enough to walk on (hours)")
+qqmath(~ time, cement, groups = type, aspect = 'xy',
+       xlab = "Standard normal quantiles",
        type = c("g","p"),
-       panel=function(...){panel.qqmathline(..., alpha = 0.5, lty = 2); panel.qqmath(...)},
+       panel=function(...)
+   {
+       panel.qqmathline(..., alpha = 0.5, lty = 2)
+       panel.qqmath(...)
+   },
        ylab = "Time until concrete is dry enough to walk on (hours)",
        auto.key = list(space = "right", title = "Type", lines = TRUE))
 }

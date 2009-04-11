@@ -13,8 +13,9 @@
   A data frame with 36 observations on the following 3 variables.
   \describe{
     \item{\code{brand}}{a factor with levels \code{A} \code{B} \code{C}}
-    \item{\code{type}}{a factor with levels \code{A} \code{B} \code{C}}
-    \item{\code{time}}{a numeric vector}
+    \item{\code{type}}{an ordered factor with levels \code{Inexpensive
+	home} < \code{Expensive home} < \code{Business}}
+    \item{\code{time}}{time to repair computer (minutes)}
   }
 }
 \references{
@@ -24,5 +25,12 @@
 }
 \examples{
 str(computer)
+dotplot(type ~ time, computer, groups = brand,
+        auto.key = list(columns = 3, lines = TRUE),
+        type = c("p","a"), jitter.y = TRUE,
+        xlab = "Time to repair computer (minutes)")
+summary(fm1 <- lm(time ~ brand * type, computer))
+summary(fm2 <- lm(time ~ brand + type, computer))
+summary(fm3 <- lm(time ~ type, computer))
 }
 \keyword{datasets}

@@ -23,9 +23,11 @@
 }
 \examples{
 str(caliper)
-show(pl1 <- xyplot(caliperb ~ calipera, caliper, type = c("g","p"), aspect = "iso",
-                   xlab = "Measurement with caliper A",
-                   ylab = "Measurement with caliper B", pch = as.character(caliper$part)))
-show(tmd(pl1))
+show(pl1 <-
+     xyplot(caliperb ~ calipera, caliper, type = c("g","p"),
+            aspect = "iso",
+            xlab = "Measurement with caliper A",
+            ylab = "Measurement with caliper B"))
+tmd(pl1)
 }
 \keyword{datasets}

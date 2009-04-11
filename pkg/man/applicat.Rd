@@ -3,13 +3,14 @@
 \docType{data}
 \title{Application of powder coating}
 \description{ 
-  As described in Nelson, Coffin and Copeland (2003), “The application of
-  powder coating (a type of paint used on appliances and, in limited
-  settings, cars) is done by spraying the material through a ‘gun’ that
-  has an electrical charge on it. There are three factors to consider in
-  setting up the application booth: the gun distance from the target item,
-  the charge and the pressure (flow rate) of the material through the
-  gun. This data set contains data from 18 runs.”
+  As described in Nelson, Coffin and Copeland (2003), \dQuote{The
+    application of powder coating (a type of paint used on appliances
+    and, in limited settings, cars) is done by spraying the material
+    through a \sQuote{gun} that has an electrical charge on it. There
+    are three factors to consider in setting up the application booth:
+    the gun distance from the target item, the charge and the pressure
+    (flow rate) of the material through the gun. This data set contains
+    data from 18 runs.}
 }
 \format{
   A data frame with 18 observations on the following 4 variables.
@@ -34,13 +35,13 @@ dotplot(distance ~ gloss|flowrate, applicat, groups = charge,
         type = c("p","a"), layout = c(1,2),
         ylab = "Gun distance from target (in.)",
         strip = FALSE, strip.left = TRUE,
-        auto.key = list(columns = 3, lines = TRUE),
-        xlab = "Gloss for two flow rates (gm/min) and three charges (kvolts)")
+        auto.key = list(columns = 3, lines = TRUE), xlab =
+"Gloss for two flow rates (gm/min) and three charges (kvolts)")
 dotplot(charge ~ gloss|flowrate, applicat, groups = distance, 
         type = c("p","a"), layout = c(1,2),
         ylab = "Charge (kvolts)",
         strip = FALSE, strip.left = TRUE,
-        auto.key = list(columns = 3, lines = TRUE),
-xlab = "Gloss for two flow rates (gm/min) and three distances from target (in)")
+        auto.key = list(columns = 3, lines = TRUE), xlab =
+"Gloss for two flow rates (gm/min) and three distances from target (in)")
 }
 \keyword{datasets}

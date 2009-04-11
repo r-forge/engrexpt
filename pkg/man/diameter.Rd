@@ -23,5 +23,11 @@
 }
 \examples{
 str(diameter)
+dotplot(line ~ diameter, diameter, type = c("p","a"),
+        jitter.y = TRUE, aspect = 0.2, ylab = "Line",
+        xlab = "Diameter of tracking ball (cm.)")
+bwplot(line ~ diameter, diameter, type = c("p","a"),
+       jitter.y = TRUE, aspect = 0.2, ylab = "Line",
+       xlab = "Diameter of tracking ball (cm.)")
 }
 \keyword{datasets}
