@@ -13,7 +13,6 @@
   pH levels.  In the \code{adhesion2} data five samples were made and
   tested at each of six combinations of pH and catalyst.
 }
-%\usage{data(adhesion)}
 \format{
   \code{adhesion} is a data frame with 30 observations on the following 2 variables.
   \describe{
@@ -43,6 +42,7 @@ str(adhesion2)
 xtabs(~ cat + pH, adhesion2)
 dotplot(as.factor(pH) ~ adhesion, adhesion2, groups = cat,
         type = c("p","a"), ylab = "pH",
-        auto.key = list(space = "right", lines = TRUE, title = "Catalyst"))
+        auto.key = list(space = "right", lines = TRUE,
+                        title = "Catalyst"))
 }
 \keyword{datasets}

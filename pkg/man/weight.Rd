@@ -21,5 +21,8 @@
 }
 \examples{
 str(weight)
+densityplot(~ weight, weight, xlab = "Weight bag held before breaking")
+qqmath(~ weight, weight, ylab = "Weight bag held before breaking",
+       aspect = 1, type = c("g","p"), xlab = "Standard normal quantiles")
 }
 \keyword{datasets}

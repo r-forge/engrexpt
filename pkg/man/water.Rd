@@ -11,7 +11,7 @@
 \format{
   A data frame with 50 observations on the following variable.
   \describe{
-    \item{\code{bacteria}}{a numeric vector}
+    \item{\code{bacteria}}{bacteria concentration (ppm)}
   }
 }
 \references{
@@ -21,5 +21,11 @@
 }
 \examples{
 str(water)
+qqmath(~ bacteria, water, aspect = 1,
+       xlab = "Standard normal quantiles",
+       ylab = "Bacteria concentration (ppm)")
+histogram(~ bacteria, water, breaks = 0:14 - 0.5,
+          xlab = "Bacteria concentration (ppm)")
+xtabs(~ bacteria, water)
 }
 \keyword{datasets}

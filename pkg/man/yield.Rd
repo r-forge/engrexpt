@@ -11,9 +11,9 @@
 \format{
   A data frame with 20 observations on the following 3 variables.
   \describe{
-    \item{\code{temp}}{a numeric vector}
-    \item{\code{ph}}{a numeric vector}
-    \item{\code{yield}}{a numeric vector}
+    \item{\code{temp}}{temperature of the slurry(degrees C)}
+    \item{\code{pH}}{pH of the slurry}
+    \item{\code{yield}}{yield of the process (tons)}
   }
 }
 \references{
@@ -23,5 +23,8 @@
 }
 \examples{
 str(yield)
+xyplot(yield ~ temp|ordered(pH), yield, aspect = 'xy',
+       type = c("g","p","r"), xlab = "Temperature of the slurry (degrees C)",
+       ylab = "Yield (tons)")
 }
 \keyword{datasets}

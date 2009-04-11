@@ -20,5 +20,8 @@
 }
 \examples{
 str(chemreac)
+dotplot(as.factor(temp) ~ yield | as.factor(time), chemreac, groups = cat,
+        strip = FALSE, strip.left = TRUE, type = c("p", "a"), layout = c(1,2),
+        auto.key = list(space = "right", title = "Catalyst", lines = TRUE))
 }
 \keyword{datasets}

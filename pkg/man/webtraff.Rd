@@ -11,8 +11,8 @@
 \format{
   A data frame with 10 observations on the following 2 variables.
   \describe{
-    \item{\code{weeks}}{a factor with levels \code{A} \code{B} \code{C} \code{D} \code{E}}
-    \item{\code{traffic}}{a numeric vector}
+    \item{\code{weeks}}{weeks into the marketing campaign - an ordered factor with levels \code{1} to \code{5}}
+    \item{\code{traffic}}{web site traffic (1000's of hits per day)}
   }
 }
 \references{
@@ -22,5 +22,8 @@
 }
 \examples{
 str(webtraff)
+dotplot(weeks ~ traffic, webtraff, type = c("p","a"),
+        xlab = "Web traffic (1000's of hits per day)",
+        ylab = "Weeks into the marketing campaign")
 }
 \keyword{datasets}
