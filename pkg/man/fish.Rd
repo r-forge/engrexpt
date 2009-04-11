@@ -10,9 +10,16 @@
   Toxin concentrations in fish by site
 }
 \format{
-  A data frame with 16 observations on the following 2 variables.
+  \code{fish} is a data frame with 16 observations on the following 2 variables.
   \describe{
-    \item{\code{site}}{a factor with levels \code{A} \code{B} \code{C} \code{D}}
+    \item{\code{site}}{a factor with levels \code{A}, \code{B}, \code{C}
+      and \code{D}}
+    \item{\code{toxin}}{a numeric vector}
+  }
+  \code{fish2} is a data frame with 16 observations on the following 2 variables.
+  \describe{
+    \item{\code{site}}{a factor with levels \code{E}, \code{F}, \code{G}
+      and \code{H}}
     \item{\code{toxin}}{a numeric vector}
   }
 }
@@ -23,6 +30,10 @@
 }
 \examples{
 str(fish)
+dotplot(reorder(site, toxin) ~ toxin, fish, jitter.y = TRUE,
+        aspect = 0.3, xlab = "Amount of toxin (mg/kg wet weight)")
 str(fish2)
+dotplot(reorder(site, toxin) ~ toxin, fish2, jitter.y = TRUE,
+        aspect = 0.3, xlab = "Amount of toxin (mg/kg wet weight)")
 }
 \keyword{datasets}
