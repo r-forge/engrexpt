@@ -1,5 +1,17 @@
 2009-04-11  Douglas Bates <bates@stat.wisc.edu>
 
+	* [r19] man/fish.Rd, man/urine.Rd: Update documentation
+	* [r18] data/fish.rda, data/fish2.rda, data/urine.rda: Conversion of
+	  variables to (ordered) factors
+	* [r17] man/applicat.Rd, man/bacteria.Rd, man/bath.Rd, man/caliper.Rd,
+	  man/cement.Rd, man/cheese.Rd, man/chemreac.Rd, man/computer.Rd,
+	  man/cure.Rd, man/defoam.Rd, man/deink.Rd, man/diagnostic.Rd,
+	  man/diameter.Rd: Update documentation
+	* [r16] data/bath.rda, data/cheese.rda, data/chemreac.rda,
+	  data/computer.rda, data/cure.rda, data/defoam.rda, data/deink.rda:
+	  Convert variable to (ordered) factors
+	* [r15] DESCRIPTION: Wait until R-2.9.0 is released before creating a
+	  dependency on it
 	* [r13] DESCRIPTION: New Release
 	* [r12] data/applicat.rda, data/timetemp.rda, data/webtraff.rda,
 	  data/yield.rda, man/absorb.Rd, man/adhesion.Rd, man/alum.Rd,
