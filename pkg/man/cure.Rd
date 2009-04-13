@@ -10,7 +10,6 @@
   combination of time and temperature in a curing process, that will
   maximize the yield of the product.
 }
-\usage{data(cure)}
 \format{
   A data frame with 18 observations on the following 3 variables.
   \describe{

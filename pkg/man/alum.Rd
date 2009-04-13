@@ -6,15 +6,18 @@
   Aluminum impurity amounts
 }
 \description{
-  As described in Nelson, Coffin and Copeland (2003), "Over a 2-hour
-  period, twenty-five 200 gm samples were drawn at random from a process
-  that recycles plastic, and the amount of aluminum impurities in the
-  sample in ppm was determined for each sample."
+  As described in Nelson, Coffin and Copeland (2003),
+  \dQuote{
+    Over a 2-hour period, twenty-five 200 gm samples were drawn at
+    random from a process that recycles plastic, and the amount of
+    aluminum impurities in the sample in ppm was determined for each
+    sample.
+  }
 }
 \format{
   A data frame with 25 observations on the following variable.
   \describe{
-    \item{\code{ppm}}{a numeric vector}
+    \item{\code{ppm}}{amount of aluminum impurities (ppm)}
   }
 }
 \references{

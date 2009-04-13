@@ -13,8 +13,10 @@
 \format{
   A data frame with 19 observations on the following 2 variables.
   \describe{
-    \item{\code{type}}{a factor with levels \code{A} \code{B} \code{C}}
-    \item{\code{time}}{a numeric vector}
+    \item{\code{type}}{concrete mix - a factor with levels \code{A},
+      \code{B} and \code{C}}
+    \item{\code{time}}{time (hr) until concrete is dry enough to walk
+      on}
   }
 }
 \references{
@@ -37,5 +39,7 @@ qqmath(~ time, cement, groups = type, aspect = 'xy',
    },
        ylab = "Time until concrete is dry enough to walk on (hours)",
        auto.key = list(space = "right", title = "Type", lines = TRUE))
+summary(fm1 <- aov(time ~ type, cement))
+TukeyHSD(fm1)
 }
 \keyword{datasets}
