@@ -23,8 +23,9 @@
 }
 \examples{
 str(yield)
-xyplot(yield ~ temp|ordered(pH), yield, aspect = 'xy',
-       type = c("g","p","r"), xlab = "Temperature of the slurry (degrees C)",
+xyplot(yield ~ temp|cut(pH, seq(6.25,6.85,len = 4), ordered = TRUE),
+       yield, type = c("g","p","r"),
+       xlab = "Temperature of the slurry (degrees C)",
        ylab = "Yield (tons)")
 }
 \keyword{datasets}

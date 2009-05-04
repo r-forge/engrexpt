@@ -24,7 +24,6 @@
 \examples{
 str(sarea)
 xtabs(sarea ~ batch + tech, sarea)
-xtabs(sarea ~ reorder(batch, sarea) + reorder(tech, sarea), sarea)
 dotplot(reorder(tech, sarea) ~ sarea, sarea,
         groups = batch, type = c("p","a"), aspect = "xy",
         ylab = "Technician",

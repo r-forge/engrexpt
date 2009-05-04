@@ -11,11 +11,15 @@
 \format{
   A data frame with 8 observations on the following 5 variables.
   \describe{
-    \item{\code{temp}}{a numeric vector}
-    \item{\code{speed}}{a factor with levels \code{A} \code{B}}
-    \item{\code{solids}}{a numeric vector}
-    \item{\code{ph}}{a numeric vector}
-    \item{\code{moisture}}{a numeric vector}
+    \item{\code{temp}}{temperature in degrees Fahrenheit - an ordered
+      factor with levels \code{200} < \code{300}}
+    \item{\code{speed}}{process speed - an ordered factor with levels
+      \code{A} and \code{B}}
+    \item{\code{solids}}{percent solids - an ordered factor with levels
+      \code{10} < \code{15}}
+    \item{\code{pH}}{pH of the process - an ordered factor with levels
+      \code{6.5} < \code{7}}
+    \item{\code{moisture}}{moisture content of the product}
   }
 }
 \references{
