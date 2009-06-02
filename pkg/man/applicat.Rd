@@ -10,7 +10,9 @@
     are three factors to consider in setting up the application booth:
     the gun distance from the target item, the charge and the pressure
     (flow rate) of the material through the gun. This data set contains
-    data from 18 runs.}
+    data from 18 runs.}  Note that there is no data for the high flow rate, high charges,
+		and low distance as these combinations were infeasible from an operations standpoint (they were such 
+		that too much paint would be applied to the target).
 }
 \format{
   A data frame with 18 observations on the following 4 variables.

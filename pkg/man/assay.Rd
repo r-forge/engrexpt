@@ -6,9 +6,9 @@
   Yield from two processes
 }
 \description{
-  As described in Nelson, Coffin and Copeland (2003),
-  \dQuote{Two different chemical processes are being considered for
-    producing a resin needed in the manufacture of paint}.
+  A resin is one component in paint formulations.  A chemist was working on a process for producing
+	a resin needed in a paint formulation.  Two competing processes were tested for the amount of resin the could 
+	produce.
 }
 \format{
   A data frame with 9 observations on the following 2 variables.

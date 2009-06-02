@@ -7,11 +7,16 @@
   Adhesive qualities of a lens coating
 }
 \description{
-  These data are from two experiments to examine the effect of pH and
-  catalyst on the adhesive qualities of a lens coating.  In the
-  \code{adhesion} data ten samples were made and tested at each of three
-  pH levels.  In the \code{adhesion2} data five samples were made and
-  tested at each of six combinations of pH and catalyst.
+  These data are from two experiments to examine the effect of formulation changes on the adhesive properties
+	of a eye glass lens coating.  If the coating would not adhere to the lens surface then the formulation would not
+	be marketable.
+	The first experiment (\code{adhesion}) considered only pH (i.e., one factor).  In this experiemnt three formulations were made (one at
+	each of three pH levles) and ten samples from each formulation were tested.  The test procedure for measuring adhesion
+	is known to contain a large amount of test error.
+   In the second experiment (
+  \code{adhesion2} the effect of pH (3 levels) and a catalyst (2 levels) were tested.  The data consists of
+	five samples were taken from and
+  tested from each of the six formulations.
 }
 \format{
   \code{adhesion} is a data frame with 30 observations on the following 2 variables.

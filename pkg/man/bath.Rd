@@ -6,7 +6,8 @@
   Electrical resistance after water bath
 }
 \description{
-  In a production process the product passes through a water bath.  In
+  In a production process a rubber material is extruded in a continous ribbon (about 2 feet in width).
+	In one step of the process the product passes through a water bath.  In
   this experiment the time spent in the bath and the temperature of the
   bath were varied to determine their effect on the electrical
   resistance of the final product.

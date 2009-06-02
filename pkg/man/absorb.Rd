@@ -6,8 +6,8 @@
   Oil absorption of silica
 }
 \description{
-  The average oil absorption of the silica produced in one shift at a
-  silica processing plant.
+	  Time ordered measurements of oil absorption from silica samples produced during 
+	one manufacturing shift.
 }
 \format{
   A data frame with 102 observations on the following variable.
