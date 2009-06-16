@@ -22,6 +22,9 @@
   \emph{Introductory Statistics for Engineering Experimentation},
   Elsevier. (Appendix A)
 }
+\details{ One step of recycling newsprint is to "de-ink" the newsprint, that is to remove the ink.
+	The brightness of the paper pulp after a de-inking process is a measure of how well the process
+	to remove the ink worked.}
 \examples{
 str(deink)
 xtabs(~ alkali + hardness, deink)

@@ -8,7 +8,7 @@
 \description{
   The current formulation of a coating on transparencies used in ink-jet
   printers causes them to curl.  These data are from experiments
-  conducted on a new formulation of the coating.  
+  conducted on a new formulation of the coating to reduce the amount of curl.  
 }
 \format{
   A data frame with 12 observations on the following 3 variables.
@@ -17,6 +17,11 @@
     \item{\code{compa}}{amount of component a (the second component)}
     \item{\code{curl}}{a measure of the curl}
   }
+\details{This data was collected when transparencies were still widely
+used for presentations.  With the proliferation of projectors, transparencies are
+being used less and less.  However, coatings on paper will continue to be an area of 
+resesarch as coatings have to interact with a variety of printers and inks in 
+order to be useful.}
 }
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),

@@ -21,6 +21,8 @@
     \item{\code{height}}{height of solution in the graduated cylinder}
   }
 }
+\details{A defoamer is a product that controls the formation of foam
+in industrial processes such as one might find in the food industry.}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

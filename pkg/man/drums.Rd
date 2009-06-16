@@ -16,6 +16,8 @@
     \item{\code{full}}{a numeric vector}
   }
 }
+\details{This data was collected to study a filling process that filled drums
+of material based on an assumed weight of the empty drum.}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

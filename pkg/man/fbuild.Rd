@@ -15,6 +15,8 @@
     \item{\code{gloss}}{a numeric vector}
   }
 }
+\details{Film build is the thickness of a coating, such as an automotive paint.  Gloss is
+an appearance measure with higher gloss generally being preferred.}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

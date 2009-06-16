@@ -19,7 +19,7 @@
     \item{\code{batch}}{the batch of cheese - a factor with levels
       \code{a} to \code{f}.  Note that batch \code{a} from plant
       \code{A} is not related to batch \code{a} from plants
-      \code{B} and \code{C}}
+      \code{B} or \code{C}}
     \item{\code{fat}}{fat content of the cheese (\%)}
   }
 }

@@ -14,7 +14,7 @@
   \describe{
     \item{\code{temp}}{temperature in degrees C - an ordered factor with levels
       \code{120} < \code{140}}
-    \item{\code{cat}}{catalyst - an ordered factor with levels \code{A} < \code{B}}
+    \item{\code{cat}}{catalyst - a factor with levels \code{A} and \code{B}}
     \item{\code{time}}{time reaction was run, in minutes - an ordered
       factor with levels \code{10} < \code{30} }
     \item{\code{yield}}{yield of the reaction}

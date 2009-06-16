@@ -17,6 +17,10 @@
     \item{\code{response}}{Moisture content of final product (\%)}
   }
 }
+\details{A production process used two types of dryers.  The product could pass through the
+tunnel dryer as a web of material or the product could be coiled on larger rollers and then
+placed into a dryer.  The question was how to best set each dryer to obtain a moisture content
+of 63(\%).}
 \examples{
 str(dry)
 }

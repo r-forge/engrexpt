@@ -15,6 +15,10 @@
     \item{\code{gloss}}{a numeric vector}
   }
 }
+\details{The final coat of paint on a car is typically a clear coat.  This layer is applied
+on top of the layer with the color and formulations must be compatible with many base colors. This data
+was used to investigate the performance of a formulation on the appearance of the coating when used
+with various base colors.  }
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},
