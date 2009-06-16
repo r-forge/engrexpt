@@ -1,3 +1,29 @@
+2009-06-16  Douglas Bates <bates@stat.wisc.edu>
+
+	* [r33] DESCRIPTION: New release
+	* [r32] man/calcium.Rd, man/caliper.Rd, man/ccthickn.Rd, man/curl.Rd:
+	  Minor syntax corrections
+	* [r29] man/calcium.Rd, man/caliper.Rd, man/ccthickn.Rd, man/cheese.Rd,
+	  man/chemreac.Rd, man/curl.Rd, man/defoam.Rd, man/deink.Rd,
+	  man/deink2.Rd, man/dhaze.Rd, man/diagnostic.Rd, man/drums.Rd,
+	  man/dry.Rd, man/epoxy.Rd, man/exposure.Rd, man/fbuild.Rd, man/fish.Rd,
+	  man/gloss.Rd: Updates by Karen
+
+2009-06-02  Karen Copeland <karen@boulderstats.com>
+
+	* [r27] man/absorb.Rd, man/adhesion.Rd, man/applicat.Rd, man/assay.Rd,
+	  man/bath.Rd, man/bright.Rd: Documentation enhancements.
+
+2009-05-04  Douglas Bates <bates@stat.wisc.edu>
+
+	* [r26] data/tpaste.rda:
+	* [r25] man/tpaste.Rd:
+	* [r24] man/bright.Rd:
+	* [r23] DESCRIPTION, data/bright.rda, data/deink2.rda,
+	  data/moisture.rda, data/mw.rda, data/separate.rda, data/temprate.rda,
+	  man/moisture.Rd, man/sarea.Rd, man/yield.Rd: New release including
+	  modifications to data sets
+
 2009-04-11  Douglas Bates <bates@stat.wisc.edu>
 
 	* [r19] man/fish.Rd, man/urine.Rd: Update documentation
