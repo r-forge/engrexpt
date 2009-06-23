@@ -15,7 +15,9 @@
     \item{\code{pigment}}{a factor with levels \code{A} \code{B} \code{C}}
     \item{\code{deltab}}{a numeric vector}
   }
-}
+\details{This experiment was to study the impact of pigments on eht quality of a white paint.  The measure
+of interst was delta b (smaller is better).  Three batches of paint were use to test each of the three pigments (so there were
+three measurements for each pigment, one from each batch.}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

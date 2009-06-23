@@ -18,6 +18,8 @@
     \item{\code{protein}}{a numeric vector}
   }
 }
+\details{The response of interest in this data set is the protien level from a new diagnostic
+test. }
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

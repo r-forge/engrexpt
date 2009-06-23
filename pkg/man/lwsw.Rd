@@ -15,6 +15,9 @@
     \item{\code{sw}}{a numeric vector}
   }
 }
+\details{Longwave (LW) and shortwave (SW) are two surface quality measurements.  Both are 
+important in the development of coating formulations.  This data was gathered to examine the 
+relationship between the two measures.}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

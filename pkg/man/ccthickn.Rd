@@ -14,14 +14,12 @@ to study paint equipment set-up.  Target film build was 65 microns.
   \describe{
     \item{\code{thickness}}{clear coat thickness (microns)}
   }
-}
-\details{Cars are coated (i.e., painted) in layers.  The \dQuote{film
+\details{ Cars are coated (i.e., painted) in layers.  The \dQuote{film
     build} (i.e. thickness) of each layer of the coating has an effect
-  on the properties of the paint (performance and appearance) so it is
-  important to maintain the correct film builds. The final layer of
-  paint on a car is called the clear coat; the film build of this layer
-  was to be 65 microns.
-} 
+  on the properties of the paint (performance and appearance) so it is important to maintain the
+  correct film builds. The final layer of paint on a car is called the
+  clear coat; the film build of this layer was to be 65 microns.}
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

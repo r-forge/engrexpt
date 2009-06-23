@@ -15,6 +15,8 @@
     \item{\code{ph}}{a numeric vector}
   }
 }
+\details{For each of three batches of material numerous pH readings were taken over the course
+of the production process. For this material the pH should be consistent throughout production.}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

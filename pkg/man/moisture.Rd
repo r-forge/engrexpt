@@ -22,6 +22,8 @@
     \item{\code{moisture}}{moisture content of the product}
   }
 }
+\details{This data was collected from an experiment run on in a pilot plant to try to 
+increase the moisture content of a product through production changes.}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

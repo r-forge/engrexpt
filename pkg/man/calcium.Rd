@@ -16,10 +16,9 @@
     \item{\code{hrs3}}{serum calcium level (mg/dl) three hours after
       taking the multi-vitamin containing calcium}
   }
+\details{This was a small pilot study to test the effectiveness of the muliti-vitamin with
+respect to calcium absorption.
 }
-\details{
-  This was a small pilot study to test the effectiveness of the
-  muliti-vitamin with respect to calcium absorption.
 }
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),

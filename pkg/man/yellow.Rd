@@ -11,10 +11,11 @@
 \format{
   A data frame with 23 observations on the following 2 variables.
   \describe{
-    \item{\code{b1}}{a numeric vector}
-    \item{\code{b2}}{a numeric vector}
+    \item{\code{b1}}{a numeric vector of initial color measurements}
+    \item{\code{b2}}{a numeric vector of color measurements after one month}
   }
 }
+\details{It is undesirable to see color changes in a lens over time.}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

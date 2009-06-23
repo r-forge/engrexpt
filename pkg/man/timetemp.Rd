@@ -18,7 +18,10 @@
     \item{\code{type}}{a factor with levels \code{Repair} \code{OEM}}
   }
 }
-%\details{}
+\details{A freezer is used to simulate exposure to cold on automative paint test panels.  A durability test
+is to be conducted at -10 C.  The test is conducted on two types of panels (one type has an additonal coat
+of paint) and there is some time needed to retrieve the panel from the freezer and to place it in the test
+equipment.  This study was run to deterime the optimal freezer setting for running the durability test.}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},
