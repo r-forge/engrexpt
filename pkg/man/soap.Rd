@@ -11,7 +11,7 @@
 \format{
   A data frame with 5 observations on the following 3 variables.
   \describe{
-    \item{\code{box}}{number of box packages sold}}
+    \item{\code{box}}{number of box packages sold}
     \item{\code{foil}}{number of foil packages sold}
     \item{\code{shrink}}{number of shrink wrapped packages sold}
   }
