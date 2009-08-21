@@ -1,3 +1,10 @@
+2009-08-21  Douglas Bates <bates@stat.wisc.edu>
+
+	* [r36,r38,r39] man/pigment.Rd, man/soap.Rd, man/calcium.Rd,
+	  man/caliper.Rd, man/ccthickn.Rd, man/curl.Rd, man/labcomp.Rd,
+	  man/lw.Rd,man/ccthickn.Rd: Fix Rd syntax errors
+	* [r37] DESCRIPTION: New release
+
 2009-06-16  Douglas Bates <bates@stat.wisc.edu>
 
 	* [r33] DESCRIPTION: New release
