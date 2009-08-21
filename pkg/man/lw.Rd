@@ -19,7 +19,7 @@
   }
 }
 \details{
-  LW (longwave) is a surface appearnce measure.  This data was from an
+  LW (longwave) is a surface appearance measure.  This data was from an
   experiment to choose the best combination of two components in an
   automotive paint formulation.  The goal is to maximize the LW measure.
 }

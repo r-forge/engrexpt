@@ -11,8 +11,10 @@
 \format{
   A data frame with 20 observations on the following 3 variables.
   \describe{
-    \item{\code{run}}{a factor with levels \code{A} \code{B} \code{C} \code{D}}
-    \item{\code{tube}}{a factor with levels \code{A} \code{B} \code{C} \code{D} \code{E}}
+    \item{\code{run}}{a factor with levels \code{A}, \code{B}, \code{C}
+      and \code{D}}
+    \item{\code{tube}}{a factor with levels \code{A}, \code{B},
+      \code{C}, \code{D} and \code{E}}
     \item{\code{weight}}{a numeric vector}
   }
 }

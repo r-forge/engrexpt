@@ -16,11 +16,12 @@
     \item{\code{rating}}{appearance rating}
   }
 }
-\details{One way to test the durability of a new auto paint formulation is to hang
-coated test panels outside and expose them to the elements.  After some time has passed the 
-appearnce of the
-pannels are rated.  If their appearance is poor then that formulation
-is not desireable.}
+\details{
+  One way to test the durability of a new auto paint formulation is to
+  hang coated test panels outside and expose them to the elements.  After
+  some time has passed the appearance of the panels are rated.  If their
+  appearance is poor then that formulation is not desirable.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

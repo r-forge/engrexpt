@@ -15,9 +15,12 @@
     \item{\code{lw}}{longwave measure of appearance}
   }
 }
-\details{Long wave is a measurement used to characterize a surface, such as the paint
-on an auto.  In this instance higher LW was desired and the amount epoxy was one component
-of the paint that was known to impact the LW properties of the final product. }
+\details{
+  Long wave is a measurement used to characterize a surface, such as the
+  paint on an auto.  In this instance higher LW was desired and the amount
+  epoxy was one component of the paint that was known to impact the LW
+  properties of the final product.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

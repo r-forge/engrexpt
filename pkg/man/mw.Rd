@@ -19,10 +19,13 @@
     \item{\code{mw}}{a numeric vector}
   }
 }
-\details{This data is from a designed experiment to study the impact of 5 process factors
-on the molecular weight of a paint.  The Mw is the response of interest as it in turn impacts 
-quality characteristics of the paint. This study was run to better understand the influence
-of processing variables on the resulting Mw of the formulations.}
+\details{
+  These data are from a designed experiment to study the impact of 5
+  process factors on the molecular weight of a paint.  The Mw is the
+  response of interest as it in turn impacts quality characteristics of
+  the paint. This study was run to better understand the influence of
+  processing variables on the resulting Mw of the formulations.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

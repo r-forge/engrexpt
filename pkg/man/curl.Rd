@@ -22,7 +22,7 @@
   These data were collected when transparencies were still widely used
   for presentations.  With the proliferation of projectors, transparencies
   are being used less and less.  However, coatings on paper will continue
-  to be an area of resesarch as coatings have to interact with a variety
+  to be an area of research as coatings have to interact with a variety
   of printers and inks in order to be useful.
 }
 \references{

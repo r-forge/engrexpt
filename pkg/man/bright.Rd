@@ -6,10 +6,11 @@
   Brightness of de-inked newspaper
 }
 \description{
-  One step of recycling newsprint is to "de-ink" the newsprint, that is to remove the ink.
-	The brightness of the paper pulp after a de-inking process is a measure of how well the process
-	to remove the ink worked.  A half-fraction of a \eqn{2^5} factorial experiment experiment was run 
-	to test various factors on the ability to de-ink newsprint.
+  One step of recycling newsprint is to "de-ink" the newsprint, that is
+  to remove the ink.  The brightness of the paper pulp after a de-inking
+  process is a measure of how well the process to remove the ink worked.
+  A half-fraction of a \eqn{2^5} factorial experiment experiment was run
+  to test various factors on the ability to de-ink newsprint.
 }
 \usage{data(bright)}
 \format{

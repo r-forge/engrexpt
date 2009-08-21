@@ -21,9 +21,9 @@
   This study was an "inter-lab" study to investigate measurements taken
   on a product at various facilities.  In particular, this company has a
   research lab, a pilot line lab, and multiple labs at plants.  When
-  characterizing products and espically in trouble shooting performance
+  characterizing products and especially in trouble shooting performance
   issues samples may be tested at multiple facilities and it is important
-  to know if there is an impact of location on the resulting measuremnets.
+  to know if there is an impact of location on the resulting measurements.
   For this study material was sent to each lab and tested 7 times by two
   testing methods, a 1-point method at all labs and a 5-point method at
   two of the labs.

@@ -6,11 +6,11 @@
   Bacteria count in water samples
 }
 \description{
-  As described in Nelson, Coffin and Copeland (2003), \dQuote{Purified
-    water is used in one step in the production of a medical device.
-    The water is tested daily for bacteria.  These data are the results
-    from 50 days of testing.  They are the counts of a particular strain
-    of bacteria in a 100 ml. sample of water.}
+  As described in Nelson, Coffin and Copeland (2003),
+  \dQuote{Purified water is used in one step in the production of a
+    medical device.  The water is tested daily for bacteria.  These data
+    are the results from 50 days of testing.  They are the counts of a
+    particular strain of bacteria in a 100 ml. sample of water.}
 }
 \format{
   A data frame with 50 observations on the following variable.

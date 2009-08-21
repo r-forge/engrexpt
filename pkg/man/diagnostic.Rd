@@ -15,11 +15,14 @@
     \item{\code{kit2}}{measurement using kit 2}
   }
 }
-\details{Diagnostic kits are used in clinics or labartories to test samples (e.g., blood)
-for some condition (i.e., illness).  One kit can often test many samples.  In this
-case one kit can test at least 16 samples.  This study was to look the consistency between
-kits used to test the same set of samples.  The samples would have been divided such that
-both kits could be used to test the sample and then the results compared. }
+\details{
+  Diagnostic kits are used in clinics or laboratories to test samples
+  (e.g., blood) for some condition (i.e., illness).  One kit can often
+  test many samples.  In this case one kit can test at least 16 samples.
+  This study was to look the consistency between kits used to test the
+  same set of samples.  The samples would have been divided such that both
+  kits could be used to test the sample and then the results compared.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

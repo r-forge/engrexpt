@@ -15,7 +15,8 @@
 \format{
   A data frame with 5 observations on the following 3 variables.
   \describe{
-    \item{\code{town}}{a factor with levels \code{A} \code{B} \code{C} \code{D} \code{E}}
+    \item{\code{town}}{a factor with levels \code{A}, \code{B},
+      \code{C}, \code{D} and \code{E}}
     \item{\code{j2001}}{water usage (millions of gallons) in 2001}
     \item{\code{j2002}}{water usage (millions of gallons) in 2001}
   }

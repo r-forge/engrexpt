@@ -3,10 +3,10 @@
 \alias{fluoride}
 \docType{data}
 \title{
-  Flouride levels from water sources
+  Fluoride levels from water sources
 }
 \description{
-  Flouride levels from water sources
+  Fluoride levels from water sources
 }
 \format{
   A data frame with 58 observations on the following 2 variables.

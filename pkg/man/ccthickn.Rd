@@ -6,7 +6,7 @@
   Clear coat thickness
 }
 \description{
-  Measurements of film build from 40 test pannels sprayed in a pilot
+  Measurements of film build from 40 test panels sprayed in a pilot
   plant spray booth to study paint equipment set-up.  Target film build
   was 65 microns.
 }
