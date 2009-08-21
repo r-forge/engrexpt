@@ -17,11 +17,13 @@
     \item{\code{compa}}{amount of component a (the second component)}
     \item{\code{curl}}{a measure of the curl}
   }
-\details{This data was collected when transparencies were still widely
-used for presentations.  With the proliferation of projectors, transparencies are
-being used less and less.  However, coatings on paper will continue to be an area of 
-resesarch as coatings have to interact with a variety of printers and inks in 
-order to be useful.}
+}
+\details{
+  These data were collected when transparencies were still widely used
+  for presentations.  With the proliferation of projectors, transparencies
+  are being used less and less.  However, coatings on paper will continue
+  to be an area of resesarch as coatings have to interact with a variety
+  of printers and inks in order to be useful.
 }
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),

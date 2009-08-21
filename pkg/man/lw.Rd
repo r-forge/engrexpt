@@ -12,12 +12,17 @@
   A data frame with 24 observations on the following 3 variables.
   \describe{
     \item{\code{lw}}{a numeric vector}
-    \item{\code{comp1}}{a factor with levels \code{A} \code{B} \code{C} \code{D}}
-    \item{\code{comp2}}{a factor with levels \code{A} \code{B} \code{C}}
+    \item{\code{comp1}}{a factor with levels \code{A}, \code{B},
+      \code{C} and \code{D}}
+    \item{\code{comp2}}{a factor with levels \code{A}, \code{B} and
+      \code{C}}
   }
 }
-\detials{LW (longwave) is a surface appearnce measure.  This data was from an experiment to choose the 
-best combination of two components in an automtive paint formulation.  The goal is to maximize the LW measure.}
+\details{
+  LW (longwave) is a surface appearnce measure.  This data was from an
+  experiment to choose the best combination of two components in an
+  automotive paint formulation.  The goal is to maximize the LW measure.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},
