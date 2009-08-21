@@ -22,7 +22,7 @@
   properties of the paint (performance and appearance) so it is
   important to maintain the correct film builds. The final layer of
   paint on a car is called the clear coat; the film build of this
-  layer was to be 65 microns.}
+  layer was to be 65 microns.
 }
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
