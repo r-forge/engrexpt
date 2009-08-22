@@ -9,7 +9,8 @@
   Sales versus capital expenditure over 48 months
 }
 \format{
-  A data frame with 48 observations (ordered by month) on the following 3 variables.
+  A data frame with 48 observations (ordered by month) on the following
+  3 variables.
   \describe{
     \item{\code{capital}}{a numeric vector}
     \item{\code{pindex}}{a numeric vector}

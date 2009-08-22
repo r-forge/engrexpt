@@ -12,7 +12,8 @@
   A data frame with 30 observations on the following 4 variables.
   \describe{
     \item{\code{year}}{a numeric vector}
-    \item{\code{place}}{a factor with levels \code{CA} \code{KY} \code{MI} \code{NY} \code{TN} \code{TX}}
+    \item{\code{place}}{a factor with levels \code{CA}, \code{KY},
+      \code{MI}, \code{NY}, \code{TN} and \code{TX}}
     \item{\code{employees}}{a numeric vector}
     \item{\code{cases}}{a numeric vector}
   }

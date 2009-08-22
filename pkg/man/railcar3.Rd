@@ -15,9 +15,12 @@
     \item{\code{moisture}}{a numeric vector}
   }
 }
-\details{Rail cars are used to ship bulk product to customers.  A company has two primary styles of
-cars that it uses for a product that has specific moisture specifications.  A customer was seeing variability
-in the moisture levels of the product when it reached their site.}
+\details{
+  Rail cars are used to ship bulk product to customers.  A company has
+  two primary styles of cars that it uses for a product that has
+  specific moisture specifications.  A customer was seeing variability
+  in the moisture levels of the product when it reached their site.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

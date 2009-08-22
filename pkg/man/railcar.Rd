@@ -15,9 +15,12 @@
     \item{\code{days}}{a numeric vector}
   }
 }
-\details{A company ships product to customers in rail cars.  The rail cars are delivered by the 
-railroad to a rail siding at the customer's facility.  This data records the time that a railcar
-is held at a customer facility.}
+\details{
+  A company ships product to customers in rail cars.  The rail cars are
+  delivered by the railroad to a rail siding at the customer's facility.
+  This data records the time that a railcar is held at a customer
+  facility.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

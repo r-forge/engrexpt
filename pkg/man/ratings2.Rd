@@ -15,10 +15,13 @@
     \item{\code{moisture}}{a numeric vector}
   }
 }
-\details{A company has a new raw material that they wish to quickly evaluate.   To do so they rate
-how well thier process is running at key steps when using the new material.  The rating is done on a scale
-of 1 - 10 at each key step and then averaged.  In addition the moisture level of the raw material
-was recorded for each batch.}
+\details{
+  A company has a new raw material that they wish to quickly evaluate.
+  To do so they rate how well their process is running at key steps when
+  using the new material.  The rating is done on a scale of 1 - 10 at
+  each key step and then averaged.  In addition the moisture level of
+  the raw material was recorded for each batch.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

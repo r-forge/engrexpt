@@ -11,7 +11,8 @@
 \format{
   A data frame with 10 observations on the following 2 variables.
   \describe{
-    \item{\code{weeks}}{weeks into the marketing campaign - an ordered factor with levels \code{1} to \code{5}}
+    \item{\code{weeks}}{weeks into the marketing campaign - an ordered
+      factor with levels \code{1} to \code{5}}
     \item{\code{traffic}}{web site traffic (1000's of hits per day)}
   }
 }

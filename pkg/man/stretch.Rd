@@ -16,10 +16,14 @@
     \item{\code{stretch}}{a numeric vector}
   }
 }
-\details{A critical quality measure of pizza cheese is how well it streches when it is hot.  This study
-was to evaluate the amount of cheese and the temperature at which the pizza was cooked on the stretch
-of the hot cheese.  Measuring the strech of pizza cheese is not a precise science, thus, five measurements
-were taken on each pizza.  One pizza was used for each temperature/cheese combination. }
+\details{
+  A critical quality measure of pizza cheese is how well it stretches
+  when it is hot.  This study was to evaluate the amount of cheese and
+  the temperature at which the pizza was cooked on the stretch of the
+  hot cheese.  Measuring the stretch of pizza cheese is not a precise
+  science, thus, five measurements were taken on each pizza.  One pizza
+  was used for each temperature/cheese combination.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

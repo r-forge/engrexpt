@@ -17,9 +17,12 @@
     \item{\code{y}}{a numeric vector}
   }
 }
-\details{This experiment was run to study the effect of three process factors on the electrical 
-resistance of a battery separator (extruded from a rubber, oil, and silica mix).  Each of the three factors, 
-occur at two levels, designated "High" and "Low".}
+\details{
+  This experiment was run to study the effect of three process factors
+  on the electrical resistance of a battery separator (extruded from a
+  rubber, oil, and silica mix).  Each of the three factors, occur at two
+  levels, designated "High" and "Low".
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

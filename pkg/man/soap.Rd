@@ -16,9 +16,12 @@
     \item{\code{shrink}}{number of shrink wrapped packages sold}
   }
 }
-\details{An in store study was run to test consumer preference of packaging for a soap.
-The study was run for 5 weeks with the number of packages sold each week recorded.  Note, after
-the third week there was a supply disruption so there were no boxed soaps available for sale.}
+\details{
+  An in-store study was run to test consumer preference of packaging for
+  a soap.  The study was run for 5 weeks with the number of packages
+  sold each week recorded.  Note, after the third week there was a
+  supply disruption so there were no boxed soaps available for sale.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

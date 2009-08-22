@@ -19,8 +19,10 @@
     \item{\code{person4}}{mercury concentration in person 4's urine}
   }
 }
-\details{Employees who work in a high risk area of a chemical plant are monitored monthly for
-mercury exposure.}
+\details{
+  Employees who work in a high risk area of a chemical plant are
+  monitored monthly for mercury exposure.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

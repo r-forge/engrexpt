@@ -17,8 +17,11 @@
     \item{\code{y}}{a numeric vector}
   }
 }
-\details{The stability of the active ingredient is critical.  This study looks at the impact of
-temperature and humidity on the stability of the active ingredient over time.}
+\details{
+  The stability of the active ingredient is critical.  This study looks
+  at the impact of temperature and humidity on the stability of the
+  active ingredient over time.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

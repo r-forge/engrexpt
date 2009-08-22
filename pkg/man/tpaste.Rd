@@ -35,5 +35,6 @@ xyplot(sort(abs(coef(fm6)[-1])) ~ sqrt(qchisq(ppoints(7), df = 1)),
        xlab = "Quantiles of absolute value of the standard normal",
        ylab = "Absolute value of estimated coefficients", type = c("g","p"))
 summary(fm7 <- lm(turbidity ~ NaCl * rate, tpaste))
+options(opt)
 }
 \keyword{datasets}

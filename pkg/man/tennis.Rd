@@ -11,7 +11,8 @@
 \format{
   A data frame with 20 observations on the following 2 variables.
   \describe{
-    \item{\code{type}}{a factor with levels \code{A} \code{B} \code{C} \code{D}}
+    \item{\code{type}}{a factor with levels \code{A}, \code{B}, \code{C}
+      and \code{D}}
     \item{\code{wear}}{a numeric vector}
   }
 }

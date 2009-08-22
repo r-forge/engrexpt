@@ -17,11 +17,15 @@
     \item{\code{time2}}{rating after 2 weeks}
   }
 }
-\details{A particular durability test of paint involves applying drops of acid on the panel. After a particular
-time point the panel is rated for its ability to withstand the acid.  This study involved washing (or not 
-washing) panels and then storing them for two weeks to see if there was a residual effect of the acid on the panel.
-This was important as panels are often stored and used in presentations so the researchers needed
-to know if they should wash the panels before storing them.}
+\details{
+  A particular durability test of paint involves applying drops of acid
+  on the panel. After a particular time point the panel is rated for its
+  ability to withstand the acid.  This study involved washing (or not
+  washing) panels and then storing them for two weeks to see if there
+  was a residual effect of the acid on the panel.  This was important as
+  panels are often stored and used in presentations so the researchers
+  needed to know if they should wash the panels before storing them.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

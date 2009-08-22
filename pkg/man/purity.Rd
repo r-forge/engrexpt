@@ -17,8 +17,10 @@
     \item{\code{purity}}{a response factor}
   }
 }
-\details{This experiment was run by two technicians to study the impact of two process factors on the
-purity of the product after filtration.}
+\details{
+  This experiment was run by two technicians to study the impact of two
+  process factors on the purity of the product after filtration.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},

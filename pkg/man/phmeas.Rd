@@ -15,8 +15,10 @@
     \item{\code{phnew}}{a numeric vector}
   }
 }
-\details{This data was collected to compare an old insturment to a new insturment.  Eleven samples
-were tested with both instruments. }
+\details{
+  These data were collected to compare an old instrument to a new
+  instrument.  Eleven samples were tested with both instruments.
+}
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
   \emph{Introductory Statistics for Engineering Experimentation},
