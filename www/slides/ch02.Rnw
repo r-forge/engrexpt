@@ -1,0 +1,148 @@
+% NOTE -- ONLY EDIT THE .Rnw FILE!!!  The .tex file is
+% likely to be overwritten.
+\usepackage{SweaveSlides}
+\title[Chapter 2]{Chapter 2: Summarizing data}
+%\subject{Probability}
+\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,width=10,height=6.5,strip.white=all}
+\SweaveOpts{prefix=TRUE,prefix.string=figs/ch02,include=TRUE}
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents[pausesections]
+\end{frame}
+<<preliminaries,echo=FALSE,results=hide>>=
+options(width=60)
+library(EngrExpt)
+options(show.signif.stars = FALSE)
+set.seed(123454321)
+@ 
+\section[2.1 Simple]{2.1 Simple graphical techniques}
+\label{sec:02.1}
+
+\begin{frame}\frametitle{Section 2.1: Univariate data}
+  \begin{itemize}
+  \item Graphs can
+    \begin{itemize}
+    \item summarize the data
+    \item show typical and atypical values
+    \item highlight relationships between variables
+    \item show how the data are spread out, which we call the
+      \Emph{distribution} of the data
+    \end{itemize}
+  \item Often we observe multiple characteristics on each experimental
+    run or observation.  We call such data \Emph{multivariate}.  If we
+    only observe one characteristic we say the data are
+    \Emph{univariate}.
+  \item Typical plots of univariate, numeric data are
+    \Emph{histograms} (\code{histogram}) or \Emph{density plots}
+    (\code{densityplot}), \Emph{box-and-whisker
+      plots} (\code{bwplot}) and \Emph{dotplots} (\code{dotplot}).
+    (Names in parentheses are the names of the corresponding \R{}
+    function from the \code{lattice} package.)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{The railcar data}
+  \begin{itemize}
+  \item Example 2.1.1 describes the \code{railcar} data, which are 53
+    observations of the number of days that a customer holds a rail
+    car after delivery.  The authors say the data are in a file named
+    \Emph{railcar.txt}.  We will use the dataset called \code{railcar}
+    from the \code{EngrExpt} package for \R{}.
+  \item All of the data sets are described in Appendix A, starting on
+    page 424.  When you start \R{} you should attach the EngrExpt
+    package, using \code{library(EngrExpt)}.  To check on the form of
+    a data set use, e.g., \code{str(railcar)}, and compare the result
+    to the description in Appendix A.
+  \end{itemize}
+<<railcarstr>>=
+library(EngrExpt)
+str(railcar)
+@   
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Histograms}
+  \begin{itemize}
+  \item A histogram is a simple bar chart of the number of
+    observations in each of a set of adjacent, constant-width
+    intervals.
+  \item It was popular in the days when all graphics, and most
+    calculations, needed to be done by hand.  It shows the
+    distribution of the data (see the comments in example 2.1.1).
+  \end{itemize}
+<<railcarhist,fig=TRUE,echo=FALSE,height=4>>=
+print(histogram(~ days, railcar))
+@   
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Creating a histogram}
+  \begin{itemize}
+  \item The text gives a description of creating a histogram by hand.
+  \item In \R{}, you can use the \code{histogram} function.  The plot
+    on the previous slide was created with
+<<railcarhistshow,eval=FALSE>>=
+histogram(~ days, railcar)
+@     
+\item There are several optional arguments for the \code{histogram}
+  function.  To create a plot like Figure 2.1 we specify the break
+  points for the intervals (argument \code{breaks}) and also change
+  the label on the x-axis (argument \code{xlab}).
+  \end{itemize}
+<<railcarhist2show,eval=FALSE>>=
+histogram(~ days, railcar, breaks = seq(2, 44, 3), xlab = "Days")
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Histogram like Figure 2.1}
+<<railcarhist2,fig=TRUE,echo=FALSE>>=
+print(histogram(~ days, railcar, breaks = seq(2, 44, 3), xlab = "Days"))
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Density plots}
+  \begin{itemize}
+  \item This topic is not covered in the text.  It requires more
+    sophisticated software than they were using.
+  \item Notice that the histogram shape depends on the somewhat
+    arbitrary choice of intervals.
+  \item If we are interested in the shape of the distribution of the
+    observations we can use an alternative called a density plot.
+  \item Without going in to details, an empirical density plot centers
+    a narrow, ``bell-curve'' density at each observed data point and
+    sums the result.  The version in \R{} also adds a ``rug'' with the
+    original data values plotted as points and jittered vertically (so
+    you can see multiple data points with the same value).
+  \end{itemize}
+<<raildatadensityplot,eval=FALSE>>=
+densityplot(~ days, railcar, xlab = "Days")
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Density plot of the rail data.}
+<<raildensity,fig=TRUE,echo=FALSE>>=
+print(densityplot(~ days, railcar, xlab = "Days"))
+@
+The skewness of this plot indicates that we may want to consider the
+logarithm of the days.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Density plot of the rail data (logarithmic scale).}
+  \begin{center}
+<<raildensity,fig=TRUE,echo=FALSE>>=
+print(densityplot(~ days, railcar, xlab = "Days",
+                  scales = list(x = list(log = 2))))
+@
+  \end{center}
+The skewness of this plot indicates that we may want to consider the
+logarithm of the days.
+\end{frame}
+
