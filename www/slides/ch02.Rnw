@@ -17,7 +17,7 @@
 options(width=60)
 library(EngrExpt)
 options(show.signif.stars = FALSE)
-set.seed(123454321)
+#lattice.options(default.theme = function() standard.theme(color=FALSE))
 @ 
 \section[2.1 Simple graphical]{2.1 Simple graphical techniques}
 \label{sec:02.1}
@@ -314,6 +314,276 @@ xyplot(absorb ~ seq_along(absorb), absorb, type = "b")
 show(xyplot(absorb ~ seq_along(absorb), absorb, type = "b",
             xlab = "Sample number within shift",
             ylab = "Oil absorption"))
+@   
+\end{center}
+\end{frame}
+
+\section[2.2 Numerical]{2.2 Numerical summaries and box plots}
+
+\begin{frame}
+  \frametitle{Measures of locations}
+  \begin{itemize}
+  \item In addition to graphical representations of data we can also
+    provide numerical summaries.
+  \item Typically we provide measures of location, such as the sample mean
+    \begin{displaymath}
+      \bar{y}=\frac{1}{n}\sum_{i=1}^n y_i
+    \end{displaymath}
+    or the sample median, which is the middle data value (formula
+    2.2.2).  Notice that both of these are given in the output of the
+    \code{summary} of a numeric variable.
+  \item The sample mean is the point at which the data could be
+    balanced. As such it uses all the information in the data but is
+    sensitive to outliers.
+  \item The sample median is not sensitive to outliers, which is why
+    it is used to summarize highly skewed distributions such as
+    distributions of salaries.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Sample quantiles}
+  \begin{itemize}
+  \item The median is an example of a sample \Emph{quantile}, written $q(p),
+    0<p<1$ in the text (formula 2.2.4).  The median is $q(0.5)$.
+  \item The first and third quartiles are $q(0.25)$ and $q(0.75)$.
+    That is, they are points that divide the data with $\frac{1}{4}$
+    below and $\frac{3}{4}$ above and vice versa.  The quartiles are
+    also given in the \code{summary} output as well as the minimum and
+    maximum.
+  \end{itemize}
+<<summaryout>>=
+with(subset(timetemp, type == "OEM"), summary(time))
+with(railcar, summary(days))
+with(surfarea, summary(area))
+@   
+\end{frame}
+
+\begin{frame}
+  \frametitle{Measures of spread}
+  \begin{itemize}
+  \item The simplest measure of spread of the data is the range of the
+    data values.  However, it is sensitive to the size of the sample
+    and to outliers and not of much value in data analysis.
+  \item The \Emph{inter-quartile range}
+    \begin{displaymath}
+      \mathrm{IQR}=q(0.75) - q(0.25)
+    \end{displaymath}
+    is the width of the ``middle half'' of the data and provides a
+    more reproducible measure of spread.
+  \item The most commonly used measures of spread are the \Emph{sample
+      variance}
+    \begin{displaymath}
+      s^2=\frac{1}{n-1}\sum_{i=1}^n\left(y_i-\bar{y}\right)^2
+    \end{displaymath}
+    and its square root, $s$, called the \Emph{sample standard deviation}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Evaluating IQR, $s$, etc.}
+  \begin{itemize}
+  \item The inter-quartile range can be evaluated from the
+    \code{summary} output.  There is also a function \code{IQR} to
+    evaluate it directly.
+  \item The function \code{sd} evaluates the sample standard
+    deviation.  (\code{var} evaluates the sample variance).
+  \item Functions \code{mean} and \code{median} evaluate the
+    corresponding measures of location.
+  \item The function \code{quantile} evaluates an arbitrary quantile
+    from the data.
+  \end{itemize}
+<<samplestats>>=
+with(surfarea,
+     c(IQR = IQR(area), mean = mean(area),
+       s = sd(area), var = var(area),
+       Q1 = quantile(area, 0.25), Q3 = quantile(area, 0.75)))
+@   
+\end{frame}
+
+\begin{frame}
+  \frametitle{Statistics and parameters}
+  \begin{itemize}
+  \item Quantities like $\bar{y}$ and $s$ are \Emph{sample
+      statistics}.  (Any value that can be calculated from the data
+    alone is called a statistic.)
+  \item When performing statistical inference we have a probability
+    model for the distribution of the characteristic of interest
+    within the population.  This probability distribution has
+    corresponding quantities which we call \Emph{population
+      parameters}.
+  \item We use Greek letters for the population parameters: the
+    population mean is written $\mu$ and the population standard
+    deviation is written $\sigma$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Box-and-whisker plots}
+  \begin{itemize}
+  \item A \code{boxplot} displays the a ``five-number summary''
+    (minimum, first quartile, median, third quartile, maximum) of a
+    numeric variable.
+  \item The box covers the region from the first to the third
+    quartiles.  Whiskers extend to the minimum and maximum of the data
+    unless values are too far from the middle of the data and are
+    considered potential outliers.  The default definition of ``too
+    far'' is more than 1.5 times the width of the box away from the box.
+  \item Boxplots are frequently shown vertically, but this wastes
+    space.  I prefer the horizontal orientation, especially for
+    comparative boxplots.
+  \end{itemize}
+<<bwplot1show,eval=FALSE>>=
+bwplot(~ area, surfarea, xlab = "Surface area of Silica samples")
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Comparative boxplots}
+  \begin{center}
+<<bwplot1,fig=TRUE,echo=FALSE,height=2.0>>=
+show(bwplot(~ area, surfarea, xlab = "Surface area of silica samples"))
+@   
+  \end{center}
+\begin{itemize}
+\item To produce a comparative box-and-whisker plot, provide the
+  categorical variable on the left hand side of the formula.
+\end{itemize}
+<<bwplot2show,eval=FALSE>>=
+bwplot(batch ~ time, tablets)
+@ 
+\begin{center}
+<<bwplot2,fig=TRUE,echo=FALSE,height=2.5>>=
+show(bwplot(batch ~ time, tablets,
+            xlab = "Lifetime of chlorine tablets (days)",
+            ylab = "Batch of product"))
+@   
+\end{center}
+\end{frame}
+
+\section[2.3 Designed experiments]{2.3 Graphical tools
+  for designed experiments}
+\begin{frame}
+  \frametitle{Designed experiments}
+  \begin{itemize}
+  \item In a designed experiment certain variables or \Emph{factors}
+    are systematically varied while observing the value of a
+    response.
+  \item If a covariate is categorical we store it as a data type
+    called a factor.  The values of a factor must come from a fixed
+    set called the \code{levels} of the factor.  Occasionally we will
+    use \Emph{ordered factors} (data type is \code{ordered}) where the
+    levels have a natural ordering.
+  \item For a single factor we often use comparative boxplots to
+    evaluate the change in the response with changing levels of the
+    factor.  Sometimes comparative dotplots or comparative density
+    plots are more effective.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{The optical lens coating data, example 2.3.1}
+  \begin{itemize}
+  \item This is a balanced, designed experiment on the abrasion
+    resistance of four different lens coatings (see description in
+    text).  The description \Emph{balanced} means that there were the
+    same number of observations on each level of the factor.
+  \end{itemize}
+<<strdhaze>>=
+str(dhaze)
+xtabs(~ treatment, dhaze)
+@   
+\begin{center}
+<<dhazebwplot,fig=TRUE,echo=FALSE,height=2.5>>=
+show(bwplot(treatment ~ dhaze, dhaze,
+            xlab = "Change in haze after 150 cycles of abrasion",
+            ylab = "Surface treatment"))
+@   
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Re-ordering factor levels}
+  \begin{itemize}
+  \item If the levels of a factor are in an arbitrary order we can
+    impose an order to make the plot more informative.  A common way
+    of doing this is to order the levels by increasing mean response
+    (function \code{reorder})
+  \end{itemize}
+<<dhbw2show,eval=FALSE>>=
+bwplot(reorder(treatment, dhaze) ~ dhaze, dhaze)
+@   
+\begin{center}
+<<dhazebwplot2,fig=TRUE,echo=FALSE,height=3>>=
+show(bwplot(reorder(treatment, dhaze) ~ dhaze, dhaze,
+            xlab = "Change in haze after 150 cycles of abrasion",
+            ylab = "Surface treatment"))
+@   
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Comparative dotplots}
+  \begin{itemize}
+  \item Box-and-whisker plots reduce the data to 5 summary statistics.
+    This can help to eliminate clutter in a plot but can also miss
+    important characteristics.  With only 7 observations per group
+    like this we can plot the original data by group to see more detail.
+  \item To avoid overplotting of points with the same response value,
+    we ``jitter'' the y values and use an open circle (\code{pch=21})
+    as the plot character. We also use \code{type} to join the
+    averages.
+  \end{itemize}
+<<dhdotshow,eval=FALSE>>=
+dotplot(reorder(treatment, dhaze) ~ dhaze, dhaze, pch = 21,
+        jitter.y = TRUE, type = c("p", "a"))
+@   
+\begin{center}
+<<dhazedotplot,fig=TRUE,echo=FALSE,height=3>>=
+show(dotplot(reorder(treatment, dhaze) ~ dhaze, dhaze,
+             pch = 21, jitter.y = TRUE, type = c("p", "a"),
+             xlab = "Change in haze after 150 cycles of abrasion",
+             ylab = "Surface treatment"))
+@   
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Multi-factor experiments}
+  \begin{itemize}
+  \item In the \code{dhaze} data there is one experimental factor,
+    \code{treatment}.
+  \item In other experiments we may vary multiple factors, preferably
+    in a \Emph{factorial design} where each combination of levels of
+    factors has the same number of observations.
+  \item We can use \code{xtabs} to determine the number of
+    observations at each combination.
+  \end{itemize}
+<<lwstr>>=
+str(lw)  # Example 2.3.2
+xtabs(~ comp2 + comp1, lw)
+@   
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Interaction plots}
+  \begin{itemize}
+  \item An \Emph{interaction plot} shows the response as a function of
+    one factor with symbols or line types determined by a second factor.
+  \item Typically the response is on the vertical axis.  I prefer the
+    horizontal.  I also reorder factor levels.
+  \end{itemize}
+<<>>=
+dotplot(reorder(comp1, lw) ~ lw, lw,
+        groups = comp2, type = c("p", "a"))
+@   
+\begin{center}
+<<lwintplot,fig=TRUE,echo=FALSE,height=3.5>>=
+show(dotplot(reorder(comp1, lw) ~ lw, lw, groups = comp2,
+             type = c("p", "a"),
+             xlab = "Long wave (LW) appearance measure",
+             ylab = "Component 1",
+             auto.key = list(columns = 3, lines = TRUE)))
 @   
 \end{center}
 \end{frame}
