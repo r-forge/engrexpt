@@ -3,7 +3,7 @@
 \usepackage{SweaveSlides}
 \title[Chapter 2]{Chapter 2: Summarizing data}
 %\subject{Probability}
-\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,width=10,height=6.5,strip.white=all}
+\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,width=10,height=6.5,strip.white=all,keep.source=TRUE}
 \SweaveOpts{prefix=TRUE,prefix.string=figs/ch02,include=TRUE}
 \begin{document}
 \begin{frame}
@@ -19,7 +19,7 @@ library(EngrExpt)
 options(show.signif.stars = FALSE)
 set.seed(123454321)
 @ 
-\section[2.1 Simple]{2.1 Simple graphical techniques}
+\section[2.1 Simple graphical]{2.1 Simple graphical techniques}
 \label{sec:02.1}
 
 \begin{frame}\frametitle{Section 2.1: Univariate data}
@@ -75,7 +75,7 @@ str(railcar)
     distribution of the data (see the comments in example 2.1.1).
   \end{itemize}
 <<railcarhist,fig=TRUE,echo=FALSE,height=4>>=
-print(histogram(~ days, railcar))
+show(histogram(~ days, railcar))
 @   
 \end{frame}
 
@@ -101,7 +101,7 @@ histogram(~ days, railcar, breaks = seq(2, 44, 3), xlab = "Days")
 \begin{frame}[fragile]
   \frametitle{Histogram like Figure 2.1}
 <<railcarhist2,fig=TRUE,echo=FALSE>>=
-print(histogram(~ days, railcar, breaks = seq(2, 44, 3), xlab = "Days"))
+show(histogram(~ days, railcar, breaks = seq(2, 44, 3), xlab = "Days"))
 @ 
 \end{frame}
 
@@ -114,7 +114,7 @@ print(histogram(~ days, railcar, breaks = seq(2, 44, 3), xlab = "Days"))
     arbitrary choice of intervals.
   \item If we are interested in the shape of the distribution of the
     observations we can use an alternative called a density plot.
-  \item Without going in to details, an empirical density plot centers
+  \item Without going into details, an empirical density plot centers
     a narrow, ``bell-curve'' density at each observed data point and
     sums the result.  The version in \R{} also adds a ``rug'' with the
     original data values plotted as points and jittered vertically (so
@@ -127,9 +127,11 @@ densityplot(~ days, railcar, xlab = "Days")
 
 \begin{frame}[fragile]
   \frametitle{Density plot of the rail data.}
-<<raildensity,fig=TRUE,echo=FALSE>>=
-print(densityplot(~ days, railcar, xlab = "Days"))
+  \begin{center}
+<<raildensity,fig=TRUE,echo=FALSE,height=5>>=
+show(densityplot(~ days, railcar, xlab = "Days"))
 @
+  \end{center}
 The skewness of this plot indicates that we may want to consider the
 logarithm of the days.
 \end{frame}
@@ -137,12 +139,181 @@ logarithm of the days.
 \begin{frame}[fragile]
   \frametitle{Density plot of the rail data (logarithmic scale).}
   \begin{center}
-<<raildensity,fig=TRUE,echo=FALSE>>=
-print(densityplot(~ days, railcar, xlab = "Days",
-                  scales = list(x = list(log = 2))))
+<<raildensitylog,fig=TRUE,echo=FALSE>>=
+show(densityplot(~ days, railcar, xlab = "Days",
+                 scales = list(x = list(log = 2))))
 @
   \end{center}
-The skewness of this plot indicates that we may want to consider the
-logarithm of the days.
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Silica surface area data, example 2.2}
+  \begin{itemize}
+  \item The \code{surfarea} data are measurements of the surface area
+    of samples of silica.
+<<surfareastr>>=
+str(surfarea)
+summary(surfarea)
+## alternative form for univariate data
+with(surfarea, summary(area))
+@     
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Comparing a histogram and density plot for surfarea}
+  \begin{itemize}
+  \item The histogram shown in Figure 2.2 indicates a very flat
+    distribution.
+  \item A density plot shows more of a ``bell-curve'' distribution.
+  \end{itemize}
+  \begin{center}
+<<surfareadensplot,fig=TRUE,echo=FALSE,height=5>>=
+show(densityplot(~ area, surfarea,
+                 xlab = "Surface area of samples of silica"))
+@     
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Plots of bivariate data}
+  \begin{itemize}
+  \item Although we do analyze univariate data, in practice we are
+    often interested in ``input-response'' data, the simplest form of
+    which is \Emph{bivariate} (two variables).
+  \item The \code{xyplot} function produces a scatterplot of data
+    values based on a formula in the first argument.  Many
+    optional arguments can be used; for us the \code{type} and
+    \code{groups} arguments are important.
+  \item The \code{timetemp} data describe the time for a panel to get
+    to the testing temperature as a function of the temperature of the
+    freezer in which is was stored.  There are two types of panels,
+    OEM and repaired.  See
+<<helptimetemp,eval = FALSE>>=
+?timetemp
+@ 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Subsetting the data}
+<<strtimetemp>>=
+str(timetemp)
+@   
+\begin{itemize}
+\item Initially we want to create a plot of just the OEM panels
+  (Figure 2.5).  We can use the \code{subset} function to extract
+  these panels only.  Note that the equality comparison is \code{==},
+  not just \code{=}.
+\end{itemize}
+<<OEMpanels>>=
+OEM <- subset(timetemp, type == "OEM")
+@
+\begin{itemize}
+\item A simple plot is obtained with
+\end{itemize}
+<<xyplotOEM,eval=FALSE>>=
+xyplot(time ~ temp, OEM)
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Scatter-plot of OEM panel data only}
+  \begin{center}
+<<OEMplot,fig=TRUE,echo=FALSE,height=4>>=
+show(xyplot(time ~ temp, OEM,
+            aspect = 'xy',
+            ylab = "Time to reach -10C (min.)",
+            xlab = "Temperature in freezer (degrees C)"))
+@     
+  \end{center}
+  \begin{itemize}
+  \item An alternative way to generate this plot is to use the
+    \code{subset} argument in the call to \code{xyplot}.
+  \end{itemize}
+<<xyplotOEM2,eval=FALSE>>=
+xyplot(time ~ temp, timetemp, subset = type == "OEM")
+@   
+\end{frame}
+
+\begin{frame}
+  \frametitle{Overlaying multiple groups}
+  \begin{itemize}
+  \item Frequently we want to compare the behavior of two or more
+    groups, such as the OEM panels versus the repaired panels, which
+    have an extra coat of paint.
+  \item The \code{xyplot} function provides two ways of doing this.
+    Using the \code{groups} argument provides different symbols and/or
+    line types in the same panel.  Usually we use the \code{auto.key}
+    argument as well to add a key to the plot so we know which symbol
+    corresponds to which group.
+  \item An alternative it to use multiple panels (but the same axis
+    ranges on each panel to facilitate comparison).  This is done by
+    modifying the formula.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Different groups on the same plot panel}
+<<xyplotbothshow,eval=FALSE>>=
+xyplot(time ~ temp, timetemp, groups = type, type = c("g","p","r"))
+@ 
+  \begin{center}
+<<xyplotboth,fig=TRUE,echo=FALSE,height=5.5>>=
+show(xyplot(time ~ temp, timetemp, groups = type,
+            type = c("g","p","r"), aspect = 'xy',
+            ylab = "Time to reach -10C (min.)",
+            xlab = "Temperature in freezer (degrees C)",
+            auto.key = list(columns = 2, lines = TRUE))
+    )
+@ 
+  \end{center}
+We added ``reference'' lines to facilitate comparison.  
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Separate plot panels with common axes}
+<<xyplotsepshow,eval=FALSE>>=
+xyplot(time ~ temp | type, timetemp, type = c("g","p","r"))
+@   
+\begin{center}
+<<xyplotsep,fig=TRUE,echo=FALSE>>=
+show(xyplot(time ~ temp | type, timetemp, type = c("g","p","r"), 
+            ylab = "Time to reach -10C (min.)",
+            xlab = "Temperature in freezer (degrees C)")
+     )
+@   
+\end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Runs charts or time-series plots}
+  \begin{itemize}
+  \item In an \code{xyplot} we typically plot a response versus a
+    \Emph{covariate}.  Often the most important covariate in a
+    production process is the time order in which units are produced.
+  \item This type of data are called \Emph{time-series} data.  When we
+    plot such data we usually join the points because the order is
+    important.
+  \item Sometimes there is a variable in the data frame indicating the
+    order.  Often we omit it because it is redundant.  We can generate
+    a sequence of indices starting at 1 with the \code{seq\_along}
+    function.
+  \item The \code{absorb} data set is such a time series of
+    measurements on samples taken in one shift.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Runs chart of the absorb data}
+<<runsshow,eval=FALSE>>=
+xyplot(absorb ~ seq_along(absorb), absorb, type = "b")
+@   
+\begin{center}
+<<runsshow,fig=TRUE,echo=FALSE>>=
+show(xyplot(absorb ~ seq_along(absorb), absorb, type = "b",
+            xlab = "Sample number within shift",
+            ylab = "Oil absorption"))
+@   
+\end{center}
+\end{frame}
