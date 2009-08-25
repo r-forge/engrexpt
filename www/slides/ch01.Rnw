@@ -1,0 +1,103 @@
+% NOTE -- ONLY EDIT THE .Rnw FILE!!!  The .tex file is
+% likely to be overwritten.
+\usepackage{SweaveSlides}
+\title[Chapter 1]{Chapter 1: Introduction}
+%\subject{Probability}
+\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,width=10,height=6.5,strip.white=all,keep.source=TRUE}
+\SweaveOpts{prefix=TRUE,prefix.string=figs/ch01,include=TRUE}
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+<<preliminaries,echo=FALSE,results=hide>>=
+options(width=60)
+library(EngrExpt)
+options(show.signif.stars = FALSE)
+#lattice.options(default.theme = function() standard.theme(color=FALSE))
+@ 
+\begin{frame}
+  \frametitle{Introduction}
+  The first chapter of the text is concise and well-written.  I
+  recommend you read it.  Things to notice are:
+  \begin{itemize}
+  \item The orientation in this course is to analyze and present
+    data from scientific investigations.  Such data can be used to
+    \begin{itemize}
+    \item Summarize a situation
+    \item Model experimental outcomes
+    \item Quantify uncertainty
+    \item Make decisions
+    \end{itemize}
+  \item Our general model is that the data we observe are a
+    \Emph{sample} from a \Emph{population} of items we could have
+    observed.
+  \item Analysis also leads us to questions of \Emph{experimental
+      design}: what to measure, how to measure it, and at what
+    settings of various experimental factors.
+  \item In statistical inference we formulate models for the
+    \Emph{variability} in our observations.  In practice variability
+    can result from \Emph{measurement error} (the variability in the
+    measurement process) or from \Emph{random variability} that would
+    occur if we repeated the experiment.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Experimental design}
+  \begin{itemize}
+  \item Considering how the data are to be collected is called
+    \Emph{experimental design}.  We want our designs to be both robust
+    and efficient.
+  \item Multi-factor designs, where more than one experimental
+    settings are changed from run to run are particularly sensitive.
+    We will advocate the use of \Emph{factorial designs}, as opposed
+    to \Emph{one-at-a-time} designs.
+  \item Many of the data sets we will examine come from studies
+    analyzed by one of the authors, Karen Copeland, who is a
+    statistical consultant in industry.  Most of these studies
+    involved  factorial designs.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Random sampling}
+  \begin{itemize}
+  \item When we are sampling from a finite population we want to
+    ensure that the sample is representative of the population.
+  \item If we know the population we can use \Emph{random sampling} to
+    achieve this.
+  \item We do need to be careful that we are indeed sampling from the
+    population of interest.  Consider sampling potential voters by
+    selecting telephone numbers from a directory - you will only get
+    people with land lines who choose to have their numbers listed.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Randomization}
+  \begin{itemize}
+  \item Often there are environmental factors beyond our control in an
+    experiment.  Sometimes we don't even know what they are but
+    frequently they are connected with something like the order in
+    which we do the runs.  (We pretend that our process is stationary
+    but almost every process drifts in some way.)
+  \item We cannot eliminate the variability induced by such factors
+    but we can try to avoid confounding it with factors of interest by
+    randomizing the allocation of experimental units to treatments
+    and, when possible, randomizing the order of the runs.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Replication versus repeated measures}
+  \begin{itemize}
+  \item When we refer to \Emph{replicate} measurements we mean
+    measurements at the same set of factor levels incorporating the
+    full extent of the random variability in the process.  That is, we
+    assume that the experiment was repeated.
+  \item This is in contrast to \Emph{repeated measures} where the
+    experiment is performed only once but there are multiple assays of
+    the final product.  The variability in repeated measures only
+    reflects the measurement error, not the random variability.
+  \end{itemize}
+\end{frame}
