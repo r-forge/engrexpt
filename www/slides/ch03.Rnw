@@ -1,0 +1,463 @@
+% NOTE -- ONLY EDIT THE .Rnw FILE!!!  The .tex file is,
+% likely to be overwritten.
+\usepackage{SweaveSlides}
+\title[Chapter 3]{Chapter 3: Models for Experimental Outcomes}
+%\subject{Models}
+\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,width=10,height=6.5,strip.white=all,keep.source=TRUE}
+\SweaveOpts{prefix=TRUE,prefix.string=figs/ch03,include=TRUE}
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents[pausesections]
+\end{frame}
+<<preliminaries,echo=FALSE,results=hide>>=
+options(width=60)
+library(EngrExpt)
+options(show.signif.stars = FALSE)
+#lattice.options(default.theme = function() standard.theme(color=FALSE))
+@ 
+
+\begin{frame}
+  \frametitle{Mathematical models in science and engineering}
+  \begin{itemize}
+  \item Mathematical models are widely used in science and engineering
+    to express the relationships among several \Emph{variables}
+    (quantities that we can measure).
+  \item Typically these models include \Emph{parameters}, which are
+    constants related to the process.  In some mathematical models the
+    values of the parameters are known.  We will consider models with
+    parameters whose values are unknown and must be estimated from the
+    data.
+  \item See the description preceding \S3.1 of model used to
+    extrapolate the shelf-life of a compound based on the results of
+    an accelerated life-test experiment.  The model uses the Arrhenius
+    relationship from chemical kinetics.
+  \end{itemize}
+\end{frame}
+
+\section[3.1 Single factor]{3.1 Models for single-factor experiments}
+
+\begin{frame}\frametitle{Section 3.1: Single-factor experiments}
+  \begin{itemize}
+  \item In a \Emph{single-factor} experiment we measure a numeric
+    \Emph{response variable} several times at each of the levels of a
+    categorical \Emph{covariate}.  The \code{dhaze} data are an example.
+  \item If the number of measurements at each level of the covariate
+    is constant, we say that the experiment is \Emph{balanced}.
+  \item Typically we are interested in the mean response for each
+    group.  In the model we write the mean response for population
+    group $i$ as $\mu_i$.  The model for the $j$th measurement in the
+    $i$th group in a balanced experiment is
+    \begin{displaymath}
+      \mathcal{Y}_{ij}=\mu_i+\epsilon_{ij},\quad i=1,\dots,I;\,j=1,\dots,n
+    \end{displaymath}
+    where
+    \begin{description}
+    \item[$\mathcal{Y}_{ij}$] is the $j$th replicate measurement at the $i$th level
+    \item[$\mu_i$] is the mean response at the $i$th level
+    \item[$\epsilon_{ij}$] is the individual random error for this observation
+    \end{description}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Some notation}
+  \begin{itemize}
+  \item We use upper-case Latin letters to designate the value of a response
+    in the model.  On the slides these are shown in the script font,
+    like $\mathcal{Y}_{ij}$.
+  \item The observed values are shown as the corresponding lower-case
+    letter, like $y_{ij}$.
+  \item We use Greek letters for parameters, like $\mu_i$.
+  \item In a single-factor experiment we write the number of levels of
+    the factor as $I$ so the subscript $i=1,\dots,I$.
+  \item In a balanced experiment we can write the number of replicate
+    observations in each group as $n$.  For an unbalanced experiment
+    we need to write the number of replicates in the $i$th group as $n_i$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Parameter estimation}
+  \begin{itemize}
+  \item The parameters to be estimated are $\mu_i,i=1,\dots,I$ (and a
+    measure of the variability in the $\epsilon_{ij}$).
+  \item Our estimate of $\mu_i$, written
+    \begin{displaymath}
+      \widehat{\mu}_i=\bar{y}_{i\centerdot}=\sum_{j=1}^n y_{ij},\quad i=1,\dots,I,
+    \end{displaymath}
+    is the $i$th sample mean.
+  \item In general a ``hat'' over a parameter symbol denotes the
+    estimate of the parameter.  A ``bar'' over a letter indicates an
+    average.  We replace the subscript(s) over which we have averaged
+    by a dot.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Estimating the Magnitude of the Error}
+  \begin{itemize}
+  \item The ``noise-terms'', $\epsilon_{ij}$, in the model
+    characterize the random variability in the measurements.
+  \item We sometimes refer to these as the ``error'' in that they
+    represent the amount by which the measurement $\mathcal{Y}_{ij}$
+    deviates from its mean or ``expected'' value, $\mu_i$.  The term
+    ``error'' should not be interpreted as meaning that something has
+    gone wrong --- it simply means that there is random or unexplained
+    variability in the process.
+  \item We characterize the magnitude of the error terms by their
+    standard deviation or, equivalently, their variance.  The
+    (theoretical) variance of error in the $i$th group is written
+    $\sigma^2_i$ with estimate
+    \begin{displaymath}
+      \widehat{\sigma^2}_i=s^2_i=
+      \frac{1}{n-1}\sum_{i=1}^n\left(y_{ij}-\bar{y}_{i\centerdot}\right)^2 .
+    \end{displaymath}
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Pooling estimates of error variances; residuals}
+  \begin{itemize}
+  \item If we can reasonably assume that
+    $\sigma^2_1=\sigma^2_2=\dots=\sigma^2_I=\sigma^2$ then we ``pool''
+    the estimates from the individual groups as
+    \begin{displaymath}
+      \widehat{\sigma^2}=\frac{s^2_1+s^2_2+\dots+s^2_I}{I}
+    \end{displaymath}
+  \item When estimates of parameters are available, we derive
+    estimates of the noise terms.  These estimates are called the
+    \Emph{residuals} (in the sense of ``the part that is left over
+    after we formulate our best guess'').  For this model
+    \begin{displaymath}
+      \widehat{e}_{ij}=y_{ij}-\widehat{\mu}_i=y_{ij}-\bar{y}_{i\centerdot},
+    \end{displaymath}
+    from which we can write
+    \begin{displaymath}
+      \widehat{\sigma^2}=\frac{1}{I(n-1)}\sum_{i=1}^I\sum_{j=1}^n
+      \left(\widehat{e}_{ij}\right)^2
+    \end{displaymath}
+    Expressions like that on the right are called ``sums of squared
+    residuals'' or ``residual sum of squares''.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Fitting such models in \R}
+  \begin{itemize}
+  \item The calculation of $\widehat{\mu}_i,i=1,\dots,I$ and
+    $\widehat{\sigma^2}$ is straightforward and could be done with a
+    calculator.
+  \item Instead of showing the individual calculations in \R{}, we
+    show the general method of fitting models like this using the
+    \code{aov} function (these models are sometimes called ``analysis
+    of variance'' models after one of the statistical techniques
+    applied to the results).
+  \item As in the lattice graphics functions, the first argument to
+    \code{aov} is a formula.  In this case it is a two-sided formula
+    with the response on the left and the covariate(s) on the right.
+  \item We assign the fitted model object to a name and apply various
+    \Emph{extractor} functions to it.  The assignment operator is the
+    two-character sequence $<-$ (looks like a left-pointing
+    arrow).  The \code{=} can also be used.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Optical lens data, Example 3.1.2}
+<<dhazefm1>>=
+fm1 <- aov(dhaze ~ treatment, dhaze)
+summary(fm1)
+model.tables(fm1, type = "means")
+str(resid(fm1))
+@   
+\end{frame}
+
+\section[3.2 Two-factor]{3.2 Models for two-factor factorial experiments}
+
+\begin{frame}
+  \frametitle{Factorial experiments}
+  \begin{itemize}
+  \item In a factorial experiment each level of every factor occurs in
+    combination with each level of every other factor.
+  \item If the number of times each combination occurs is constant, we
+    say it is a balanced factorial experiment.
+  \item If combinations of factor levels occur more than once, we say
+    it is a replicated factorial experiment.
+
+  \item For a balanced, two-factor factorial with replications we
+    write the responses as $y_{ijk}, i =
+    1,\dots,I;j=1,\dots,J;k=1,\dots,n$ (if it is unbalanced then
+    $k=1,\dots,n_{ij}$).
+  \item ``Cell means'' and ``cell variances'' (the names come from
+    considering cells in a two-way table, like tables 3.1 and 3.2) are
+    written $\bar{y}_{ij\centerdot}$ and $s^2_{ij}$.  Row and column
+    means are written $\bar{y}_{i\centerdot\centerdot},i=1,\dots,I$
+    and $\bar{y}_{\centerdot j\centerdot},j=1,\dots,J$.  The ``grand
+    mean'' is $\bar{y}_{\centerdot\centerdot\centerdot}$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{A Model with No Interaction}
+  \begin{itemize}
+  \item With multiple factors we write the model in terms of
+    ``effects'' of the levels of each factor (written $\alpha_i$ and
+    $\beta_j$) and possible interactions.
+  \item An ``additive'' model, meaning one without interactions, is
+    \begin{displaymath}
+      \mathcal{Y}_{ijk}=\mu+\alpha_i+\beta_j+\epsilon_{ijk},\quad
+      i=1,\dots,I;\,j=1,\dots,J;\,k=1,\dots,n
+    \end{displaymath}
+  \item Parameter estimates from a balanced two-factor factorial are
+    based on averages;
+    $\widehat{\mu}=\bar{y}_{\centerdot\centerdot\centerdot}$,
+    $\widehat{\alpha_i}=\bar{y}_{i\centerdot\centerdot}-
+    \bar{y}_{\centerdot\centerdot\centerdot}$, etc.
+  \item Things get much more complicated with unbalanced data.  I
+    tend to use the computer, even for balanced designs, so that I can
+    also plot the data to check assumptions.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Paint formulation data, Example 3.2.2}
+  \begin{itemize}
+  \item In the text the factors are written so that component 2 is the
+    first factor (factor A) and component 1 is the second (factor B).
+    We list them in that order in the formula so our results are
+    consistent with those in the text.
+<<fm2>>=
+fm2 <- aov(lw ~ comp2 + comp1, lw)
+@
+\item The ``Mean square for residuals'' in the summary table is $\widehat{\sigma^2}=s^2$
+<<fm2summary>>=
+summary(fm2)
+@   
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Estimated effects and residuals from example 3.2.2}
+<<fm2table>>=
+model.tables(fm2)
+str(resid(fm2))
+@   
+\end{frame}
+
+\begin{frame}
+  \frametitle{A Model Accounting for Interaction}
+  \begin{itemize}
+  \item As described in the text, a two-factor model allowing for
+    interactions of the factors provides a separately estimated mean
+    for each cell.  That is
+    \begin{displaymath}
+      \mathcal{Y}_{ijk}=\mu_{ij}+\epsilon_{ijk},\quad
+      i=1,\dots,I;\,j=1,\dots,J;\,k=1,\dots,n
+    \end{displaymath}
+  \item The estimates of the cell mean parameters are the cell sample means.
+    \begin{displaymath}
+      \widehat{\mu}_{ij}=\bar{y}_{i j\centerdot}
+    \end{displaymath}
+  \item As before the estimate of $\sigma^2$ is the mean squared residual.
+  \item In the formula for the \code{aov} function we use an \code{*}
+    instead of a \code{+} between the factors to indicate a model with
+    interactions.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Oven data, example 3.2.4}
+  \begin{center}
+<<ovendot,fig=TRUE,echo=FALSE,height=3.5>>=
+show(dotplot(type ~ moisture|reorder(brand,moisture), oven,
+             type = c("p","a"), pch=21,
+             xlab = "Percentage of moisture remaining in silica after 15 min. drying",
+             auto.key = list(columns = 3, lines = TRUE),
+             jitter.y = TRUE, strip=FALSE, strip.left=TRUE,
+             layout = c(1,3)))
+@     
+\end{center}
+<<fm3>>=
+summary(fm3 <- aov(moisture ~ type * brand, oven))
+str(fitted(fm3))
+@ 
+\end{frame}
+
+\section[3.3 Bivariate]{3.3 Models for Bivariate Data}
+
+\begin{frame}
+  \frametitle{Bivariate data}
+  \begin{itemize}
+  \item If we have measured two numeric characteristics and can regard
+    one as an \Emph{independent} or \Emph{predictor} variable while
+    the other is a \Emph{dependent} or \Emph{response} variable, we
+    fit an appropriate response function.
+  \item For many phenomena observed over a restricted range, it is
+    appropriate to use a linear model of the form
+    \begin{displaymath}
+      \mathcal{Y}_i=\beta_0+\beta_1 x_i+\epsilon_i,\quad i=1,\dots,n
+    \end{displaymath}
+    where
+    \begin{description}
+    \item[$\mathcal{Y}_i$] is the response on the $i$th trial
+    \item[$x_i$] is the value of the covariate on the $i$th trial
+    \item[$n$] is the number of observations
+    \end{description}
+  \item The best way to decide if this is an appropriate model is to
+    \textbf{plot the data}.  Never fit a statistical model without
+    first plotting the data.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Parameter estimates for linear models}
+  \begin{itemize}
+  \item If a linear model seems appropriate and the variability seems
+    reasonably constant across the range of the data, we use the
+    \Emph{least squares} parameter estimates which minimize the sum of
+    squared residuals.
+  \item That is, we determine $\widehat{\beta}_0$ and $\widehat{\beta}_1$ as
+    \begin{displaymath}
+      \arg\min_{b_0,b_1}\sum_{i=1}^n\left[y_i-\left(b_0+b_1 x_i\right)\right]^2
+    \end{displaymath}
+  \item As before, the estimate of the variance of the $\epsilon_i$ is
+    the mean squared residual.
+  \item We use the \code{lm} function in \R{} to fit such models.  As
+    for \code{aov} the first two arguments are the formula and the
+    name of the data set.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example 3.3.1}
+  This example uses a toy data set to show the calculations
+<<ex331>>=
+ex331 <- data.frame(x = c(2,9,3,5,1), y = c(1,17,3,9,0))
+@   
+\begin{center}
+<<ex331plot,fig=TRUE,echo=FALSE,height=5>>=
+show(xyplot(y ~ x, ex331, type = c("g","p","r"), aspect = 'xy'))
+@   
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example 3.3.1 (cont'd)}
+<<fm4>>=
+summary(fm4 <- lm(y ~ x, ex331))
+@
+The quantity labeled ``Residual standard error'' is $s$, the square
+root of the variance estimate.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Fitting exponential curves}
+  \begin{itemize}
+  \item There are several forms of models used in engineering that can
+    be converted to a linear model by taking logarithms of the
+    response or of the covariate or both.
+  \item Naturally the variable to be transformed by taking the
+    logarithm must take on positive values only.
+  \item Always check the plot of the transformed data to ensure that
+    it exhibits a linear relationship and approximately constant
+    variability after transformation.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 3.3.3}
+  \begin{center}
+<<ex333,fig=TRUE,echo=FALSE,height=5>>=
+ex333 <-
+    data.frame(x = c(9,2,5,8,4,1,3,7,6),
+               y = c(253.5,7.1,74.1,165.2,32.,1.9,18.1,136.1,100))
+print(xyplot(y ~ x, ex333, type = c("g","p")),
+      split = c(1,1,2,1), more = TRUE)
+print(xyplot(y ~ x, ex333,
+             type = c("g","p","r"), scales = list(log = 2)),
+      split = c(2,1,2,1))
+@     
+  \end{center}
+  There is noticeable curvature in the original plot, which is
+  dramatically reduced in the log-log plot.
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 3.3.3 (cont'd)}
+<<fm5>>=
+summary(fm5 <- lm(log(y) ~ log(x), ex333))
+@   
+\end{frame}
+
+\begin{frame}
+  \frametitle{Fitting polynomial curves}
+  \begin{itemize}
+  \item A polynomial curve is, strangely enough, regarded as a linear
+    model in statistics because the coefficients in the model, which
+    are the parameters to be estimated, occur linearly.
+  \item That is, we can fit curves of the form
+    \begin{displaymath}
+      \mathcal{Y}=\beta_0+\beta_1x+\beta_2 x^2+\epsilon
+    \end{displaymath}
+    or
+    \begin{displaymath}
+      \mathcal{Y}=\beta_0+\beta_1x+\beta_2 x^2+\beta_3 x^3+\epsilon
+    \end{displaymath}
+    with the \code{lm} function in \R{}.
+  \item Generally it is not a good idea to go beyond a cubic
+    polynomial.  Predictions from higher-order polynomials are too
+    sensitive to small perturbations in the data.
+  \item In the formula for such a model we must use the \code{I}
+    function (an identity operator) to protect the expressions for the
+    powers of \code{x}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example 3.3.6}
+<<ex336>>=
+ex336 <- data.frame(x = c(18,18,20,20,22,22,24,24,26,26),
+           y = c(4.0,4.2,5.6,6.1,6.5,6.8,5.4,5.6,3.3,3.6))
+@   
+\begin{center}
+<<ex336fig,fig=TRUE,echo=FALSE,height=5.5>>=
+show(xyplot(y ~ x, ex336, type = c("g","p"), aspect = 0.8))
+@   
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example 3.3.6 (cont'd)}
+<<fm6>>=
+summary(fm6 <- lm(y ~ x + I(x^2), ex336))
+@   
+\end{frame}
+
+\section[3.4 Multivariate]{3.4 Models for Multivariate Data}
+
+\begin{frame}[fragile]
+  \frametitle{Models for multivariate data}
+  \begin{itemize}
+  \item In general we can fit linear models (i.e. linear in the
+    parameters, not necessarily linear in the covariate values) with
+    many different types of terms based on either numeric covariates
+    or categorical covariates (factors).
+  \item A model of the form
+    \begin{displaymath}
+      \mathcal{Y}=\beta_0+\beta_1 x_1+\beta_2 x_2+\epsilon
+    \end{displaymath}
+    with linear terms in two or more numeric covariates is called a
+    multiple linear model.
+  \item In example 3.4.2 a model is fit to chemical process yield data
+  \end{itemize}
+<<yield>>=
+str(yield)
+@   
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example 3.4.2}
+<<fm7>>=
+summary(fm7 <- lm(yield ~ temp + pH, yield))
+@   
+\end{frame}
