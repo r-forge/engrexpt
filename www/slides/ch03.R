@@ -121,3 +121,90 @@ str(yield)
 summary(fm7 <- lm(yield ~ temp + pH, yield))
 
 
+###################################################
+### chunk number 18: fm8
+###################################################
+fm8 <- lm(time ~ temp, timetemp, subset = type == "Repaired")
+
+
+###################################################
+### chunk number 19: fm8rp1
+###################################################
+plot(fm8, which = 1)
+
+
+###################################################
+### chunk number 20: fm8resf eval=FALSE
+###################################################
+## xyplot(resid(fm8) ~ fitted(fm8), type = c("g","p","smooth"))
+
+
+###################################################
+### chunk number 21: fm8resfshow
+###################################################
+show(xyplot(resid(fm8) ~ fitted(fm8),
+            type = c("g","p","smooth"), aspect = 0.8))
+
+
+###################################################
+### chunk number 22: fig310 eval=FALSE
+###################################################
+## xyplot(resid(fm8) ~ temp, timetemp, subset = type == "Repaired")
+
+
+###################################################
+### chunk number 23: fig310fshow
+###################################################
+show(xyplot(resid(fm8) ~ temp, timetemp,
+            subset = type == "Repaired",
+            type = c("g","p"), aspect = 0.8,
+            xlab = "Temperature", ylab = "Residuals"))
+
+
+###################################################
+### chunk number 24: shaker
+###################################################
+shaker <-
+    data.frame(leftover = c(6.3,6.1,5.8,5.9,5.6,5.3,6.1,5.8,5.5),
+               flowrate = rep(c(85,90,95), 3),
+               vacuum = rep(c(20,22,24), each = 3))
+
+
+###################################################
+### chunk number 25: shakerdataplots
+###################################################
+print(xyplot(leftover ~ vacuum, shaker,
+             type = c("g","b"), groups = flowrate,
+             auto.key = list(columns = 3, lines = TRUE)),
+      split = c(1,1,2,1), more = TRUE)
+print(xyplot(leftover ~ flowrate, shaker,
+             type = c("g","b"), groups = vacuum,
+             auto.key = list(columns = 3, lines = TRUE)),
+      split = c(2,1,2,1))
+
+
+###################################################
+### chunk number 26: fm9 eval=FALSE
+###################################################
+## summary(fm9 <- lm(leftover ~ flowrate + vacuum + I(vacuum^2),
+##                   shaker))
+
+
+###################################################
+### chunk number 27: fm9cap
+###################################################
+foo <- capture.output(summary(fm9 <- lm(leftover ~ flowrate + vacuum + I(vacuum^2), shaker)))
+
+
+###################################################
+### chunk number 28: fm9out
+###################################################
+cat(paste(foo[-(1:10)], collapse = "\n"), "\n")
+
+
+###################################################
+### chunk number 29: corr
+###################################################
+with(subset(timetemp, type == "Repaired"), cor(time, temp))
+
+

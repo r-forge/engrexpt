@@ -461,3 +461,177 @@ str(yield)
 summary(fm7 <- lm(yield ~ temp + pH, yield))
 @   
 \end{frame}
+
+\section[3.5 Assessing fit]{3.5 Assessing the Fit of a Model}
+\newcommand{\SSTOT}{\ensuremath{\mathrm{SS}_{\mathrm{total}}}}
+\newcommand{\SSE}{\ensuremath{\mathrm{SS}_e}}
+\begin{frame}
+  \frametitle{Coefficient of determination}
+  \begin{itemize}
+  \item A common numeric measure of the quality of the fit of a linear
+    model is the $R^2$ statistic which is the proportion of the
+    variability in the response that has been incorporated into the
+    model.
+  \item This is shown in the summary of an \code{lm} fit labeled
+    ``Multiple R-squared''.  As a proportion it satisfies $0\le R^2\le
+    1$.  Larger is better.
+  \item If \SSE{} is the sum of squared residuals and
+    \SSTOT{} is the total sum of squares
+    \begin{displaymath}
+      \SSTOT=\sum_{i=1}^n\left(y_i-\widehat{y}_i\right)^2
+    \end{displaymath}
+    then
+    \begin{displaymath}
+      R^2=\frac{\SSTOT-\SSE}{\SSTOT}=1-\frac{\SSE}{\SSTOT}
+    \end{displaymath}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Residual plots}
+  \begin{itemize}
+  \item Creating a statistical model should not be regarded as a
+    ``one-shot'' process.  Instead we should consider it as an
+    iterative process where we examine the data and form a preliminary
+    model, fit this model and then re-examine the fit to see if it
+    satisfies the assumptions on the model, changing the model and
+    re-fitting if necessary.
+  \item Graphical methods are best for the preliminary investigation
+    and for the model criticism.  When assessing a model fit we are
+    particularly interested in properties of the residuals.  We plot
+    the residuals versus the fitted values and versus covariates that
+    are not yet incorporated in the model.
+  \item In the case of a simple linear regression model the plot of
+    the residuals versus the fitted values is equivalent to plotting
+    the residuals versus the covariate.
+  \item The pattern we are seeking is ``no pattern''.  In particular,
+    we want the residuals to lie in what looks like a horizontal band
+    of constant height centered around the zero line.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Residual plots in \R}
+  \begin{itemize}
+  \item Residuals can be plotted by extracting them from the fitted
+    model and using \code{xyplot}.  For the special case of the
+    residuals versus the fitted values a direct call to \code{plot}
+    can be used.
+  \item In example 3.5.3 the residuals from a simple linear model fit
+    to the repaired panels in the \code{timetemp} data are plot versus
+    the temperature.  We fit the model as
+  \end{itemize}
+<<fm8>>=
+fm8 <- lm(time ~ temp, timetemp, subset = type == "Repaired")
+@   
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{``Pre-packaged'' plot of residuals vs. fitted}
+  \begin{center}
+<<fm8rp1,fig=TRUE>>=
+plot(fm8, which = 1)
+@     
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{``Manual'' plot of residuals vs. fitted}
+<<fm8resf,eval=FALSE>>=
+xyplot(resid(fm8) ~ fitted(fm8), type = c("g","p","smooth"))
+@   
+\begin{center}
+<<fm8resfshow,fig=TRUE,echo=FALSE,height=6>>=
+show(xyplot(resid(fm8) ~ fitted(fm8),
+            type = c("g","p","smooth"), aspect = 0.8))
+@   
+\end{center}
+This is a mirror image of Fig. 3.10 because $\widehat{\beta}_1<0$.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Reproducing Figure 3.10, page 72}
+<<fig310,eval=FALSE>>=
+xyplot(resid(fm8) ~ temp, timetemp, subset = type == "Repaired")
+@   
+\begin{center}
+<<fig310fshow,fig=TRUE,echo=FALSE>>=
+show(xyplot(resid(fm8) ~ temp, timetemp,
+            subset = type == "Repaired",
+            type = c("g","p"), aspect = 0.8,
+            xlab = "Temperature", ylab = "Residuals"))
+@   
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example 3.5.5}
+  \begin{itemize}
+  \item Example 3.5.5 shows model building for a response (leftover)
+    as a function of two covariates, flow rate and vacuum.
+  \item We will show a slightly different approach.  First create the
+    data frame.
+  \end{itemize}
+<<shaker>>=
+shaker <-
+    data.frame(leftover = c(6.3,6.1,5.8,5.9,5.6,5.3,6.1,5.8,5.5),
+               flowrate = rep(c(85,90,95), 3),
+               vacuum = rep(c(20,22,24), each = 3))
+@   
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example 3.5.5 (cont'd)}
+<<shakerdataplots>>=
+print(xyplot(leftover ~ vacuum, shaker,
+             type = c("g","b"), groups = flowrate,
+             auto.key = list(columns = 3, lines = TRUE)),
+      split = c(1,1,2,1), more = TRUE)
+print(xyplot(leftover ~ flowrate, shaker,
+             type = c("g","b"), groups = vacuum,
+             auto.key = list(columns = 3, lines = TRUE)),
+      split = c(2,1,2,1))
+@   
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example 3.5.5 (cont'd)}
+  \begin{itemize}
+  \item The plots indicate a quadratic in \code{vacuum} but a linear
+    term in \code{flowrate}.  There is little evidence of interaction.
+  \end{itemize}
+<<fm9,eval=FALSE>>=
+summary(fm9 <- lm(leftover ~ flowrate + vacuum + I(vacuum^2),
+                  shaker))
+@   
+<<fm9cap,echo=FALSE,results=hide>>=
+foo <- capture.output(summary(fm9 <- lm(leftover ~ flowrate + vacuum + I(vacuum^2), shaker)))
+@   
+<<fm9out,echo=FALSE>>=
+cat(paste(foo[-(1:10)], collapse = "\n"), "\n")
+@ 
+(Some output has been truncated)
+
+With an $R^2$ of 99.4\% further improvements are unlikely (these are
+probably constructed data, not an actual experiment).
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{The correlation coefficient}
+  \begin{itemize}
+  \item For the special case of a simple linear model (i.e. a linear
+    term in only one covariate) the correlation coefficient
+    \begin{displaymath}
+      r = (\text{sign of }\widehat{\beta}_1)\sqrt{R^2}
+    \end{displaymath}
+    measures the linear correlation of the response and the covariate.
+  \item Generally correlation measures the extent to which two
+    variables vary together.  In observational studies (as opposed to
+    experimental studies) we must be careful not to confuse
+    correlation with causation.
+  \item The \R{} function \code{cor} evaluates $r$ directly.
+  \end{itemize}
+<<corr>>=
+with(subset(timetemp, type == "Repaired"), cor(time, temp))
+@ 
+\end{frame}
