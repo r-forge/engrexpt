@@ -582,7 +582,8 @@ shaker <-
 
 \begin{frame}[fragile]
   \frametitle{Example 3.5.5 (cont'd)}
-<<shakerdataplots>>=
+  \begin{center}
+<<shakerdataplots,fig=TRUE,echo=FALSE>>=
 print(xyplot(leftover ~ vacuum, shaker,
              type = c("g","b"), groups = flowrate,
              auto.key = list(columns = 3, lines = TRUE)),
@@ -592,6 +593,7 @@ print(xyplot(leftover ~ flowrate, shaker,
              auto.key = list(columns = 3, lines = TRUE)),
       split = c(2,1,2,1))
 @   
+  \end{center}
 \end{frame}
 
 \begin{frame}[fragile]
