@@ -1,0 +1,36 @@
+% NOTE -- ONLY EDIT THE .Rnw FILE!!!  The .tex file is,
+% likely to be overwritten.
+\usepackage{SweaveSlides}
+\title[Chapter 4]{Chapter 4: Models for the Random Error}
+%\subject{Models}
+\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,width=10,height=6.5,strip.white=all,keep.source=TRUE}
+\SweaveOpts{prefix=TRUE,prefix.string=figs/ch04,include=TRUE}
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents[pausesections]
+\end{frame}
+<<preliminaries,echo=FALSE,results=hide>>=
+options(width=60)
+library(EngrExpt)
+options(show.signif.stars = FALSE)
+#lattice.options(default.theme = function() standard.theme(color=FALSE))
+@ 
+
+\section{4.1 Random variables}
+\begin{frame}
+  \frametitle{Random variables}
+  \begin{itemize}
+  \item Models for the random error are called \Emph{random
+      variables}.  These are functions that map experimental outcomes
+    to numeric values.  Although we don't know what the particular
+    value will be, we can describe the set of all possible values and
+    characterize the distribution of the random variable.
+  \item Distributions are characterized by either a \Emph{probability
+      density function} (pdf) or a \Emph{probability mass function}
+    (pmf).
+  \end{itemize}
+\end{frame}
