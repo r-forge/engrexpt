@@ -17,7 +17,7 @@
 options(width=60)
 library(EngrExpt)
 options(show.signif.stars = FALSE)
-#lattice.options(default.theme = function() standard.theme(color=FALSE))
+lattice.options(default.theme = function() standard.theme(color=FALSE))
 @ 
 
 \begin{frame}
