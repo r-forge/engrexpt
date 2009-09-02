@@ -12,7 +12,7 @@
   A data frame with 30 observations on the following 3 variables.
   \describe{
     \item{\code{brand}}{a factor with levels \code{A} \code{B} \code{C}}
-    \item{\code{type}}{a factor with levels \code{A} \code{B}}
+    \item{\code{type}}{a factor with levels \code{Gas} and \code{Electric}}
     \item{\code{moisture}}{a numeric vector}
   }
 }
