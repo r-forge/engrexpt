@@ -400,3 +400,64 @@ show(xyplot(dbinom(0:50, 50, 0.07) + dbinom(0:50, 50, 0.93) ~ 0:50, type = "h", 
     \hat{p}=\frac{y}{n}
   \end{displaymath}
 \end{frame}
+
+\begin{frame}
+  \frametitle{The Poisson distribution}
+  \begin{itemize}
+  \item Like the binomial distribution, the Poisson distribution
+    models the total number of events that occur in some experiment.
+  \item For the binomial distribution the events are binary responses
+    in distinct trials.  The range of the random variable is $[0,n]$
+    where $n$ is the total number of trials.
+  \item In a \Emph{Poisson process} events occur over a continuum,
+    such as time or distance or area or $\dots$.  We assume that
+    \begin{enumerate}
+    \item The interval of interest can be divided into small units of
+      opportunity $h$ such that only one event could occur during a unit.
+    \item For an opportunity unit $h$ the probability of one event is
+      $\lambda h$.  The parameter $\lambda$ is called the intensity.
+    \item The occurrence or non-occurence of events in non-overlapping
+      intervals are independent.
+    \end{enumerate}
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{The Poisson distribution (cont'd)}
+  \begin{itemize}
+  \item Let $\rvy$ be the number of events in an opportunity unit of
+    size $t$ in a Poisson process with intensity $\lambda$.  Then
+    \begin{displaymath}
+      P(\rvy=k)=p_k=\frac{e^{-\lambda\,t}(\lambda\,t)^k}{k!}\quad k=1,\dots
+    \end{displaymath}
+  \item Most commonly $t$ is a length of time (say 1 hr.) so that
+    $\lambda$ is the intensity of the events (say 30 cars/hr.).  The
+    parameter has units that are counts/(units of $t$).
+  \item The \R functions \code{dpois}, \code{ppois}, \code{qpois} and
+    \code{rpois} take a single parameter, also called \code{lambda},
+    but representing the product $\lambda\,t$ in the notation above.
+    This is the expected value of $\rvy$.
+  \end{itemize}
+  \begin{displaymath}
+    \mathrm{E}(\rvy)=\lambda\,t\quad\mathrm{Var}(\rvy)=\lambda\,t
+  \end{displaymath}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 4.2.7}
+  \begin{itemize}
+  \item Example 4.2.6 describes a Poisson process where $\lambda=0.1$
+    cars/sec.  Suppose we observe for $t=30$ seconds.  Then
+    $\lambda\,t=3$ is the expected number of cars to observe.
+  \item We are asked to evaluate the ``probability that no more than 2
+    cars pass through the intersection'', which is $P(\rvy\le 2)$.
+
+  \item The simple evaluation is
+<<dpois1>>=
+sum(dpois(0:2, lambda = 3))
+@     
+
+\item An alternative is to use the cumulative distribution function
+<<dpois2>>=
+ppois(2, lambda = 3)
+@   
+  \end{itemize}
+\end{frame}
