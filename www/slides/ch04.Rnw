@@ -449,15 +449,148 @@ show(xyplot(dbinom(0:50, 50, 0.07) + dbinom(0:50, 50, 0.93) ~ 0:50, type = "h", 
     $\lambda\,t=3$ is the expected number of cars to observe.
   \item We are asked to evaluate the ``probability that no more than 2
     cars pass through the intersection'', which is $P(\rvy\le 2)$.
-
-  \item The simple evaluation is
-<<dpois1>>=
-sum(dpois(0:2, lambda = 3))
-@     
-
-\item An alternative is to use the cumulative distribution function
-<<dpois2>>=
-ppois(2, lambda = 3)
+  \item The simple evaluation is \code{sum(dpois(0:2, lambda = 3)) =}
+      \Sexpr{sprintf("%g",sum(dpois(0:2, lambda = 3)))}. An
+    alternative is to use the cumulative distribution function
+    \code{ppois(2, lambda = 3) =}
+      \Sexpr{sprintf("%g",sum(ppois(2, lambda = 3)))}.
+  \end{itemize}
+<<poisplot,fig=TRUE,echo=FALSE,height=3>>=
+show(xyplot(dpois(0:15,lambda=3) ~ 0:15, type = "h", xlab = NULL))
 @   
+\end{frame}
+\begin{frame}
+  \frametitle{Parameter estimation}
+  \begin{itemize}
+  \item Because $\mathrm{E}(\rvy)=\lambda\,t$ we estimate the
+    intensity, $\lambda$, by plugging into this relationship.  That
+    is, $\hat{\lambda}\,t=y$ or $\hat{\lambda}=y/t$.
+  \item An interesting property of the Poisson distribution is the
+    fact that the sum of independent Poisson random variables is also
+    a Poisson.  (Surprisingly this doesn't happen for most other
+    distributions - only for the Poisson and the Gaussian or
+    ``normal'' distributions.)
+  \item Because
+    \begin{displaymath}
+      \rvy_1\sim\mathrm{Pois}(\lambda_1t_1),\;
+      \rvy_2\sim\mathrm{Pois}(\lambda_2t_2)
+      \Rightarrow \rvy_1+\rvy_2\sim\mathrm{Pois}(
+      \lambda_1t_1+\lambda_2t_2)
+    \end{displaymath}
+    we can combine the results from non-overlapping intervals when
+    estimating a common intensity $\lambda$.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Relationship to binomial}
+  \begin{itemize}
+  \item The Poisson process can be considered as the continuous limit
+    of discrete Bernoulli trials.  The usual limit processes from
+    calculus apply: take more and more intervals whose width becomes
+    smaller and smaller to go from the discrete jumps to the
+    continuous function.
+  \item When binomial probabilities needed to be evaluated from
+    tables, it was important that for $n$ large and $p$ moderate (so
+    that both $np$ and $n(1-p)$ become large) you could approximate
+    binomial distributions by Poissons.  We set $\lambda\,t=np$.
+  \item We don't need to concern ourselves with that because we can
+    evaluate essentially any binomial probability.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example of Poisson approximation to binomial}
+  \begin{itemize}
+  \item Just for completeness we give the comparison of $P(\rvy<2)$
+    for $n=50$ and $p=0.03$ versus a Poisson with $\lambda\,t=1.5$.
+  \end{itemize}
+<<poisapprox>>=
+c(binom = sum(dbinom(0:1, 50, 0.03)), Poisson = sum(dpois(0:1, 1.5)))
+all.equal(sum(dbinom(0:1, 50, 0.03)), sum(dpois(0:1, 1.5)))
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{The geometric distribution}
+  \begin{itemize}
+  \item For a Bernoulli process (repeated, independent trials with 0/1
+    outcomes and constant probability, $p$, of ``success'') the
+    binomial distribution arises from setting the number of trials to
+    $n$ and counting the total number of successes.
+  \item The geometric distribution is the distribution of the number
+    of trials before the first success. Be aware that it can be
+    defined in two ways: either count the number of trials until the
+    first success or count the number of failures before the first
+    success. These counts just differ by 1, of course, but you should
+    be careful to check which definition you are using.
+  \item The text counts the total number of trials.  The \R{}
+    functions \code{dgeom}, \code{pgeom}, \code{qgeom} and
+    \code{rgeom} are based on the number of failures before the first
+    success.
+  \item In the text's notation, if $\rvy\sim\mathrm{Geom}(p)$ then
+  \end{itemize}
+  \begin{displaymath}
+    P(\rvy = k)=p_k=p(1-p)^{k-1}\quad k=1,2,\dots
+  \end{displaymath}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 4.2.13}
+  \begin{itemize}
+  \item We assume that the probability of a defective is 0.03 and
+    check units until a defective is found.  Let $\rvy$ be the number
+    checked.  (Notice that ``success'' in this case means finding a
+    defective.)
+  \item The expected number of trials is $1/0.03\approx 33$.  The
+    probability distribution of the number of ``failures''
+    (non-defectives, in this case) before the first ``success'' is
+  \end{itemize}
+<<geomplot,fig=TRUE,echo=FALSE,height=4.5>>=
+show(xyplot(dgeom(0:200, prob = 0.03) ~ 0:200, type = "h", xlab = NULL))
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 4.2.13}
+  \begin{itemize}
+  \item The question in the text is whether the total number of trails is $\le 3$.
+  \item In \R{} we need to check if the number of failures before the
+    first success is $\le 2$.  We can use the probability mass
+    function, \code{dgeom}, or the cumulative distribution function,
+    \code{pgeom}
+  \end{itemize}
+<<geomprob>>=
+sum(dgeom(0:2, prob = 0.03))
+pgeom(2, prob = 0.03)
+@   
+\end{frame}
+<<set.seed,echo=FALSE,results=hide>>=
+set.seed(1234321)
+@ 
+\begin{frame}[fragile]
+  \frametitle{Properties of the geometric distribution}
+  \begin{itemize}
+  \item If $\rvy\sim\mathrm{Geom}(p)$ (text's definition) then
+    $\mathrm{E}(\rvy) = \frac{1}{p}$ and
+    $\mathrm{Var}(\rvy)=\frac{1-p}{p^2}$
+  \item In the definition used in \R, $\mathrm{E}(\rvy)=\frac{1}{p}-1$
+    and the variance is the same as above (why?).
+  \item You can check these formulas at Wikipedia,
+    \url{http://en.wikipedia.org/wiki/Geometric_distribution}.
+    Information on the other distributions is also available there.
+  \item You can also check it out by creating a very large random
+    sample and taking the sample mean and variance.  Then change
+    parameters and do it again.
+  \end{itemize}
+<<samplegeom,keep.source=TRUE>>=
+mean(gsamp <- rgeom(1000000, prob = 0.03)) # should be near 32.3
+var(gsamp)  # should be near 0.97/0.03^2 = 1077.778
+@ 
+\end{frame}
+\begin{frame}
+  \frametitle{Parameter estimation for the geometric}
+  \begin{itemize}
+  \item As before you must be careful if you are counting the total
+    number of trials (including the last trial, which must be a
+    success, by definition) or just the failures before the first success.
+  \item If $y$ is the observed number of trials then $\hat{p}=1/y$.
+  \item If we have several repetitions of the experiment (recommended)
+    then $\hat{p}=1/\bar{y}$
   \end{itemize}
 \end{frame}
