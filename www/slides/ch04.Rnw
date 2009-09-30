@@ -569,8 +569,9 @@ set.seed(1234321)
   \item If $\rvy\sim\mathrm{Geom}(p)$ (text's definition) then
     $\mathrm{E}(\rvy) = \frac{1}{p}$ and
     $\mathrm{Var}(\rvy)=\frac{1-p}{p^2}$
-  \item In the definition used in \R, $\mathrm{E}(\rvy)=\frac{1}{p}-1$
-    and the variance is the same as above (why?).
+  \item In the definition used in \R,
+    $\mathrm{E}(\rvy)=\frac{1}{p}-1=\frac{1-p}{p}$ and the variance is
+    the same as above (why?).
   \item You can check these formulas at Wikipedia,
     \url{http://en.wikipedia.org/wiki/Geometric_distribution}.
     Information on the other distributions is also available there.
