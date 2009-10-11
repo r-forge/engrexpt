@@ -719,3 +719,130 @@ print(xyplot(dunif(y, min = 0, max = 1) + punif(y, min = 0, max = 1) ~ y,
 pexp(3.5, rate = 1/7)
 @   
 \end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 4.3.5}
+  \begin{itemize}
+  \item The probability that such a light bulb will last more than 6
+    years can be evaluated in two ways
+<<exp6>>=
+1 - pexp(6, rate = 1/7)
+pexp(6, 1/7, lower = FALSE)
+@
+\item \code{lower = FALSE} is used with any
+  cumulative probability function to obtain the probability of
+  exceeding the first argument.
+\item The probability that such a light bulb lasts between 3.5 and 9
+  years is evaluated as the difference in the c.d.f. values.  I prefer
+  to use the diff function to do this.
+<<exp3.5>>=
+pexp(9, 1/7) - pexp(3.5, 1/7)
+diff(pexp(c(3.5, 9), 1/7))
+@
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Properties and parameter estimation}
+  \begin{itemize}
+  \item As indicated by the notation, the expected value of the
+    exponential distribution is the mean, $\mu$.  Sometimes this is
+    called the \Emph{mean time between failures} or \Emph{MTBF}.
+  \item If $\rvy$ is written in terms of the rate or intensity,
+    $\lambda$, then $\mathrm{E}(\rvy)=\frac{1}{\lambda}$.
+  \item The variance is $\mu^2$ or $\frac{1}{\lambda^2}$, hence the
+    standard deviation is $\sigma=\mu$ for an exponential
+    distribution.
+  \item The estimate of $\mu$ is $\widehat{\mu}=\bar{y}$.
+    Correspondingly, the estimate of the intensity, $\lambda$, is
+    $\widehat{\lambda}=\frac{1}{\bar{y}}$.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{The normal or Gaussian distribution}
+  \begin{itemize}
+  \item By far the most important distribution in statistics is the
+    normal or Gaussian distribution, the so-called ``bell curve''.
+  \item It has two parameters, $\mu$ and $\sigma$.  These turn out to
+    be the mean and the standard deviation, respectively.
+  \item The density for $\rvy\sim\mathcal{N}(\mu,\sigma^2)$
+    \begin{displaymath}
+      f(y)=\frac{1}{\sqrt{2\pi}\sigma}
+      e^{-\frac{1}{2}\left(\frac{y-\mu}{\sigma}\right)^2}
+    \end{displaymath}
+  \item There is no closed-form expression for the c.d.f., $F(x)$, but
+    good numerical methods for its evaluation are available.
+  \item The text describes methods based on converting from a general
+    normal distribution to the standard normal and referring to tables
+    of that distribution.  We can by-pass all that.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{The density of the standard normal distribution}
+  \begin{itemize}
+  \item The \Emph{standard} normal distribution is
+    $\mathcal{N}(0,1)$.  That is $\mu=0$ and $\sigma=1=\sigma^2$.
+  \item The parameters of the distribution are specified to the \R{}
+    functions \code{dnorm}, \code{pnorm}, \code{qnorm} and
+    \code{rnorm} as \code{mean} and \code{sd}.  They default to 0 and
+    1, respectively.
+  \end{itemize}
+<<stdnormdensshow,eval=FALSE>>=
+xyplot(dnorm(z) ~ z, type = c("g","l"))
+@ 
+  \begin{center}
+<<stdnormdens,fig=TRUE,echo=FALSE,height=4>>=
+z <- seq(-3.65, 3.65, 0.01)
+print(xyplot(dnorm(z) ~ z, type = c("g","l"), scales = list(x = list(axs = 'i'))))
+@   
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Density of $\mathcal{N}(100,15^2)$}
+  The IQ scale is normalized to have a mean of 100 and a
+  standard deviation of 15. 
+  \begin{center}
+<<IQnormdens,fig=TRUE,echo=FALSE>>=
+x <- seq(47, 153, 0.5)
+print(xyplot(dnorm(x, mean = 100, sd = 15) ~ x, type = c("g","l"), scales = list(x = list(axs = 'i'))))
+@   
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Cdf of the Gaussian distribution}
+  The cdf for a Gaussian distribution is sigmoidal (i.e. S-shaped).
+<<IQnormcdf,fig=TRUE,echo=FALSE>>=
+print(xyplot(pnorm(x, mean = 100, sd = 15) ~ x, type = c("g","l"), scales = list(x = list(axs = 'i'))))
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 4.3.11}
+  \begin{itemize}
+  \item In the example the yields are distributed as
+    $\mathcal{N}(450,900)$ meaning that $\mu=450$ and
+    $\sigma=\sqrt{900}=30$.  To evaluate $P(\rvy<500)$, $P(\rvy>550)$
+    and $P(400<\rvy<500)$ we use
+  \end{itemize}
+<<pnorm>>=
+pnorm(500, 450, 30)
+1 - pnorm(550, 450, 30)
+diff(pnorm(c(400,500), 450, 30))
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Quantiles}
+  \begin{itemize}
+  \item Occasionally we want to find the value of $\rvy$ with a
+    specified probabilty to the left of it.  This is called a
+    \Emph{quantile} of the distribution.
+  \item For example, the organization called Mensa has only one
+    qualification for membership - a candidate's IQ must be in the top
+    2\% of the population.  If IQ scores are distributed as
+    $\mathcal{N}\left(100, (15)^2\right)$ then the cutoff score is
+  \end{itemize}
+<<qnorm>>=
+qnorm(0.98, 100, 15)
+@   
+\end{frame}
+
