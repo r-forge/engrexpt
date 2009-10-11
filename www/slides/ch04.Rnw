@@ -19,8 +19,9 @@ library(EngrExpt)
 options(show.signif.stars = FALSE)
 #lattice.options(default.theme = function() standard.theme(color=FALSE))
 @ 
-\newcommand{\rvy}{\ensuremath{\mathcal{Y}}}
+\newcommand{\rvu}{\ensuremath{\mathcal{U}}}
 \newcommand{\rvx}{\ensuremath{\mathcal{X}}}
+\newcommand{\rvy}{\ensuremath{\mathcal{Y}}}
 
 \section{4.1 Random variables}
 \begin{frame}
@@ -594,4 +595,127 @@ var(gsamp)  # should be near 0.97/0.03^2 = 1077.778
   \item If we have several repetitions of the experiment (recommended)
     then $\hat{p}=1/\bar{y}$
   \end{itemize}
+\end{frame}
+\section[4.3 Continuous distributions]{4.3 Important
+  Continuous Distributions}
+\begin{frame}
+  \frametitle{Important continuous distributions}
+  \begin{itemize}
+  \item We will use three basic continuous distributions: uniform,
+    exponential and normal (or Gaussian) plus two derived
+    distributions, the lognormal and the Weibull, which is a
+    generalization of the exponential.
+  \item The corresponding \R{} functions end in \code{unif},
+    \code{exp}, \code{norm}, \code{lnorm} and \code{weibull}.
+  \item The Wikipedia URLs end in
+    \code{Uniform\_distribution\_(continuous)},
+    \code{Exponential\_distribution}, \code{Normal\_distribution},
+    \code{Log\_normal\_distribution} and \code{Weibull\_distribution}.
+
+  \item Although we define the distribution by its density, in
+    practice we usually work with the cumulative distribution
+    function.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{The uniform distribution}
+  \begin{itemize}
+  \item The density is constant over a finite interval, usually
+    written $[a,b]$.  Thus
+    \begin{displaymath}
+      f(y) =
+      \begin{cases}
+        \frac{1}{b-a}&a<y<b\\
+        0 & \mathrm{otherwise}
+      \end{cases}
+    \end{displaymath}
+  \item This density is symmetric about the midpoint of the interval
+    so $\mathrm{E}(\rvy)=\frac{a + b}{2}$.
+  \item The cumulative distribution function (cdf) is
+    \begin{displaymath}
+      F(y) =
+      \begin{cases}
+        0 & y < a\\
+        \frac{y-a}{b-a}&a\le y\le b\\
+        1 & y > b
+      \end{cases}
+    \end{displaymath}
+  \item We call $\rvu\sim\mathrm{Unif}(0,1)$ the \Emph{standard
+      uniform distribution}.  It is easy to verify that
+    $\mathrm{Var}(\rvu)=\int_0^1\left(u-\frac{1}{2}\right)^2du=\frac{1}{12}$.
+    For the general uniform distribution,
+    $\mathrm{Var}(\rvy)=\frac{(b-a)^2}{12}$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example cdf's and pdf's from uniform distributions}
+  \begin{center}
+<<unifcdfplot,fig=TRUE,echo=FALSE>>=
+eps <- 100*.Machine$double.eps
+y <- c(12.5,13-eps, 13.0,15.0,15 + eps, 15.5)
+print(xyplot(dunif(y, min = 13, max = 15) + punif(y, min = 13, max = 15) ~ y,
+             outer = TRUE, type = c("g","l"), xlab = "y", ylab = NULL, layout = c(1,2),
+             scales = list(y = list(relation = "free"), x = list(axs = "i"))),
+      pos = c(0,0,0.5,1), more = TRUE)
+y <- c(-0.1,-eps, 0,1,1+eps, 1.1)
+print(xyplot(dunif(y, min = 0, max = 1) + punif(y, min = 0, max = 1) ~ y,
+             outer = TRUE, type = c("g","l"), xlab = "y", ylab = NULL, layout = c(1,2),
+             scales = list(y = list(relation = "free"), x = list(axs = "i"))),
+      pos = c(0.5,0,1,1))
+@ 
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The exponential distribution}
+  \begin{itemize}
+  \item A common model for lifetime data (also called \Emph{time to
+      failure} or \Emph{survival analysis}) is the exponential
+    distribution with density
+    \begin{displaymath}
+      f(y) =
+      \begin{cases}
+        0 & y\le 0\\
+        \frac{e^{-y/\mu}}{\mu}&y > 0
+      \end{cases}
+    \end{displaymath}
+    where $\mu>0$ is the expected time to failure.
+  \item This distribution is often written in terms of the failure
+    rate, $\lambda=1/\mu$, for which $f(y)=\lambda e^{-\lambda
+      y},\,y>0$.
+  \item The parameter $\lambda$ is the same as for the Poisson
+    distribution.  Just as the geometric distribution is the number of
+    trials before the first event for a Bernoulli process, the
+    exponential distribution is the length of time before the first
+    event in a Poisson process.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Cumulative distribution function (cdf) for exponential}
+  \begin{itemize}
+  \item The exponential distribution is one of the few cases where the
+    cdf is easier to evaluate than the density.
+    \begin{displaymath}
+      F(y) =
+      \int_{-\infty}^yf(u)\,du=\int_0^yf(u)\,du=1-e^{-y/\mu}\quad y>0
+    \end{displaymath}
+
+  \item This makes it particularly easy to evaluate probabilities.
+    Note that the \R{} functions \code{pexp}, \code{dexp}, \code{qexp}
+    and \code{rexp} use the parameter $\lambda=\frac{1}{\mu}$, not $\mu$.
+  \item In Example 4.3.4 the lifetimes of compact fluorescent light
+    bulbs are assumed to be exponentially with mean $\mu=7$ years.
+    The probability a given bulb will last less than 3.5 yr. is
+    \begin{displaymath}
+      P(\rvy<3.5) = 1-e^{-3.5/7}=0.39
+    \end{displaymath}
+    (Recall that for continuous r.v.'s you can interchange $<$ and
+    $\le$.)
+    In \R{} you would use
+  \end{itemize}
+<<pexp>>=
+pexp(3.5, rate = 1/7)
+@   
 \end{frame}
