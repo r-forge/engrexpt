@@ -20,6 +20,7 @@ options(show.signif.stars = FALSE)
 #lattice.options(default.theme = function() standard.theme(color=FALSE))
 @ 
 \newcommand{\rvu}{\ensuremath{\mathcal{U}}}
+\newcommand{\rvw}{\ensuremath{\mathcal{W}}}
 \newcommand{\rvx}{\ensuremath{\mathcal{X}}}
 \newcommand{\rvy}{\ensuremath{\mathcal{Y}}}
 
@@ -846,3 +847,95 @@ qnorm(0.98, 100, 15)
 @   
 \end{frame}
 
+\begin{frame}
+  \frametitle{The lognormal distribution}
+  \begin{itemize}
+  \item In many cases the measurements we make must be positive to be
+    physically sensible.
+  \item If the standard deviation is small relative to the mean (like
+    the IQ scores) we can use the normal distribution as a model for
+    the random variable, even though in theory it would give a (very
+    small) positive probability to negative values.
+  \item However, if the standard deviation is not small, compared to
+    the mean, the distribution will usually be skewed.  Often the
+    logarithms of the measurements are more like a normal distribution.
+  \item Usually it is simplest to take the logarithms and then use the
+    normal distribution.  In some cases there is interest in a model
+    of the results on the original scale, for which we use the
+    lognormal distribution.
+  \item The parameters of the distribution, written $\mu$ and
+    $\sigma$, are the mean and standard deviation of the
+    \Emph{logarithm} of $\rvy$.  In the \R{} functions these are
+    called \code{meanlog} and \code{sdlog}.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 4.3.20}
+  The \code{alum} data are measurements of the parts per million of
+  aluminum impurities in the plastics stream at a recycling plant.
+<<alumdens,fig=TRUE,echo=FALSE>>=
+print(densityplot(~ ppm, alum, xlab = "Parts per million"),
+      split = c(1,1,1,2), more = TRUE)
+print(densityplot(~ ppm, alum, scales = list(x = list(log = 2)),
+                  xlab = "Parts per million (logarithmic scale)"),
+      split = c(1,2,1,2))
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Parameter estimates}
+  \begin{itemize}
+  \item The parameter estimates, $\widehat{\mu}$ and $\widehat\sigma$
+    are the sample mean and sample standard deviation of the
+    logarithms of the responses.
+  \end{itemize}
+<<pars>>=
+with(alum, c(muhat = mean(log(ppm)), sigmahat = sd(log(ppm))))
+@   
+\begin{itemize}
+\item Given these parameters we can evaluate probabilities either by
+  first taking logarithms and using \code{pnorm} or by using
+  \code{plnorm}.  If $\rvy$ is the impurity level in parts per million
+  then $P(\rvy < 100)$ is
+\end{itemize}
+<<ex4.3.20>>=
+plnorm(100, meanlog = 5.0999591, sdlog = 0.6958257)
+pnorm(log(100), mean = 5.0999591, sd = 0.6958257)
+@ 
+\end{frame}
+\begin{frame}
+  \frametitle{The Weibull distribution}
+  \begin{itemize}
+  \item The Weibull distribution is a generalization of the
+    exponential distribution and is typically used to model the time
+    to failure for systems with an increasing hazard function
+    (i.e. subject to wear-out failures) or with a decreasing hazard
+    function (subject to ``break-in'' failures).
+  \item If $\rvw$ has a Weibull distribution with scale parameter
+    $\beta$ and shape parameter $\delta$ then
+    \begin{displaymath}
+      \rvy = \left(\frac{\rvw}{\beta}\right)^\delta
+    \end{displaymath}
+    has a standard exponential distribution (i.e. $\mu=1=\lambda$).
+  \item From these we obtain the cdf
+    \begin{displaymath}
+      F(w) = 1 - e^{-(w/\beta)^\delta}
+    \end{displaymath}
+    which we differentiate to get the density.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Shape parameter and R functions}
+  \begin{itemize}
+  \item When the shape parameter, $\delta$, is 1 the Weibull is the
+    same as the exponential.  With $\delta < 1$ it has a decreasing
+    hazard function.  With $\delta>1$ it has an increasing hazard.
+  \end{itemize}
+<<weibullplot,fig=TRUE,echo=FALSE,height=6>>=
+w <- seq(0, 5, 0.02)
+show(xyplot(dweibull(w, 0.5, 1) + dweibull(w, 1, 1) + dweibull(w, 1.5, 1) + dweibull(w, 3, 1) ~ w,
+            type = c("g","l"),
+            outer = FALSE, ylab = NULL, xlab = NULL,
+            auto.key = list(columns = 4, lines = TRUE, points = FALSE)))
+@   
+\end{frame}
