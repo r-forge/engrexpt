@@ -185,3 +185,99 @@ show(xyplot(dweibull(w, 0.5, 1) + dweibull(w, 1, 1) + dweibull(w, 1.5, 1) + dwei
             auto.key = list(columns = 4, lines = TRUE, points = FALSE)))
 
 
+###################################################
+### chunk number 27: ppoints
+###################################################
+ppoints(20)
+
+
+###################################################
+### chunk number 28: ex441
+###################################################
+cell <- c(4.23,1.89,10.52,6.46,8.32,8.6,0.41,0.91,2.66,35.71)
+(mu <- mean(cell))
+
+
+###################################################
+### chunk number 29: cellprpl
+###################################################
+print(qqmath(~ cell,
+             distribution = function(x) qexp(p = x, rate = 1/mu),
+             aspect = 1),
+      split = c(1,1,2,1), more = TRUE)
+print(qqmath(~ cell, distribution = qexp, aspect = 1),
+      split = c(2,1,2,1))
+
+
+###################################################
+### chunk number 30: plotcalls eval=FALSE
+###################################################
+## qqmath(cell, dist = function(x) qexp(x, rate = 1/mu))
+## qqmath(cell, dist = qexp)
+
+
+###################################################
+### chunk number 31: ex442
+###################################################
+ex442 <- c(1.76,5.71,1.17,0.49,1.09,5.56,6.82,9.48,1.54,1.88)
+
+
+###################################################
+### chunk number 32: ex442plotshow eval=FALSE
+###################################################
+## qqmath(ex442, dist = qexp, type = c("g","p"), aspect = 1,
+##        xlab = "Standard exponential quantiles")
+
+
+###################################################
+### chunk number 33: ex442plot
+###################################################
+show(qqmath(ex442, dist = qexp, type = c("g","p"), aspect = 1,
+            xlab = "Standard exponential quantiles"))
+
+
+###################################################
+### chunk number 34: ex443 eval=FALSE
+###################################################
+## len <- c(4.03,4.04,4.16,4.02,4.18,4.14,4.11,4.13,4.19,3.94,4.21,4.25)
+## qqmath(len, aspect = 1, type = c("g","p"), xlab = "Standard ...")
+
+
+###################################################
+### chunk number 35: ex443plots
+###################################################
+len <- c(4.03,4.04,4.16,4.02,4.18,4.14,4.11,4.13,4.19,3.94,4.21,4.25)
+print(densityplot(len, xlab = "Lengths (in.) of rubber strips"),
+      pos = c(0,0,0.52,1), more = TRUE)
+print(qqmath(len, aspect = 1, type = c("g","p"),
+             xlab = "Standard normal quantiles"),
+      pos = c(0.5,0,1,1))
+
+
+###################################################
+### chunk number 36: shapiro
+###################################################
+shapiro.test(len)
+
+
+###################################################
+### chunk number 37: brks
+###################################################
+brks <- tensile$bstrength[1:14] # stored data don't agree with text
+library(MASS)
+fitdistr(brks, "weibull")
+
+
+###################################################
+### chunk number 38: wiebullshow eval=FALSE
+###################################################
+## xyplot(log(sort(brks)) ~ log(-log(1-ppoints(14))), aspect = 1)
+
+
+###################################################
+### chunk number 39: weibullplt
+###################################################
+show(xyplot(log(sort(brks)) ~ log(-log(1-ppoints(14))),
+            aspect = 1, type = c("g","p")))
+
+

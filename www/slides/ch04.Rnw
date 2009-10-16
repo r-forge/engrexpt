@@ -939,3 +939,190 @@ show(xyplot(dweibull(w, 0.5, 1) + dweibull(w, 1, 1) + dweibull(w, 1.5, 1) + dwei
             auto.key = list(columns = 4, lines = TRUE, points = FALSE)))
 @   
 \end{frame}
+
+\section[4.4 Probability plots]{4.4 Assessing the fit of a distribution}
+
+\begin{frame}
+  \frametitle{Assessing the fit of a distribution}
+  \begin{itemize}
+  \item When we propose a distribution as a model of the random error
+    in measurements it is, like any statistical model, a proposed
+    model and, as George Box famously said, ``All models are wrong; some
+    models are useful.''
+  \item We should assess if the distribution we are considering is a
+    suitable model and, if not, consider alternatives.
+  \item One of the most powerful methods of assessing a distribution
+    or distribution family as a potential model is through
+    \Emph{probability plots} in which the observed quantiles (i.e. the
+    observed sample values in increasing order) are plotted versus the
+    quantiles of the proposed distribution.
+  \item The points form a non-decreasing pattern.  We are interested
+    in whether the pattern is close to a straight line.
+  \item When the distribution family incorporates only location and
+    scale parameters we can use the quantiles from the standard form
+    of the distribution, because we are interested only in the pattern
+    and that is not changed by shifting and scaling an axis.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Probability plots (cont'd)}
+  \begin{itemize}
+
+  \item In general we need to pick a particular distribution (i.e. we
+    must estimate the parameters in the distribution family) to
+    evaluate the theoretical quantiles.
+  \item For the exponential and normal distributions, in which the
+    parameters are shift and scale parameters, we can use the standard
+    form of the distribution. 
+  \item Because the exponential distribution has a closed-form and
+    invertible c.d.f. we can easily determine the quantiles.
+  \item We plot the ordered data values, $x_{i)}, i=1,\dots,n$ versus
+    $F^{-1}(\frac{i-0.05}{n})$.  Notice that we use $\frac{i-0.5}{n}$,
+    not $\frac{i}{n}$.  These are the midpoints of $n$ equally spaced
+    intervals from 0 to 1, sometimes called the \Emph{probability points}
+  \end{itemize}
+<<ppoints>>=
+ppoints(20)
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 4.4.1}
+<<ex441>>=
+cell <- c(4.23,1.89,10.52,6.46,8.32,8.6,0.41,0.91,2.66,35.71)
+(mu <- mean(cell))
+@   
+\begin{center}
+<<cellprpl,fig=TRUE,echo=FALSE,height=6>>=
+print(qqmath(~ cell,
+             distribution = function(x) qexp(p = x, rate = 1/mu),
+             aspect = 1),
+      split = c(1,1,2,1), more = TRUE)
+print(qqmath(~ cell, distribution = qexp, aspect = 1),
+      split = c(2,1,2,1))
+@   
+\end{center}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 4.41 (cont'd)}
+  \begin{itemize}
+  \item This example provides (probably fictitious) data on the
+    lifetimes of cellular telephones.
+  \item To obtain a specific exponential distribution we would
+    estimate the parameter $\mu$ by the sample mean lifetime (7.971
+    years) or the parameter $\lambda$, the rate, as $1/\widehat{\mu}$.
+  \item The function \code{qqmath} for drawing a quantile-quantile
+    plot can take a formula/data pair as the first two arguments or
+    the name of a numeric variable.  An optional argument called
+    \code{distribution} (the name can be abbreviated) describes the
+    quantile function to use.  Typically this is just the name of a
+    quantile function with the parameters at their defaults.
+  \item These plots were produced by
+  \end{itemize}
+<<plotcalls,eval=FALSE>>=
+qqmath(cell, dist = function(x) qexp(x, rate = 1/mu))
+qqmath(cell, dist = qexp)
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 4.4.2} Usually I set the aspect ratio of a qq
+  plot to be 1 so it is easier to recognize a straight line.
+<<ex442>>=
+ex442 <- c(1.76,5.71,1.17,0.49,1.09,5.56,6.82,9.48,1.54,1.88)
+@   
+<<ex442plotshow,eval=FALSE>>=
+qqmath(ex442, dist = qexp, type = c("g","p"), aspect = 1,
+       xlab = "Standard exponential quantiles")
+@   
+\begin{center}
+<<ex442plot,fig=TRUE,echo=FALSE,height=5.5>>=
+show(qqmath(ex442, dist = qexp, type = c("g","p"), aspect = 1,
+            xlab = "Standard exponential quantiles"))
+@   
+\end{center}
+\end{frame}
+\begin{frame}
+  \begin{itemize}
+  \item By far the most important probability plot is the normal
+    probability plot.
+  \item We use it to assess whether a set of observations appears to
+    come from a normal distribution (a reasonably straight increasing
+    line) or is too skewed (a ``J-shaped'' pattern) or has outliers
+    (points too far down on the left or too far up on the right) or
+    has ``heavy tails'' (same sort of pattern as outliers).
+  \item We can use the quantiles from the standard normal distribution
+    as the reference.  This is the default distribution for the
+    \code{qqmath} function so we do not need to specify it.
+  \item The combination of an empirical density plot and a normal
+    probability plot is usually the best way to evaluate whether data
+    could have come from a normal distribution.
+  \item The y-intercept of the line is the sample median.  If the line
+    is reasonably straight the intercept is close to the sample mean
+    and the slope is close to the standard deviation.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 4.4.3}
+<<ex443,eval=FALSE>>=
+len <- c(4.03,4.04,4.16,4.02,4.18,4.14,4.11,4.13,4.19,3.94,4.21,4.25)
+qqmath(len, aspect = 1, type = c("g","p"), xlab = "Standard ...")
+@   
+\begin{center}
+<<ex443plots,fig=TRUE,echo=FALSE>>=
+len <- c(4.03,4.04,4.16,4.02,4.18,4.14,4.11,4.13,4.19,3.94,4.21,4.25)
+print(densityplot(len, xlab = "Lengths (in.) of rubber strips"),
+      pos = c(0,0,0.52,1), more = TRUE)
+print(qqmath(len, aspect = 1, type = c("g","p"),
+             xlab = "Standard normal quantiles"),
+      pos = c(0.5,0,1,1))
+@   
+\end{center}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Further comments on probability plots}
+  \begin{itemize}
+  \item The text shows examples of fitting straight lines by least
+    squares to the points on a probability plot.  Generally this is
+    not considered a good idea because the points at the edges, which
+    are the ones you often want to ignore, are the most influential
+    points in a least squares fit.
+  \item The normal probability plot is the basis for a statistical
+    test of normality called the Shapiro-Wilk test implemented in the
+    \code{shapiro.test} function.  A low p-value (i.e. close to zero)
+    indicates ``significant'' departures from normality.
+  \end{itemize}
+<<shapiro>>=
+shapiro.test(len)
+@ 
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Weibull probability plots}
+  \begin{itemize}
+  \item The Weibull distribution family is a scale/shape family, not a
+    location/scale family.
+  \item We could estimate parameters for the density to create a
+    quantile-quantile plot.  An example of estimating the parameters
+    is given in section 4.3.  A better general method of parameter
+    estimation, called ``maximum likelihood'' is implemented in the
+    \code{fitdistr} function in the \code{MASS} package.
+  \end{itemize}
+<<brks>>=
+brks <- tensile$bstrength[1:14] # stored data don't agree with text
+library(MASS)
+fitdistr(brks, "weibull")
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Weibull probability plots (cont'd)} To convert the
+  Weibull distribution from a scale/shape to a location/scale family
+  we take a transformation.
+<<wiebullshow,eval=FALSE>>=
+xyplot(log(sort(brks)) ~ log(-log(1-ppoints(14))), aspect = 1)
+@   
+\begin{center}
+<<weibullplt,fig=TRUE,echo=FALSE,height=6>>=
+show(xyplot(log(sort(brks)) ~ log(-log(1-ppoints(14))),
+            aspect = 1, type = c("g","p")))
+@   
+\end{center}
+\end{frame}
