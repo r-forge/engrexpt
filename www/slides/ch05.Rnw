@@ -1,0 +1,437 @@
+% NOTE -- ONLY EDIT THE .Rnw FILE!!!  The .tex file is,
+% likely to be overwritten.
+\usepackage{SweaveSlides}
+\title[Chapter 5]{Chapter 5: Inference for a single population}
+%\subject{Models}
+\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,width=10,height=6.5,strip.white=all,keep.source=TRUE}
+\SweaveOpts{prefix=TRUE,prefix.string=figs/ch05,include=TRUE}
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents[pausesections]
+\end{frame}
+<<preliminaries,echo=FALSE,results=hide>>=
+options(width=60)
+library(EngrExpt)
+options(show.signif.stars = FALSE)
+#lattice.options(default.theme = function() standard.theme(color=FALSE))
+@ 
+\newcommand{\rvu}{\ensuremath{\mathcal{U}}}
+\newcommand{\rvw}{\ensuremath{\mathcal{W}}}
+\newcommand{\rvx}{\ensuremath{\mathcal{X}}}
+\newcommand{\rvy}{\ensuremath{\mathcal{Y}}}
+\newcommand{\rvz}{\ensuremath{\mathcal{Z}}}
+
+\section{4.1 Central Limit Theorem}
+\begin{frame}
+  \frametitle{The Central Limit Theorem}
+  \begin{itemize}
+  \item The central limit theorem is one of the most important results
+    in mathematical statistics.  It says that the sample means from a
+    \Emph{random sample} (meaning independent samples from a stable
+    process) will be normally distributed, regardless of what the
+    original distribution was, when $n$ is sufficiently large.
+  \item Formally, if $\rvy_1,\rvy_2,\dots,\rvy_n$ is a random sample
+    from a distribution with $\sigma^2<\infty$ then for large samples,
+    $\bar{\rvy}$ is approximately normally distributed.
+  \item This is a remarkably powerful result; first, because it is
+    very general and secondly because it is a description of the
+    asymptotic or ``limiting'' distribution but it holds for quite
+    small values of $n$.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Other properties of the distribution of the sample mean}
+  \begin{itemize}
+  \item If the random variables $\rvy_1,\rvy_2,\dots,\rvy_n$ are a
+    random sample (sometimes also described as a ``independent and
+    identically distributed'' or i.i.d. sample) from a distribution
+    with mean $\mu$ and variance $\sigma^2$ then
+    $\mathrm{E}(\bar{\rvy})=\mu$ and $\mathrm{Var}(\bar{\rvy}) =
+    \sigma^2/n$.
+  \item So the central limit theorem states that, for large $n$,
+    \begin{displaymath}
+      \bar{\rvy}\sim\mathcal{N}\left(\mu,\frac{\sigma^2}{n}\right)
+    \end{displaymath}
+  \item Exactly how large $n$ must be depends on the form of the
+    original distribution.  If it is continuous and reasonably
+    symmetric then $n=15$ may be large enough.  If it is skewed but
+    continuous we may need $n=30$ or more.  For discrete and skewed we
+    may need as much as $n=100$.
+  \item Although in practice we only have one sample and one average,
+    $\bar{y}$ we can use computer simulation to consider the sorts of
+    samples we could have gotten and the distribution of the statistic.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Conducting a simulation study (not part of the course)}
+  \begin{itemize}
+  \item Suppose we wish to simulate the value of a statistic
+    (e.g. mean or median or variance or standard deviation) from
+    samples of size $n$ drawn from a certain distribution.  Let $K$ be
+    the number of replicates we want to obtain.
+  \item The \Emph{sample size}, $n$, is typically small.  The number
+    of replicates, $K$, can be very large.  The larger the value of
+    $K$, the more accurately we can determine the distribution of the
+    statistic.  With modern computers we can afford to use values of
+    $K$ in the hundreds of thousands or more.
+  \end{itemize}
+\begin{itemize}
+\item First determine how to evaluate the statistic from a single
+  sample of size $n$ then use the \code{replicate} function to
+  repeat the process $K$ times.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Mean of samples of size 5 from U(-1,1)}
+  What is the shape of the distribution of the mean of a sample of
+  size $n=5$ from a $U(-1,1)$ distribution?
+<<umeansim>>=
+mns5 <- replicate(50000, mean(runif(5, min = -1, max = 1)))
+@ 
+<<umeanshistshow,eval=FALSE>>=
+histogram(~mns5,breaks = seq(-1, 1, len = 40))
+@ 
+\begin{center}
+<<umeanshist,fig=TRUE,echo=FALSE,height=4>>=
+print(histogram(~mns5,xlab=NULL,breaks = seq(-1, 1, len = 40)))
+@ 
+\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Sampling densities of statistics}
+  \begin{itemize}
+  \item The idiom 
+    \begin{center}
+      \code{replicate(K, <statfn>(r<distab>(n, <pars>)))}
+    \end{center}
+    produces \code{K} replicates of the statistic calculated by
+    \code{<statfn>} (examples are \code{mean}, \code{median},
+    \code{var} and \code{sd}) on samples of size \code{n} from
+    distribution \code{<distab>} with parameter(s) \code{<pars>}.
+  \item Typically \code{K} is large and \code{n} is small.  Values of
+    10,000 or 100,000 are used for \code{K} on modern computers.  The
+    larger the value of \code{K} the smoother the approximation to the
+    sampling density.  \code{n} is the size of the actual sample 
+    you can afford to collect.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Effect of changing the sample size, $n$}
+  \begin{itemize}
+  \item Performing multiple simulations allows us to see how
+    characteristics of the distribution of $\bar{\rvy}$ depends on $n$.
+  \end{itemize}
+<<moremeans>>=
+mns1 <- runif(50000, -1, 1)
+mns10 <- replicate(50000, mean(runif(10, -1, 1)))
+mns20 <- replicate(50000, mean(runif(20, -1, 1)))
+sapply(list(mns1, mns5, mns10, mns20), mean)
+sapply(list(mns1, mns5, mns10, mns20), var)
+@ 
+\begin{itemize}
+\item As $n$ increases the expected value of the sample mean stays
+  near 0.
+\item As $n$ increases the variance of the sample mean decreases.
+  Roughly, $V(\bar{X}_n)=\frac{1}{3}\cdot\frac{1}{n}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Shape of distribution of $\bar{X}_n$}
+  \begin{itemize}
+  \item As $n$ increases, the shape of the distribution of $\bar{X}_n$
+    tends to the ``bell-curve'' or Gaussian shape and it has less
+    variability.  That is, it tends to a ``central limit''.
+  \end{itemize}
+  \begin{center}
+<<mnshist,fig=TRUE,echo=FALSE,height=5.5>>=
+print(histogram(~ mns1 + mns5 + mns10 + mns20, outer = TRUE,
+                breaks = seq(-1,1,len = 40), layout = c(4,1),
+                xlab = "Means of samples of size n from U(-1,1)"))
+@     
+  \end{center}
+\end{frame}
+\begin{frame}
+  \frametitle{More detail on the shape of the distribution of $\bar{\rvy}$}
+  \begin{itemize}
+  \item In addition to the histogram we can use normal probability
+    plots to evaluate the deviations of the distribution of
+    $\bar{\rvy}$ from normality.
+  \end{itemize}
+  \begin{center}
+<<qqmathrunif,fig=TRUE,echo=FALSE,height = 4>>=
+print(qqmath(~ mns1 + mns5 + mns10 + mns20, outer = TRUE,
+             f.value = ppoints(200), layout = c(4,1), ylab = NULL,
+             xlab = "Means of samples of size n from U(-1,1)"))
+
+@     
+  \end{center}
+\end{frame}
+\begin{frame}
+  \frametitle{Overlaid normal probability plots for $\bar{\rvy}_n$}
+  \begin{center}
+<<qqmathoverlaid,fig=TRUE,echo=FALSE,height=5.5>>=
+show(qqmath(~ mns1 + mns5 + mns10 + mns20, outer = FALSE, type = c("g","l"),
+            ylab = NULL, aspect = 1, f.values = ppoints(200),
+            xlab = "Standard normal quantiles",
+            auto.key = list(columns = 4, lines = TRUE, points = FALSE)))
+@     
+  \end{center}
+The conclusion is that the distribution of means from an i.i.d. sample
+of a uniform distribution is very close to a normal, even for $n=5$.
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Sample means from an exponential distribution}
+<<emns>>=
+emns01 <- replicate(50000, mean(rexp(1, rate = 1/7)))
+emns05 <- replicate(50000, mean(rexp(5, rate = 1/7)))
+emns15 <- replicate(50000, mean(rexp(15, rate = 1/7)))
+emns50 <- replicate(50000, mean(rexp(50, rate = 1/7)))
+@   
+  \begin{center}
+<<eqqmathoverlaid,fig=TRUE,echo=FALSE,height=4.5>>=
+show(qqmath(~ emns01 + emns05 + emns15 + emns50,
+            outer = TRUE, type = c("g","l"),
+            ylab = NULL, aspect = 1, f.values = ppoints(200),
+            xlab = "Standard normal quantiles",
+            scales = list(y = list(relation = "free"))))
+@     
+  \end{center}
+  Even for $n=50$ there is noticeable skewness in the distribution
+  (althought we would not be far wrong in assuming normality at
+  $n=50$).
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Elementary uses of the C.L.T.}
+  \begin{itemize}
+  \item If we have plausible values of the variance of our process,
+    perhaps from a pilot study, we can use the normal distribution and
+    the Central Limit Theorem (C.L.T.) to evaluate probabilities
+    regarding the sample mean.
+  \item Example 5.1.3 discusses product lifetimes that have an unknown
+    mean and a variance of approximately 8 years.  The number of
+    products to sample so that we are 95\% certain that $\bar{y}$ will
+    be within 1 year of the true mean is derived from
+    \begin{displaymath}
+      \begin{aligned}
+        0.95&=P(|\bar{\rvy}-\mu|<1)
+      \end{aligned}
+    \end{displaymath}
+    The distribution of $\bar{\rvy}$ will be approximately normal with
+    mean $\mu$ and standard deviation $\sigma/\sqrt{n}$.  For a
+    standard normal, 95\% of the probability is within ``2'' standard
+    deviations of the mean (the actual multiple is \code{qnorm(0.025)=
+      \Sexpr{round(qnorm(0.025), 5)}}) so we want
+    $1=\mathtt{qnorm}(0.025)^2\frac{8}{n}$.  That is, $n >$
+  \end{itemize}
+<<>>=
+8 * qnorm(0.025)^2
+@ 
+\end{frame}
+\begin{frame}
+  \frametitle{Approximations for binomial or Poisson distributons}
+  \begin{itemize}
+  \item The text describes approximations of the probabilities for a
+    binomial or Poisson distribution based on the normal distributon.
+  \item These are interesting from the point of view of understanding
+    that these distributions will tend to have a ``bell-curve'' shape
+    when $n$ is large and $p$ is moderate for the binomial or
+    $\lambda\,t$ is large for the Poisson.
+  \item In practice, though, you can evaluate probabilities for such
+    distributions exactly so there is no need to use approximations.
+  \end{itemize}
+\end{frame}
+
+\section[4.2 Conf. int. for $\mu$]{4.2 A confidence interval for $\mu$}
+\begin{frame}
+  \frametitle{Confidence intervals}
+  \begin{itemize}
+  \item Our ``best guess'' at a parameter is called a \Emph{point
+      estimate}.  For example, we usually use the sample mean,
+    $\bar{y}$, as the point estimate of $\mu$.
+  \item An \Emph{interval estimate} or \Emph{confidence interval} is
+    an interval of plausible values for the parameter.  Values outside
+    the interval are ``unreasonable'' and values inside are ``not
+    unreasonable''.
+  \item To calibrate the meaning of ``unreasonable'' we assign a value
+    $\alpha$ to the probability of getting data like we did or even
+    more extreme when the parameter is outside.  This corresponds to
+    the ``p-value'' in a hypothesis test.
+  \item The \Emph{coverage probability} or \Emph{confidence level} is
+    $1-\alpha$.  Typically we set $\alpha=0.05$ or $\alpha=0.01$
+    resulting in 95\% or 99\% confidence intervals.
+  \item Formally, the coverage probability is the probability that an
+    interval constructed in this way will cover the true parameter
+    value.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{A confidence interval on $\mu$}
+  \begin{itemize}
+  \item In the unlikely event that someone were to tell us what the
+    standard deviation, $\sigma$, of the population was but somehow
+    not know much about the mean, $\mu$, we could create a
+    $(1-\alpha)$ confidence interval as
+    \begin{displaymath}
+      \bar{y}\pm z(\alpha/2)\frac{\sigma}{n}
+    \end{displaymath}
+    where $z(\alpha/2)$ is the \textbf{upper} $\alpha/2$ quantile of
+    the standard normal distribution.
+
+  \item For example, the upper 0.025 quantile of the standard normal is
+<<qnorm025>>=
+qnorm(0.025, low = FALSE)
+@ 
+so a 95\% confidence interval on $\mu$ for this artificial, ``known
+sigma'' case is
+\begin{displaymath}
+  \bar{y}\pm1.959964 \frac{\sigma}{\sqrt{n}}
+\end{displaymath}
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Use of Student's T distribution}
+  \begin{itemize}
+  \item In the real world no one tells us what $\sigma$ is and we must
+    estimate it as $s$.  A statistician named William Gossett, who
+    wrote under the pseudonym ``A Student'', derived the distribution
+    of the shifted, scaled sample mean when the scale is based on the
+    estimate, $s$, not the theoretical value $\sigma$.
+  \item This distribution is called the ``Student's t distribution''.
+    It is similar to the standard normal distribution but a bit more
+    spread out.  The spreading depends on the number of
+    ``degrees of freedom'' in the estimate of $\sigma^2$.  The degrees
+    of freedom are written as $\nu$.  For a single sample $\nu=n-1$.
+  \item As $\nu$ increases the T distribution approaches the standard
+    normal.  If we were using tables we would call anything with
+    $\nu>30$ a standard normal.  When using a computer we don't
+    bother.
+  \item Notation: the t distribution with $\nu$ degrees of freedom is
+    written $t(\nu)$.  The corresponding \R{} functions are \code{dt},
+    \code{pt}, \code{qt} and \code{rt}.  The upper $\alpha$ quantile
+    is written $t(\alpha;\nu)$.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Graphical comparison of $t(\nu)$ and $\rvz$}
+  \begin{center}
+<<tdensity,fig=TRUE,echo=FALSE>>=
+xv <- seq(-4.5, 4.5, 0.01)
+print(xyplot(dnorm(xv)+dt(xv,25)+dt(xv,10)+dt(xv,5) ~ xv,
+             scales = list(x = list(axs = "i")),
+             ylab = NULL, xlab = NULL, type = c("g", "l"),
+             auto.key = list(text = expression(Z, T[25], T[10], T[5]),
+             points = FALSE, lines = TRUE, columns = 4)))
+@ 
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{General form of the confidence interval}
+  \begin{itemize}
+  \item The general form of the confidence interval on $\mu$ is
+    \begin{displaymath}
+      \bar{y}\pm t\left(\frac{\alpha}{2}, n - 1\right)\frac{s}{\sqrt{n}}
+    \end{displaymath}
+  \item We can use this formula for any values of $n$.  If $n$ is
+    large we don't need strong assumptions on the shape of the
+    original distribution.  If $n$ is small we must assume that the
+    original distribution is close to the normal (but, of course, we
+    can't check this with a small sample - a ``Catch 22'' situation).
+  \item The \R function to create this interval is \code{t.test}.  The
+    name comes from the corresponding hypothesis test, which we will
+    discuss later.
+  \end{itemize}
+\end{frame}
+<<opdig,echo=FALSE,results=hide>>=
+op <- options(digits=5)
+@ 
+\begin{frame}[fragile]
+  \frametitle{Example 5.2.2} The example provides (probably
+  fictitious) discharge times for a particular electric vehicle
+<<times>>=
+charge <- c(5.11,2.1,4.27,5.04,4.47,3.73,5.96,6.21)
+c(summary(charge), sd = sd(charge))
+t.test(charge)
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 5.2.2 (cont'd)} Because the degrees of freedom,
+  $\nu=7$, are quite small we should check for normality.
+  \begin{center}
+<<chargeplot,fig=TRUE,echo=FALSE,height=4.5>>=
+print(densityplot(charge,xlab = "Discharge times"),
+      pos = c(0,0,0.65,1), more = TRUE)
+print(qqmath(charge,type=c("g","p"), aspect=1, ylab = NULL,
+             xlab = NULL), pos = c(0.65,0,1,1))
+@   
+  \end{center}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Clear-coat thickness (example 5.2.4}
+\begin{center}
+<<thickplot,fig=TRUE,width=12,height=3.5,echo=FALSE>>=
+print(qqmath(~ thickness, ccthickn, aspect = 1,
+             xlab = "Standard normal quantiles"),
+      pos = c(0,0,0.40,1), more = TRUE)
+print(densityplot(~thickness, ccthickn),
+      pos = c(0.40,0,1,1))
+@   
+\end{center}
+<<assaydat>>=
+with(ccthickn, c(summary(thickness), sd = sd(thickness)))
+with(ccthickn, t.test(thickness, mu = 65, conf = 0.9))
+@ 
+\end{frame}
+<<unopt,echo=FALSE,results=hide>>=
+options(op)
+@ 
+\begin{frame}
+  \frametitle{Sample sizes}
+  \begin{itemize}
+  \item The half-width of a confidence interval, also called the
+    \Emph{margin of error} depends on
+    \begin{description}
+    \item[The confidence level] Higher confidence levels require wider
+      intervals
+    \item[The standard deviation] More variability in the original
+      distribution results in wider intervals.
+    \item[The sample size] Larger samples produce narrower intervals.
+    \end{description}
+  \item Given a working value for $\sigma$ we can determine the sample
+    size needed to attain a given margin of error.
+  \item If we are willing to assume that $n$ is large we can use
+    $z(\alpha/2)$ in the calculation.  For small $n$ it gets tricky
+    because $\nu=n-1$ determines the multiplier when, in turn, affects
+    the sample size. We must solve a nonlinear equation but
+    computers are good at that. 
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Sample size calculations}
+  \begin{itemize}
+  \item Example 5.2.5 shows calculations for the sample size from the formula
+      $n = \left[\frac{t(\alpha/2;\infty)s}{d}\right]^2$
+    when the desired margin of error, $d$, is 0.2, the working value
+    of $s$ is 0.4 and $\alpha$ is 5\% and we round the answer to the
+    next largest integer.
+<<sampsz>>=
+ceiling((qnorm(0.025)*0.4/0.2)^2)
+@     
+\item Because this is a small value of $n$ we should instead solve for
+  $n$ in $n = \left[\frac{t(\alpha/2;n-1)s}{d}\right]^2$
+\end{itemize}
+<<sampreal>>=
+ceiling(uniroot(function(x) x-(qt(.025,x-1)*0.4/0.2)^2,
+                c(2,100))$root)
+@ 
+\end{frame}
