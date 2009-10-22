@@ -435,3 +435,46 @@ ceiling(uniroot(function(x) x-(qt(.025,x-1)*0.4/0.2)^2,
                 c(2,100))$root)
 @ 
 \end{frame}
+
+\section{5.3 Prediction and tolerance intervals}
+
+\begin{frame}
+  \frametitle{Section 5.3: Prediction and tolerance intervals}
+  \begin{itemize}
+  \item A confidence interval on $\mu$ provides a measure of the
+    precision of the information regarding the unknown population
+    parameter.  It does not directly tell us about bounds on where we
+    expect a future observation to fall.
+  \item A \Emph{prediction interval} indicates where a single future
+    observation is likely to be.
+  \item A \Emph{tolerance interval} indicates where a large proportion
+    of the population is likely to be.
+  \item Unlike the confidence interval on $\mu$, prediction intervals
+    and tolerance intervals depend strongly on the shape of the
+    distribution of the data.
+  \item In theory one can make a confidence interval arbitrarily
+    narrow by taking a sufficiently large sample.  You can't do this
+    for a prediction interval.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Prediction intervals on a future observation}
+  \begin{itemize}
+  \item If it is reasonable to assume that the \Emph{data}
+    (i.e. $\rvy_1,\rvy_2,\dots,\rvy_n$) are from normal distribution
+    then we could say that a model for the data is
+    \begin{displaymath}
+      \rvy_i=\mu+\epsilon_i,\quad \epsilon_i\sim\mathcal{N}(0,\sigma^2)
+    \end{displaymath}
+  \item Our estimate $\widehat{\mu}=\bar{\rvy}_n$ is independent of
+    $\epsilon_{n+1}$.  The variability in the difference between
+    $\rvy_{n+1}$ and $\bar{\rvy}_n$ is the sum of the variability in
+    $\bar{\rvy}_n-\mu$ ($\frac{\sigma^2}{n}$) and the variability in
+    $\epsilon_{n+1}$ ($\sigma^2$).
+  \item Because we estimate $\sigma^2$ the $(1-\alpha)$ prediction
+    interval becomes
+    \begin{displaymath}
+      \bar{y}\pm t(\alpha/2;n-1)s\sqrt{1+\frac{1}{n}}
+    \end{displaymath}
+  \end{itemize}
+\end{frame}
