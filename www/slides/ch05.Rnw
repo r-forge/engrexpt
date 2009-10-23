@@ -25,7 +25,7 @@ options(show.signif.stars = FALSE)
 \newcommand{\rvy}{\ensuremath{\mathcal{Y}}}
 \newcommand{\rvz}{\ensuremath{\mathcal{Z}}}
 
-\section{4.1 Central Limit Theorem}
+\section{5.1 Central Limit Theorem}
 \begin{frame}
   \frametitle{The Central Limit Theorem}
   \begin{itemize}
@@ -251,7 +251,7 @@ show(qqmath(~ emns01 + emns05 + emns15 + emns50,
   \end{itemize}
 \end{frame}
 
-\section[4.2 Conf. int. for $\mu$]{4.2 A confidence interval for $\mu$}
+\section[5.2 Conf. int. for $\mu$]{5.2 A confidence interval for $\mu$}
 \begin{frame}
   \frametitle{Confidence intervals}
   \begin{itemize}
@@ -286,7 +286,6 @@ show(qqmath(~ emns01 + emns05 + emns15 + emns50,
     \end{displaymath}
     where $z(\alpha/2)$ is the \textbf{upper} $\alpha/2$ quantile of
     the standard normal distribution.
-
   \item For example, the upper 0.025 quantile of the standard normal is
 <<qnorm025>>=
 qnorm(0.025, low = FALSE)
@@ -356,17 +355,22 @@ print(xyplot(dnorm(xv)+dt(xv,25)+dt(xv,10)+dt(xv,5) ~ xv,
 op <- options(digits=5)
 @ 
 \begin{frame}[fragile]
-  \frametitle{Example 5.2.2} The example provides (probably
-  fictitious) discharge times for a particular electric vehicle
+  \frametitle{Example 5.2.2}
+
+  The example provides (probably fictitious) discharge times for a
+  particular electric vehicle
 <<times>>=
-charge <- c(5.11,2.1,4.27,5.04,4.47,3.73,5.96,6.21)
-c(summary(charge), sd = sd(charge))
+sd(charge <- c(5.11,2.1,4.27,5.04,4.47,3.73,5.96,6.21))
+summary(charge)
 t.test(charge)
 @   
 \end{frame}
+
 \begin{frame}[fragile]
-  \frametitle{Example 5.2.2 (cont'd)} Because the degrees of freedom,
-  $\nu=7$, are quite small we should check for normality.
+  \frametitle{Example 5.2.2 (cont'd)}
+
+  Because the degrees of freedom, $\nu=7$, are quite small we should
+  check for normality.
   \begin{center}
 <<chargeplot,fig=TRUE,echo=FALSE,height=4.5>>=
 print(densityplot(charge,xlab = "Discharge times"),
@@ -376,8 +380,28 @@ print(qqmath(charge,type=c("g","p"), aspect=1, ylab = NULL,
 @   
   \end{center}
 \end{frame}
+
 \begin{frame}[fragile]
-  \frametitle{Clear-coat thickness (example 5.2.4}
+  \frametitle{Another \R{} evaluation of confidence intervals}
+  \begin{itemize}
+  \item Another way of evaluating a confidence intervals on $\mu$ is
+    with the \code{confint} function, which provides confidence
+    intervals on the parameters in a fitted model.
+  \item To use \code{confint} we fit what we sometimes call the
+    ``trivial'' model
+    \begin{displaymath}
+      \rvy_i = \mu + \epsilon_i,\quad i=1,\dots,n
+    \end{displaymath}
+    The estimate of $\mu$, $\widehat{\mu}=\bar{y}$ will be called
+    \code{(Intercept)} in the output.  The formula for the model
+    contains the constant term, \code{1}, as the only predictor.
+  \end{itemize}
+<<confint1>>=
+confint(fm1 <- lm(charge ~ 1))
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Clear-coat thickness (example 5.2.4)}
 \begin{center}
 <<thickplot,fig=TRUE,width=12,height=3.5,echo=FALSE>>=
 print(qqmath(~ thickness, ccthickn, aspect = 1,
@@ -388,13 +412,34 @@ print(densityplot(~thickness, ccthickn),
 @   
 \end{center}
 <<assaydat>>=
-with(ccthickn, c(summary(thickness), sd = sd(thickness)))
-with(ccthickn, t.test(thickness, mu = 65, conf = 0.9))
+with(ccthickn, summary(thickness))
+sd(ccthickn$thickness)
+confint(fm2 <- lm(thickness ~ 1, ccthickn))
 @ 
 \end{frame}
 <<unopt,echo=FALSE,results=hide>>=
 options(op)
 @ 
+\begin{frame}[fragile]
+  \frametitle{Clear-coat thickness (cont'd)}
+
+  The summary of the fit of the ``trivial'' model includes many of the
+  statistics from the data.
+<<fm2sumshow,eval=FALSE>>=
+summary(fm2)
+@ 
+<<fm2sum,echo=FALSE>>=
+cat(paste(capture.output(summary(fm2))[-(1:9)], "", sep="\n"))
+@ 
+The values in this summary include
+\begin{description}
+\item[$\bar{y}=64.26$] The parameter estimate, $\hat{\mu}$.
+\item[$s=2.718$] The sample standard deviation, $\hat{\sigma}$
+\item[$n-1=39$] The degrees of freedom, $\nu$, for the variance estimate, $s^2$.
+\item[$\frac{s}{\sqrt{n}}=0.4297$] The standard error of the mean, $\sqrt{\textrm{Var}(\bar{\rvy})}$
+\end{description}
+
+\end{frame}
 \begin{frame}
   \frametitle{Sample sizes}
   \begin{itemize}
@@ -411,7 +456,7 @@ options(op)
     size needed to attain a given margin of error.
   \item If we are willing to assume that $n$ is large we can use
     $z(\alpha/2)$ in the calculation.  For small $n$ it gets tricky
-    because $\nu=n-1$ determines the multiplier when, in turn, affects
+    because $\nu=n-1$ determines the multiplier which, in turn, affects
     the sample size. We must solve a nonlinear equation but
     computers are good at that. 
   \end{itemize}
@@ -476,5 +521,64 @@ ceiling(uniroot(function(x) x-(qt(.025,x-1)*0.4/0.2)^2,
     \begin{displaymath}
       \bar{y}\pm t(\alpha/2;n-1)s\sqrt{1+\frac{1}{n}}
     \end{displaymath}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Evaluating a prediction interval}
+  \begin{itemize}
+  \item The prediction interval could be evaluated according to the
+    formula.  For the clear-coat thickness data the 95\% prediction
+    interval on a future thickness measurement is
+  \end{itemize}
+<<ccthick>>=
+with(ccthickn, mean(thickness) + c(-1,1) * qt(0.975, 39) *
+     sd(thickness) * sqrt(1 + 1/40))
+@
+  \begin{itemize}
+  \item An alternative is to use the \code{predict} function applied
+    to the trivial model and with the optional argument \code{interval
+      = "pred"}.  This produces a matrix with n rows that are
+    identical so I just look at the first row.
+  \end{itemize}
+<<pred>>=
+predict(fm2, int = "pred")[1,]
+@   
+\end{frame}
+
+\begin{frame}
+  \frametitle{Tolerance intervals}
+  \begin{itemize}
+  \item A tolerance interval is more difficult to describe and to
+    calculate than is a prediction interval.
+  \item Methods for tolerance intervals are given in the text but we
+    will not cover this topic in this course.
+  \end{itemize}
+\end{frame}
+
+\section{5.4 Hypothesis tests}
+
+\begin{frame}
+  \frametitle{Section 5.4 Hypothesis tests}
+  \begin{itemize}
+  \item A hypothesis test is a procedure for deciding if a particular
+    value of a parameter is reasonable, given the observed data.
+  \item We have a probability model (e.g. our sample is a random
+    sample from a normal distribution with mean $\mu$ and variance
+    $\sigma^2$), the observed data, $y_1,y_2,\dots,y_n$ and a
+    particular value of the parameter in mind (e.g. the mean
+    clear-coat thickness should be 65 microns).
+  \item We consider two competing claims called the \Emph{null
+      hypothesis}, written $H_0$, and the \Emph{alternative
+      hypothesis}, written $H_a$.
+  \item $H_0$ is the ``no change'' assumption.  For our example, it is
+    $\mu=65$.  $H_a$ is the result we are trying to establish.  It is
+    also the result indicated by the data.  In our example
+    $\bar{y}=64.26$ microns.  If we are interested only in whether we
+    are ``on target'' then $H_a:\mu\ne 65$.  If we are interested in
+    whether the clear coats are systematically too thin then
+    $H_a:\mu<65$.
+  \item These are called ``two-tailed'' and ``one-tailed''
+    alternatives, respectively.
   \end{itemize}
 \end{frame}
