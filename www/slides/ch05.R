@@ -112,8 +112,8 @@ op <- options(digits=5)
 ###################################################
 ### chunk number 15: times
 ###################################################
-charge <- c(5.11,2.1,4.27,5.04,4.47,3.73,5.96,6.21)
-c(summary(charge), sd = sd(charge))
+sd(charge <- c(5.11,2.1,4.27,5.04,4.47,3.73,5.96,6.21))
+summary(charge)
 t.test(charge)
 
 
@@ -127,7 +127,13 @@ print(qqmath(charge,type=c("g","p"), aspect=1, ylab = NULL,
 
 
 ###################################################
-### chunk number 17: thickplot
+### chunk number 17: confint1
+###################################################
+confint(fm1 <- lm(charge ~ 1))
+
+
+###################################################
+### chunk number 18: thickplot
 ###################################################
 print(qqmath(~ thickness, ccthickn, aspect = 1,
              xlab = "Standard normal quantiles"),
@@ -137,28 +143,54 @@ print(densityplot(~thickness, ccthickn),
 
 
 ###################################################
-### chunk number 18: assaydat
+### chunk number 19: assaydat
 ###################################################
-with(ccthickn, c(summary(thickness), sd = sd(thickness)))
-with(ccthickn, t.test(thickness, mu = 65, conf = 0.9))
+with(ccthickn, summary(thickness))
+sd(ccthickn$thickness)
+confint(fm2 <- lm(thickness ~ 1, ccthickn))
 
 
 ###################################################
-### chunk number 19: unopt
+### chunk number 20: unopt
 ###################################################
 options(op)
 
 
 ###################################################
-### chunk number 20: sampsz
+### chunk number 21: fm2sumshow eval=FALSE
+###################################################
+## summary(fm2)
+
+
+###################################################
+### chunk number 22: fm2sum
+###################################################
+cat(paste(capture.output(summary(fm2))[-(1:9)], "", sep="\n"))
+
+
+###################################################
+### chunk number 23: sampsz
 ###################################################
 ceiling((qnorm(0.025)*0.4/0.2)^2)
 
 
 ###################################################
-### chunk number 21: sampreal
+### chunk number 24: sampreal
 ###################################################
 ceiling(uniroot(function(x) x-(qt(.025,x-1)*0.4/0.2)^2,
                 c(2,100))$root)
+
+
+###################################################
+### chunk number 25: ccthick
+###################################################
+with(ccthickn, mean(thickness) + c(-1,1) * qt(0.975, 39) *
+     sd(thickness) * sqrt(1 + 1/40))
+
+
+###################################################
+### chunk number 26: pred
+###################################################
+predict(fm2, int = "pred")[1,]
 
 
