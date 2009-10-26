@@ -25,7 +25,7 @@ options(show.signif.stars = FALSE)
 \newcommand{\rvy}{\ensuremath{\mathcal{Y}}}
 \newcommand{\rvz}{\ensuremath{\mathcal{Z}}}
 
-\section{5.1 Central Limit Theorem}
+\section[5.1 Central Limit Thm.]{5.1 Central Limit Theorem}
 \begin{frame}
   \frametitle{The Central Limit Theorem}
   \begin{itemize}
@@ -481,7 +481,7 @@ ceiling(uniroot(function(x) x-(qt(.025,x-1)*0.4/0.2)^2,
 @ 
 \end{frame}
 
-\section{5.3 Prediction and tolerance intervals}
+\section[5.3 Prediction int.]{5.3 Prediction and tolerance intervals}
 
 \begin{frame}
   \frametitle{Section 5.3: Prediction and tolerance intervals}
@@ -565,9 +565,9 @@ predict(fm2, int = "pred")[1,]
     value of a parameter is reasonable, given the observed data.
   \item We have a probability model (e.g. our sample is a random
     sample from a normal distribution with mean $\mu$ and variance
-    $\sigma^2$), the observed data, $y_1,y_2,\dots,y_n$ and a
+    $\sigma^2$), the observed data, $y_1,y_2,\dots,y_n$, and a
     particular value of the parameter in mind (e.g. the mean
-    clear-coat thickness should be 65 microns).
+    clear-coat thickness, $\mu$, should be 65 microns).
   \item We consider two competing claims called the \Emph{null
       hypothesis}, written $H_0$, and the \Emph{alternative
       hypothesis}, written $H_a$.
@@ -575,10 +575,67 @@ predict(fm2, int = "pred")[1,]
     $\mu=65$.  $H_a$ is the result we are trying to establish.  It is
     also the result indicated by the data.  In our example
     $\bar{y}=64.26$ microns.  If we are interested only in whether we
-    are ``on target'' then $H_a:\mu\ne 65$.  If we are interested in
+    are ``off target'' then $H_a:\mu\ne 65$.  If we are interested in
     whether the clear coats are systematically too thin then
     $H_a:\mu<65$.
   \item These are called ``two-tailed'' and ``one-tailed''
     alternatives, respectively.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{The p-value for a hypothesis test}
+  \begin{itemize}
+  \item We would like to establish $H_a$ directly but, because of the
+    variability in the data, we can't.
+  \item Instead we try to ``rule out'' $H_0$.  Again, because of the
+    variability we can't rule it out completely.  What we do is to
+    calculate ``the probability of seeing the data that we did, or
+    something even more unusual, assuming that $H_0$ is true''.  This
+    is called the \emph{p-value} for the test.
+  \item Because the p-value is a probability it must be between 0 and
+    1.  If the p-value is small (i.e. close to 0) we reject $H_0$ in
+    favor of $H_a$.  If the p-value is not small we fail to reject $H_0$.
+  \item Note that we never confirm $H_0$.  We either reject it
+    (i.e. rule it out) or fail to reject it (i.e. are unable to rule
+    it out).  The latter conclusion represents ``no decision''.
+  \item The p-value is evaluated assuming $H_0$ is true.  The form of
+    the evaluation depends on $H_a$.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Performing a hypothesis test}
+  \begin{itemize}
+  \item To set up a hypothesis test you must first decide on $H_0$ and
+    $H_a$.  See pages 190--191 in the text for examples.  Determine if
+    you want a one-sided or two-sided alternative.  If two-sided you
+    are done.  If one-sided then the only claim that makes sense as
+    $H_a$ is the one indicated by the data.
+  \item The text describes methods based on rejection regions and
+    critical values of test statistics.  These are used when you can't
+    calculate probabilities for distributions like the T
+    distribution.  We can do that so we use the more direct approach.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Examples 5.4.5, 5.4.7 and 5.4.10}
+  \begin{itemize}
+  \item The situation described in examples 5.4.5 and 5.4.7 involves
+    drums of material that should have a mass of 230 kg.  A random
+    sample of size 25 yields $\bar{y}=229$ and $s=4$.
+  \item The sample mean
+    is less than the nominal value of 230 kg.  We wish to determine if
+    it is ``significantly less'' than 230 kg.  Our test is of the form
+    \begin{displaymath}
+      H_0:\mu=230\quad\mathrm{vs.}\quad H_a:\mu<230
+    \end{displaymath}
+  \item The observed t statistic, assuming that $H_0$ is true, is
+    \begin{displaymath}
+      t_\mathrm{obs}=\frac{229-230}{4/\sqrt{25}}=-1.25
+    \end{displaymath}
+  \item The probability of seeing values like this, or even more
+    extreme, when $H_0$ is true, is $P(T_{24}\le-1.25)$ which we
+    evaluate as \code{pt(-1.25, df = 24)} =
+    \Sexpr{sprintf("%.4f",pt(-1.25, df=24))}.  This value is not
+    sufficiently small for us to ``rule out'' or reject $H_0$.
   \end{itemize}
 \end{frame}
