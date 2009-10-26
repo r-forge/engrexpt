@@ -639,3 +639,208 @@ predict(fm2, int = "pred")[1,]
     sufficiently small for us to ``rule out'' or reject $H_0$.
   \end{itemize}
 \end{frame}
+\begin{frame}
+  \frametitle{Use of the R function t.test}
+  \begin{itemize}
+  \item The \code{t.test} function in \R{} is used for one- or
+    two-sample t tests on the population mean, $\mu$.
+
+  \item In the one-sample form you must specify the variable name as
+    the first argument.  Use \code{with} or the \$ operator to access
+    a variable in a data frame.
+
+  \item You should specify the nominal value $\mu_0$ of the population
+    mean as the \code{mu} argument.
+    
+  \item The default alternative is \code{"two.sided"}.  Specify
+    \code{alt = "greater"} or \code{alt = "less"} for one-sided
+    alternatives.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Clear-coat thickness data}
+
+  The \code{ccthickn} data are from a process with a target thickness
+  of 65 microns but the sample mean, $\bar{y}=64.24$ microns.  Is this
+  ``significant evidence'' the $\mu<65$?
+<<ccthicknttest>>=
+with(ccthickn, t.test(thickness, mu = 65, alt = "less"))
+@   
+\end{frame}
+\begin{frame}
+  \frametitle{Sample sizes}
+  \begin{itemize}
+  \item Our conclusion in a hypothesis test is either to ``rule out''
+    or reject $H_0$ in favor of $H_a$ or to fail to rule $H_0$ out.
+  \item We don't know if $H_0$ is true or not.  If it is true and we
+    reject it, we have made one type of ``error'' or
+    mis-classification.  If it is false and we fail to reject it we
+    have made another type of ``error''.  These are called Type I and
+    Type II, respectively.
+  \item For a test on a particular set of data the probability of a
+    Type I error in rejecting $H_0$ is the p-value.  For planning
+    purposes we control for this type of error by saying it should not
+    exceed some value, $\alpha$.  Typically $\alpha = 0.05$ or $\alpha
+    = 0.01$.
+  \item To evaluate the probability of a Type II error we must specify
+    a specific alternative, such as $\mu_1$, instead of a general
+    alternative like $\mu\ne\mu_0$.  We also need a working value of
+    $\sigma$.
+  \item The \Emph{power} of a test is a function of $\mu_1$.  It is
+    the probability of rejecting $H_0:\mu=\mu_0$ when $\mu=\mu_1$.
+    Sometimes it is written as $1-\beta$.  In the text it is $\gamma$.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Use of power.t.test in R}
+  \begin{itemize}
+  \item The function \code{power.t.test} can be used to evaluate the
+    power or the sample size for one- and two-sample t-tests.
+  \item Two out of the three arguments \code{n}, \code{delta}
+    ($=\mu_1-\mu_0$) and \code{power} must be specified and the third
+    is calculated.
+  \item By default \code{delta} is in standard deviation units
+    (i.e. $\delta=\frac{\mu_1-\mu_0}{\sigma}$).  If you want to
+    specify \code{delta} in the units of the response you should also
+    give a value for the optional argument \code{sd} (= working value
+    of $\sigma$).
+  \item The default test type is \code{"two.sample"} (the next
+    chapter).  For this chapter specify \code{type = "one.sample"}.
+  \item The default alternative is \code{"two.sided"}.  For one-sided
+    alternatives specify \code{alt = "one"}.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 5.4.13}
+  \begin{itemize}
+  \item This example involves a test of $H_0:\mu=5$ versus $H_a:\mu>5$
+    (i.e. a one-sample test with a one-sided alternative) with
+    $\sigma=1$, $\alpha=0.05$, $\mu_1=6$ and a power of 80\% or 0.8.
+<<sampsize>>=
+power.t.test(delta = 1, sd = 1, sig = 0.05, power = 0.8,
+             type = "one", alt = "one")
+@   
+  \item We round fractional sample sizes up so we would use a sample of
+    size $n=8$.  Note that the sample size calculated in this example in
+    the text, assuming a ``known'' value of $\sigma$ and not an
+    estimated value, is $n=7$.
+  \item The values \code{sig = 0.05} and \code{sd = 1} are the
+    defaults and could be omitted.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 5.4.14}
+  \begin{itemize}
+  \item This example is like the previous one except that the
+    magnitude of $\delta=\mu_1-\mu_0$ is now 1.5 mg and the desired
+    power is 90\%.
+  \item The larger tolerance decreases $n$ and the higher power
+    increases $n$.  The net effect is to decrease $n$.
+  \end{itemize}
+<<sampsize1>>=
+power.t.test(del = 1.5, pow = 0.9, type = "one", alt = "one")
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 5.4.16}
+  \begin{itemize}
+  \item As explained in the text, in practice we should use the T
+    distribution and not the standard normal distribution for
+    calculating sample sizes.  This is what \code{power.t.test} does.
+    The text provides an alternative based on tables but they are very
+    coarse.
+  \item The important quantity is written in the text as
+    $d=\frac{\mu-\mu_0}\sigma$.  In the \R{} function it is \code{delta}
+  \item For this example $d=0.4$ with 90\% power on a one-tailed,
+    one-sample test.
+  \end{itemize}
+<<sampsize2>>=
+power.t.test(del = 0.4, pow = 0.9, typ = "one", alt = "one")
+@   
+\end{frame}
+
+\section[5.5 Binomial]{5.5 Inference for Binomial Populations}
+\begin{frame}
+  \frametitle{Section 5.5, Inference for Binomial Populations}
+  \begin{itemize}
+  \item Results from a binomial simply consist of the number of
+    ``successes'', $y$, and the number of trials, $n$.  This is
+    already an i.i.d. sample, $\rvy_1,\rvy_2,\dots,\rvy_n$, if we
+    consider each $\rvy_i$ as giving a binary (0/1) response.
+  \item The parameter estimate is $\hat{p}=\frac{y}{n}$.
+  \item Often approximate confidence intervals and hypothesis tests
+    are formulated based on a normal distribution for $\hat{P}$ using
+    a mean of $p$ and a variance of $\frac{p(1-p)}{n}$.
+  \item However, we can do better.  In particular, the p-value for a
+    hypothesis test can be calculated exactly.  We use
+    \code{binom.test} for a one-sample binomial test and
+    \code{prop.test} for comparing results from multiple
+    samples. Sample sizes are calculated with \code{power.prop.test}.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 5.5.4}
+  \begin{itemize}
+  \item We observe $y=18$ defectives in a sample of $n=1000$ from a
+    process where the nominal defect rate is 1\%.  Test $H_0:p=0.01$
+    versus $H_0:p>0.01$
+  \end{itemize}
+<<binomtest1>>=
+binom.test(18, 1000, p = 0.01, alt = "greater")
+sum(dbinom(18:1000, 1000, 0.01)) # explicit P(Y >= 18) for H0 true
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Comparison to results in the text}
+  \begin{itemize}
+  \item In the text the p-values for tests on a binomial distribution
+    are calculated through a normal approximation and not the binomial
+    distribution.
+  \item This results in p-values that are lower than they should be,
+    which is dangerous.  E.g. the text's p-value for Example 5.5.5 is
+    0.0055 versus the exact calculation of 0.01383.  That could be
+    important.
+  \item Example 5.5.6 in the text gives a p-value of 0.0089 for a test
+    of $H_0:p=0.05$ versus $H_a:p>0.05$ for $y=8$ and $n=72$.  The
+    more accurate value is
+  \end{itemize}
+<<binomtest>>=
+binom.test(8, 72, p = 0.05, alt = "greater")$p.value
+sum(dbinom(8:72, size = 72, prob = 0.05))
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Confidence intervals on p}
+  \begin{itemize}
+  \item The \code{binom.test} function produces a confidence interval
+    based on ``inverting'' the exact hypothesis test.  Usually we want
+    to two-sided alternative when forming a confidence interval.
+  \item The \code{conf.level} argument can be used to set the desired
+    confidence level (default is 95\%).
+  \item These intervals are more reliable than those given in the book.
+  \item Example 5.5.1 has $y=27$ out of $n=200$.  The 95\% confidence
+    interval should be
+<<ex551>>=
+binom.test(27, 200)$conf.int
+@
+
+Notice that it is wider on the side towards $p=0.5$ than on the other
+side.  This is a characteristic of the binomial.
+  \end{itemize}
+
+\end{frame}
+\begin{frame}
+  \frametitle{Sample sizes for tests on the binomial}
+  \begin{itemize}
+  \item Formulas (5.5.4), (5.5.7) and (5.5.8) in the text allow for
+    calculating sample sizes for a confidence intervals with a given
+    margin of error, $d$, or for tests with a null hypothesis of the
+    form $H_0:p=p_0$.
+  \item All of these formulas are based on the normal approximation
+    and will give values that are a bit too small.
+  \item In the two-sample case (next chapter) we can use the function
+    \code{power.prop.test} to determine the sample size for the two
+    samples.
+  \end{itemize}
+\end{frame}
+
