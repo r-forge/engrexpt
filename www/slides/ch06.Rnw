@@ -1,0 +1,145 @@
+% NOTE -- ONLY EDIT THE .Rnw FILE!!!  The .tex file is,
+% likely to be overwritten.
+\usepackage{SweaveSlides}
+\title[Chapter 6]{Chapter 6: Comparing Two Populations}
+%\subject{Models}
+\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,width=10,height=6.5,strip.white=all,keep.source=TRUE}
+\SweaveOpts{prefix=TRUE,prefix.string=figs/ch06,include=TRUE}
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents[pausesections]
+\end{frame}
+<<preliminaries,echo=FALSE,results=hide>>=
+options(width=60)
+library(EngrExpt)
+options(show.signif.stars = FALSE)
+#lattice.options(default.theme = function() standard.theme(color=FALSE))
+@ 
+\newcommand{\rvu}{\ensuremath{\mathcal{U}}}
+\newcommand{\rvw}{\ensuremath{\mathcal{W}}}
+\newcommand{\rvx}{\ensuremath{\mathcal{X}}}
+\newcommand{\rvy}{\ensuremath{\mathcal{Y}}}
+\newcommand{\rvz}{\ensuremath{\mathcal{Z}}}
+
+\begin{frame}
+  \frametitle{Comparative experiments}
+  \begin{itemize}
+  \item The ``single sample'' types of hypothesis tests described in
+    the last chapter, where $H_0:\mu=\mu_0$ or $H_0:p = p_0$, are often
+    used to compare a modified process to a standard method.
+  \item Even if we reject $H_0$ in favor of $H_a$ all we can really
+    conclude is that the process has changed.  We don't know if the
+    change is due to our modification (the experimental factor) or due
+    to other environmental factors.
+  \item If we wish to focus on a particular modification it is better
+    to use a \Emph{comparative experiment} in which we keep
+    environmental factors (raw materials, time, temperature, etc.) as
+    consistent as possible and change only the factor of interest.
+  \item In this chapter we focus on comparative experiments where the
+    experimental factor has only two levels.  In statistical terms we
+    are comparing two populations, corresponding to the two levels of
+    the factor.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Overview of techniques}
+  \begin{itemize}
+  \item When the data are on a continuous scale, we wish to compare
+    the means, written $\mu_1$ and $\mu_2$ of the two populations,
+    either by forming a confidence interval on $\mu_1-\mu_2$ or
+    testing the hypothesis $H_0:\mu_1=\mu_2$ versus a one- or
+    two-sided alternative.
+  \item If we have controlled for a known source of variability by
+    taking, say, before-after measurements on the same subject, we
+    consider the data as a set of $n$ pairs, $(y_{1i},
+    y_{2i}),i=1,\dots,n$ and analyze the differences
+    $d_i=y_{1i}-y_{2i}$ as a single sample.
+  \item For unpaired data we take the difference in the sample means,
+    suitably standardized, and compare to a T distribution in which we
+    approximate the degrees of freedom.
+  \item For binary response data we compare the observed proportions
+    $\hat{p}_1$ and $\hat{p}_2$ using a standardized statistic.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{R functions used in this chapter}
+  \begin{itemize}
+  \item Comparison of two samples on a continuous scale is done with
+    \code{t.test}, as in the previous chapter.
+    Paired samples are indicated by the optional argument \code{paired
+      = TRUE}.
+  \item We can always use the data in the ``stacked'' format where all
+    the response measurements are in one column and there is a second
+    column, a factor with two levels, that distinguishes the two samples.
+  \item When the sample sizes are equal, $n_1=n_2$, and especially for
+    paired samples, the data are often available in an ``unstacked''
+    format.  That is, the responses are in two columns.
+  \item The \code{t.test} function is used in both cases but the form
+    of the arguments is different.  For stacked data we can use a
+    formula/data specification.
+  \item Comparison of two population proportions is done with
+    \code{prop.test}.  All the we need for this test are the sample
+    sizes, $n_1$ and $n_2$, and the number of successes in each
+    sample, $y_1$ and $y_2$.
+  \end{itemize}
+\end{frame}
+\section[6.1 Paired t]{6.1 Paired samples}
+\begin{frame}
+  \frametitle{Section 6.1, Paired samples}
+  \begin{itemize}
+  \item The trick with paired samples is recognizing that the
+    observations in the two samples are paired.
+  \item Obviously, if they are to be paired you must have equal sample
+    sizes, $n_1=n_2$.
+  \item There must also be some other factor (subject, location, raw
+    material, etc.) that associates the first observation in sample 1
+    with the first observation in sample 2, and so on.
+  \item A scatterplot of $y_{2i}$ versus $y_{1i}$ should show points
+    scattered about a line with positive slope.  If it doesn't then
+    the pairing is unsuccessful.
+  \item To analyze the data we take the differences,
+    $d_i=y_{1i}-y_{2i}, i = 1,\dots, n$ and analyze them as a single
+    sample.  The hypothesis $H_0:\mu_1=\mu_2$ corresponds to $H_0:\mu_d=0$.
+  \item In practice we can specify \code{paired = TRUE} in the call to
+    \code{t.test} to have the data analyzed as a paired sample.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 5.1.1}
+  \begin{itemize}
+  \item The \code{uvcoatin} data are from an experiment comparing the
+    two UV coatings on lenses.  Each pair of observations came from
+    one pair of glasses worn by a person for 3 months, one lens with
+    the new coating and one lens with the commercial coating.
+  \end{itemize}
+<<uvcoatin>>=
+str(uvcoatin)
+@ 
+\begin{itemize}
+\item We can plot these data as a scatterplot.  Sometimes it is
+  helpful also to rotate the scatterplot by $45^o$, which corresponds
+  to plotting the difference versus the mean.  The \code{tmd} function
+  automates this.
+\end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Plots of UV coating data}
+  \begin{center}
+<<uvcoatinplot,fig=TRUE,echo=FALSE>>=
+print(xyplot(a ~ b, uvcoatin, type = c("g","p")),
+      split = c(1,1,2,1), more = TRUE)
+print(tmd(xyplot(a ~ b, uvcoatin)),
+      split = c(2,1,2,1), more = TRUE)
+@     
+  \end{center}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Paired t-test on UV coating data}
+<<uvttest>>=
+with(uvcoatin, t.test(a, b, alt = "g", paired = TRUE))
+@   
+\end{frame}
