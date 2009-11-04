@@ -1,3 +1,16 @@
+2009-11-04  Douglas Bates <bates@stat.wisc.edu>
+
+	* [r78] DESCRIPTION, man/fish.Rd: Enhance fish example; new release
+
+2009-09-18  Douglas Bates <bates@stat.wisc.edu>
+
+	* [r56] DESCRIPTION, data/labcomp.rda: Missing data
+	in labcomp; new release
+
+2009-09-02  Douglas Bates <bates@stat.wisc.edu>
+
+	* [r55] data/oven.rda, man/oven.Rd: Levels of oven type
+
 2009-08-21  Douglas Bates <bates@stat.wisc.edu>
 
 	* [r36,r38,r39] man/pigment.Rd, man/soap.Rd, man/calcium.Rd,
