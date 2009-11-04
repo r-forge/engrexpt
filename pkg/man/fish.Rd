@@ -39,11 +39,26 @@
   Elsevier. (Appendix A)
 }
 \examples{
+op <- options(show.signif.stars = FALSE)
 str(fish)
-dotplot(reorder(site, toxin) ~ toxin, fish, jitter.y = TRUE,
+dotplot(reorder(site, toxin) ~ toxin, fish,
+        type = c("a","p"), jitter.y = TRUE, pch = 21,
         aspect = 0.3, xlab = "Amount of toxin (mg/kg wet weight)")
+summary(fm1 <- aov(toxin ~ site, fish))
+TukeyHSD(fm1)
+plot(TukeyHSD(fm1))
+model.tables(fm1, type = "means")
+model.tables(fm1)
+
 str(fish2)
-dotplot(reorder(site, toxin) ~ toxin, fish2, jitter.y = TRUE,
+dotplot(reorder(site, toxin) ~ toxin, fish2,
+        type = c("a","p"), jitter.y = TRUE, pch = 21,
         aspect = 0.3, xlab = "Amount of toxin (mg/kg wet weight)")
+summary(fm2 <- aov(toxin ~ site, fish2))
+TukeyHSD(fm2)
+plot(TukeyHSD(fm2))
+model.tables(fm2, type = "means")
+model.tables(fm2)
+options(op)
 }
 \keyword{datasets}

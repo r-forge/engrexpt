@@ -1,6 +1,6 @@
 Package: EngrExpt
-Version: 0.1-9
-Date: 2009-09-18
+Version: 0.1-10
+Date: 2009-11-04
 Title: Data sets from "Introductory Statistics for Engineering Experimentation"
 Maintainer: Douglas Bates <bates@stat.wisc.edu>
 Author:  R port by Douglas Bates <bates@stat.wisc.edu> and
