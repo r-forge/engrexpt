@@ -1,0 +1,179 @@
+% NOTE -- ONLY EDIT THE .Rnw FILE!!!  The .tex file is,
+% likely to be overwritten.
+\usepackage{SweaveSlides}
+\title[Chapter 7]{Chapter 7: One-factor Multi-sample Experiments}
+%\subject{Models}
+\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,width=10,height=6.5,strip.white=all,keep.source=TRUE}
+\SweaveOpts{prefix=TRUE,prefix.string=figs/ch07,include=TRUE}
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents[pausesections]
+\end{frame}
+<<preliminaries,echo=FALSE,results=hide>>=
+options(width=60)
+library(EngrExpt)
+options(show.signif.stars = FALSE)
+#lattice.options(default.theme = function() standard.theme(color=FALSE))
+@ 
+\newcommand{\rvy}{\ensuremath{\mathcal{Y}}}
+
+\begin{frame}
+  \frametitle{Factors with more than two levels}
+  \begin{itemize}
+  \item In the previous chapter we discussed inference for comparative
+    experiments on two groups.  
+  \item In chapter 3 we showed how to model a continuous response as a
+    function of one or more factors that could have multiple levels.
+    We used the \R{} function \code{aov} to estimate the cell means or
+    the ``effects'' of the levels of each factor.
+  \item The statistical assessment of whether or not the effects are
+    significant is usually based on an \Emph{analysis of variance};
+    hence the name \code{aov} for the model-fitting function and the
+    name \code{anova} for the extractor function that produces the
+    analysis of variance table.
+  \item The text book emphasizes a technique called the analysis of
+    means (ANOM).  This is not a widely-used technique.
+  \item We will focus on the analysis of variance and another approach
+    called \code{multiple comparisons} for follow-up analysis.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Overview of techniques}
+  \begin{itemize}
+  \item In chapter 2 we used graphical methods, such as comparative
+    dotplots and comparative density plots, to display a continuous
+    response as it depends on levels of a factor.  In section 4.4 we
+    also discussed normal probability plots, which can be used as
+    comparative plots for such data.
+  \item In chapter 3 we discussed fitting models of the form
+    \begin{displaymath}
+      \rvy_{ij}=\mu_i+\epsilon_{ij},\quad i=1,\dots,I;\;j=1,\dots,n_i
+    \end{displaymath}
+    or
+    \begin{displaymath}
+      \rvy_{ij}=\mu+\alpha_i+\epsilon_{ij},\quad i=1,\dots,I;\;j=1,\dots,n_i
+    \end{displaymath}
+  \item These are the same model; just two different ways of writing
+    it.  The first is called the \Emph{cell means} form and the second
+    is the \Emph{effects} form.
+  \item We check for differences in the mean response in two stages:
+    first we check if all the means could be equal and, if we reject
+    this hypothesis, we check for which levels of the factor produce
+    significantly different means.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{R functions used in this chapter}
+  \begin{itemize}
+  \item Preliminary plots are obtained with \code{dotplot},
+    \code{bwplot}, \code{densityplot} and \code{qqmath}, all in the
+    comparative form.  Model fits assume that the variances in the
+    groups are more-or-less equal.  Hence we check the plots for equal
+    variances as well as equal means.
+  \item We use \code{aov} to fit the model, \code{summary} or
+    \code{anova} to obtain the analysis of variance table, and
+    \code{model.tables} to obtain estimates of the cell means or the
+    effects.
+  \item If we reject the hypothesis $H_0:\mu_1=\mu_2=\dots=\mu_I$ (or,
+    equivalently, $H_0:\alpha_1=\alpha_2=\dots=\alpha_I=0$ ) then we
+    use \code{TukeyHSD} to perform multiple comparisons using Tukey's
+    Honest Significant Difference method.
+  \item We assess residual plots obtained with \code{plot(fm, which =
+      1)} and \code{plot(fm, which = 2)}
+  \end{itemize}
+\end{frame}
+
+\section{7.1 Basic Inference}
+\begin{frame}
+  \frametitle{Section 7.1, Basic Inference}
+  \begin{itemize}
+  \item We begin by plotting the data, preferably with comparative
+    dotplots or comparative normal probability plots.  (The text uses
+    an error-bar chart in figure 7.1 but these are less informative
+    than those mentioned above.)
+  \item Group means and $s^2$, the mean square error, are evaluated by
+    fitting an \code{aov} model and using \code{summary} or
+    \code{anova}.  The degrees of freedom for $s^2$,
+    $n_1+n_2+\dots+n_I-I$, is given in the table.
+  \item You could use critical values from a $T_\nu$ distribution to
+    calculate confidence intervals on the individual means (p. 248)
+    but the practice is discouraged.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Examples 7.1.1 and 7.1.2}
+<<ex711data>>=
+reac <-
+    data.frame(yield = c(3.3, 4.0, 4.7,
+                         4.0, 5.0, 4.3, 5.5,
+                         5.3, 6.5, 6.4, 7.0, 7.7),
+               cat = factor(rep(LETTERS[1:3], c(3,4,5))))
+summary(fm1 <- aov(yield ~ cat, reac))
+@   
+\begin{center}
+<<reacplot,fig=TRUE,echo=FALSE,height=4>>=
+print(dotplot(cat ~ yield, reac, type = c("a","p"), pch = 21, aspect = 0.3),
+      pos = c(0,0,0.65,1), more = TRUE)
+print(qqmath(~ yield, reac, groups = cat, aspect = 1.3,
+             xlab = "Standard normal quantiles",
+             auto.key = list(columns = 3)),
+      pos = c(0.65,0,1,1))
+@   
+\end{center}
+\end{frame}
+
+\section{7.5 Analysis of variance}
+
+\begin{frame}[fragile]
+  \frametitle{Section 7.5 Analysis of Variance}
+  \begin{itemize}
+  \item The F ratio quoted in the analysis of variance table is the
+    ratio of $MS_\text{treatment}$ to the mean square for error,
+    $MS_e$.  It is a ``signal-to-noise'' ratio based on the
+    differences the differences between groups versus the differences
+    within groups.
+  \item Both the numerator and the denominator have degrees of freedom
+    associated with them.  In this case they are $I-1$ (numerator) and
+    $N-I$ (denominator) where $N$ is the total number of observations
+    ($N=n_1+n_2+\dots+n_I$)
+  \item The p-value is calculated from a theoretical distribution for
+    this quantity, written $F_{\nu_1,\nu_2}$.  The \R{} functions for
+    this distribution are \code{df}, \code{pf}, \code{qf} and \code{rf}.
+
+  \item The hypothesis being tested is ``are all the means the same?''
+    versus ``are there any differences?''.  Symbolically
+    $H_0:\mu_1=\mu_2=\dots=\mu_I$, in the cell means form, or
+    $H_0:\alpha_1=\alpha_2=\dots=\alpha_I=0$ in the effects form.
+  \end{itemize}
+\end{frame}
+
+\section{Multiple comparisons}
+
+\begin{frame}
+  \frametitle{Multiple comparisons}
+  \begin{itemize}
+  \item If we reject $H_0$ in the analysis of variance the natural
+    follow-up question is ``so which group means are significantly
+    different''.
+  \item It is tempting to use a series of t-tests to compare each pair
+    of groups but doing so will inflate the probability of a false
+    positive.
+  \item There are several ways of controlling for this inflated false
+    positive probability.  We will use Tukey's Honest Significant
+    Differences, \code{TukeyHSD}, which is preferred when the groups
+    are of equal importance.  (Other methods are used when we have,
+    say, a control group that we wish to compare with each of several
+    treatments.)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example 7.1.1 cont'd}
+<<Tukeyfm1>>=
+TukeyHSD(fm1)
+@   
+\end{frame}
