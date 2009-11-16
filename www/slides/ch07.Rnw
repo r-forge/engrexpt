@@ -176,4 +176,241 @@ print(qqmath(~ yield, reac, groups = cat, aspect = 1.3,
 <<Tukeyfm1>>=
 TukeyHSD(fm1)
 @   
+\begin{center}
+<<Tukeyplot,fig=TRUE,echo=FALSE,height=3>>=
+op <- par(las = 1)
+plot(TukeyHSD(fm1))
+@   
+\end{center}
+\end{frame}
+
+\section[7.6 Equal var]{7.6 The equal variances assumption}
+
+\begin{frame}
+  \frametitle{Section 7.6: The equal variances assumption}
+  \begin{itemize}
+  \item In the analysis of variance we pool the variance estimates
+    from each group when evaluating the mean square for error.
+  \item We are implicitly assuming that the variances of the ``noise''
+    terms (the $\epsilon_{ij}$ are equal within and between groups.
+  \item We should assess this in our data plots and through residual
+    plots.
+  \item In particular we should check the plot of the residuals versus
+    the fitted values to see if the variability increases as the level
+    of the response increases.  If that is the case we consider
+    transformations such as $\sqrt{y_{ij}}$ or $\log(y_{ij})$ or $1/y_{ij}$.
+
+  \item We could do formal statistical tests for equal variances but
+    generally those are not powerful tests.  It is better to look for
+    systematic deviations from equal variances.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Residual plots for model \code{fm1}}
+  \begin{itemize}
+  \item The residual plots for model \code{fm1} fit to the reactor
+    data do not show alarming patterns.  There is some slight
+    indication of greater variability with higher mean response by not
+    definitive at all.
+  \end{itemize}
+  \begin{center}
+<<resfm1,fig=TRUE,echo=FALSE,height=4>>=
+print(xyplot(resid(fm1) ~ fitted(fm1), type = c("g","p"),
+             xlab = "Fitted values", ylab = "Residuals"),
+      pos = c(0,0,0.65,1), more = TRUE)
+print(qqmath(~ resid(fm1), type = c("g", "p"), aspect = 1, ylab = NULL,
+             xlab = "Standard normal quantiles"),
+      pos = c(0.65,0,1,1))
+@     
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Adding lines to a probability plot}
+  \begin{itemize}
+  \item Recall that, if the pattern in a normal probability plot is
+    close to a straight line, the slope of the line corresponds to the
+    standard deviation.
+  \item In a comparative normal probability plot, equal variances
+    corresponds to equal slopes of the lines.
+  \item We could compare the slopes of lines fit to each group but we
+    do not want to use least squares fits for this purpose.  A least
+    squares fit is most sensitive to the data points at the edges and
+    these are the most suspect values.
+  \item There is a special type of straight line fit (based on
+    quartiles) for \code{qqmath}.  You add such lines to the plot by
+    redefining the \code{panel} argument.
+  \end{itemize}
+<<qqmathshow,eval=FALSE>>=
+qqmath(~ wear, tennis, groups = type, type = c("g","p"),
+       panel = function(...){
+           panel.qqmath(...)
+           panel.qqmathline(...)})
+@   
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Tennis ball wear}
+  \begin{center}
+<<tennisplots,fig=TRUE,echo=FALSE,height=2.5>>=
+print(dotplot(reorder(type, wear) ~ wear, tennis, pch = 21,
+              xlab = "Number of serves to wear off reference mark",
+              jitter.y = TRUE, ylab = "Type of ball"),
+      pos = c(0,0,0.7,1), more = TRUE)
+print(qqmath(~ wear, tennis, groups = type, type = c("g","p"),
+             auto.key = list(space = "right", points = FALSE, lines = TRUE),
+             panel = function(...){panel.qqmath(...);panel.qqmathline(...)},
+             aspect = 1.7, xlab = "Standard normal quantiles"),
+      pos = c(0.7,0,1,1))
+@ 
+  \end{center}
+<<tennisanova>>=
+summary(fm2 <- aov(wear ~ type, tennis))
+@ 
+\begin{center}
+<<fm2multcomp,fig=TRUE,echo=FALSE,height=3.5>>=
+opar <- par(las = 1)
+plot(TukeyHSD(fm2, order = TRUE))
+@   
+\end{center}
+\end{frame}
+\begin{frame}
+  \frametitle{Transformation to stabilize the variance}
+  \begin{itemize}
+  \item When a change in variance is systematic, typically the
+    variance increasing as the level of the response increases, and
+    the response must be positive and the dynamic range (ratio of
+    largest to smallest observation) is large then we consider
+    nonlinear transformation of the response.
+  \item The most common transformation is the logarithm.  Powers, such
+    as the square root and the inverse are also used.
+  \item Box and Cox formulated a family of transformations, indexed by
+    a parameter $\lambda$ that includes powers and the logarithm.
+    This family is written
+    \begin{displaymath}
+      y^{(\lambda)} =
+      \begin{cases}
+        \frac{y^\lambda - 1}{\lambda} & \lambda\ne 0\\
+        \ln(y) & \lambda = 0
+      \end{cases}
+    \end{displaymath}
+  \item There are ways to find the optimal value of $\lambda$ for a
+    particular data set and model (see \code{help(boxcox, package =
+      "MASS")}) but frequently we consider a sequence of possible
+    transformations in the order, $\sqrt{y}$, $\log(y)$ and $1/y$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example 7.6.4}
+<<aerosol>>=
+aerosol <- data.frame(cover = c(2.1,1.9,1.8,2.2,
+                      4.7,3.6,3.9,3.8, 6.4,8.5,7.9,8.8),
+                      brand = gl(3, 4, labels = LETTERS[1:3]))
+@   
+\begin{center}
+<<aerosolplot,fig=TRUE,echo=FALSE,height=2.5>>=
+print(dotplot(reorder(brand, cover) ~ cover, aerosol, pch = 21,
+              xlab = "Covering capabilities (oz./sq. ft.) of gloss white aerosol",
+              jitter.y = TRUE, ylab = "Brand"),
+      pos = c(0,0,0.7,1), more = TRUE)
+print(qqmath(~ cover, aerosol, groups = brand, type = c("g","p"),
+             auto.key = list(space = "right", points = FALSE, lines = TRUE),
+             panel = function(...){panel.qqmath(...);panel.qqmathline(...)},
+             aspect = 1.7, xlab = "Standard normal quantiles"),
+      pos = c(0.7,0,1,1))
+@ 
+$\mbox{}$
+<<aerosollogplot,fig=TRUE,echo=FALSE,height=2.5>>=
+print(dotplot(reorder(brand, cover) ~ log(cover), aerosol, pch = 21,
+              xlab = "log(covering capability (oz./sq. ft.)) of gloss white aerosol",
+              jitter.y = TRUE, ylab = "Brand"),
+      pos = c(0,0,0.7,1), more = TRUE)
+print(qqmath(~ log(cover), aerosol, groups = brand, type = c("g","p"),
+             auto.key = list(space = "right", points = FALSE, lines = TRUE),
+             panel = function(...){panel.qqmath(...);panel.qqmathline(...)},
+             aspect = 1.7, xlab = "Standard normal quantiles"),
+      pos = c(0.7,0,1,1))
+@ 
+\end{center}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 7.6.4 (cont'd)}
+<<aerosolanova>>=
+summary(fm3 <- aov(cover ~ brand, aerosol))
+summary(fm3a <- aov(log(cover) ~ brand, aerosol))
+TukeyHSD(fm3a)
+@   
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Box-Cox analysis of aerosol (not required)}
+  \begin{center}
+<<boxcox,fig=TRUE,height=4,results=hide>>=
+library(MASS)
+boxcox(fm3)
+@   
+  \end{center}
+  \begin{itemize}
+  \item This plot shows that the optimal value of $\lambda$ is about
+    -0.25, corresponding to the inverse fourth root but that $\lambda
+    = 0$ (the logarithm) and $\lambda = -1$ (the inverse) are both
+    reasonable.  $\lambda = 1$ (original scale) is not in the 95\%
+    confidence interval.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Transformation of tennis example}
+  \begin{itemize}
+  \item Data representing counts, such as the \code{tennis} example,
+    are often transformed by taking the square root.  This is because
+    we expect counts to have approximately a Poisson distribution and
+    the ``variance stabilizing'' transformation for the Poisson is the
+    square root.
+  \end{itemize}
+  \begin{center}
+<<tennissqrtplots,fig=TRUE,echo=FALSE,height=2.5>>=
+print(dotplot(reorder(type, sqrt(wear)) ~ sqrt(wear), tennis, pch = 21,
+              xlab = "Square root of number of serves to wear off reference mark",
+              jitter.y = TRUE, ylab = "Type of ball"),
+      pos = c(0,0,0.7,1), more = TRUE)
+print(qqmath(~ sqrt(wear), tennis, groups = type, type = c("g","p"),
+             auto.key = list(space = "right", points = FALSE, lines = TRUE),
+             panel = function(...){panel.qqmath(...);panel.qqmathline(...)},
+             aspect = 1.7, xlab = "Standard normal quantiles"),
+      pos = c(0.7,0,1,1))
+@ 
+  \end{center}
+<<tennisanova>>=
+summary(fm2a <- aov(sqrt(wear) ~ type, tennis))
+@ 
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Multiple comparisons on the transformed scale}
+<<tennissqrtTukey>>=
+TukeyHSD(fm2a, ordered = TRUE)
+@   
+\begin{center}
+<<tennissqrtTukeyplot,fig=TRUE,echo=FALSE,height=3>>=  
+opar <- par(las = 1)
+plot(TukeyHSD(fm2a, ordered = TRUE))
+@ 
+
+\end{center}
+\end{frame}
+\section{7.7 Sample sizes}
+
+\begin{frame}[fragile]
+  \frametitle{Section 7.7: sample sizes}
+  \begin{itemize}
+  \item Sample sizes or power calculations for analysis of variance
+    are obtained with the \code{power.anova.test} function.  It is
+    based on working values of the ``between'' and ``within''
+    variances (only their ratio is important).
+  \item The methods described in the text are based on the maximum
+    difference in the means, standardized by the underlying $\sigma$.
+    This is the TukeyHSD comparison statistic.  Some tables are given
+    in Appendix B9 but they are rather sparse.
+  \end{itemize}
 \end{frame}
