@@ -65,7 +65,7 @@ print(qqmath(~ resid(fm1), type = c("g", "p"), aspect = 1, ylab = NULL,
 ###################################################
 ### chunk number 8: tennisplots
 ###################################################
-print(dotplot(reorder(type, wear) ~ wear, tennis, pch = 21,
+print(dotplot(reorder(type, wear) ~ wear, tennis, pch = 21, type = c("p","a"),
               xlab = "Number of serves to wear off reference mark",
               jitter.y = TRUE, ylab = "Type of ball"),
       pos = c(0,0,0.7,1), more = TRUE)
@@ -100,7 +100,8 @@ aerosol <- data.frame(cover = c(2.1,1.9,1.8,2.2,
 ###################################################
 ### chunk number 12: aerosolplot
 ###################################################
-print(dotplot(reorder(brand, cover) ~ cover, aerosol, pch = 21,
+print(dotplot(reorder(brand, cover) ~ cover, aerosol,
+              pch = 21, type = c("p","a"),
               xlab = "Covering capabilities (oz./sq. ft.) of gloss white aerosol",
               jitter.y = TRUE, ylab = "Brand"),
       pos = c(0,0,0.7,1), more = TRUE)
@@ -114,7 +115,8 @@ print(qqmath(~ cover, aerosol, groups = brand, type = c("g","p"),
 ###################################################
 ### chunk number 13: aerosollogplot
 ###################################################
-print(dotplot(reorder(brand, cover) ~ log(cover), aerosol, pch = 21,
+print(dotplot(reorder(brand, cover) ~ log(cover), aerosol,
+              pch = 21, type = c("p","a"),
               xlab = "log(covering capability (oz./sq. ft.)) of gloss white aerosol",
               jitter.y = TRUE, ylab = "Brand"),
       pos = c(0,0,0.7,1), more = TRUE)
@@ -143,7 +145,8 @@ boxcox(fm3)
 ###################################################
 ### chunk number 16: tennissqrtplots
 ###################################################
-print(dotplot(reorder(type, sqrt(wear)) ~ sqrt(wear), tennis, pch = 21,
+print(dotplot(reorder(type, sqrt(wear)) ~ sqrt(wear), tennis,
+              pch = 21, type = c("p","a"),
               xlab = "Square root of number of serves to wear off reference mark",
               jitter.y = TRUE, ylab = "Type of ball"),
       pos = c(0,0,0.7,1), more = TRUE)
