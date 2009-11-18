@@ -1,0 +1,112 @@
+% NOTE -- ONLY EDIT THE .Rnw FILE!!!  The .tex file is,
+% likely to be overwritten.
+\usepackage{SweaveSlides}
+\title[Chapter 8]{Chapter 8: Experiments with two factors}
+%\subject{Models}
+\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,width=10,height=6.5,strip.white=all,keep.source=TRUE}
+\SweaveOpts{prefix=TRUE,prefix.string=figs/ch08,include=TRUE}
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents[pausesections]
+\end{frame}
+<<preliminaries,echo=FALSE,results=hide>>=
+options(width=60)
+library(EngrExpt)
+options(show.signif.stars = FALSE)
+#lattice.options(default.theme = function() standard.theme(color=FALSE))
+@ 
+\newcommand{\rvy}{\ensuremath{\mathcal{Y}}}
+
+\begin{frame}
+  \frametitle{Chapter 8: Experiments with two factors}
+  \begin{itemize}
+  \item Recall from chapter 3 that when we have a response on a
+    continuous scale and two categorical covariates, we can consider
+    the observations as being in the \Emph{cells} of a \Emph{two-way
+      layout} determined by the levels of the two factors.
+
+  \item There will always be one experimental factor whose levels are
+    of interest in themselves.  The second factor may be a
+    \Emph{blocking factor}: a known source of variability for which we
+    are controlling.
+  \item If the factors are \code{A} and \code{B} we write the number
+    of levels of the factors as $I$ and $J$, respectively, and the
+    number of observations in the $(i,j)$th cell as
+    $n_{ij},i=1,\dots,I;j=1,\dots,J$.
+  \item In a \Emph{balanced} experiment all the $n_{ij}$ are equal so
+    we simply write the number of observations per cell as $n$.
+  \item If none of the $n_{ij}$ are zero then we have a \Emph{complete
+      layout}, which is a type of \Emph{full factorial design}.
+  \item When there is at least one of the $n_{ij}>1$ the design is
+    said to be \Emph{replicated} and any observations in the same cell
+    are said to be \Emph{replicates}.
+  \item The text provides methods for balanced designs only.  The
+    methods we will describe can be applied to unbalanced designs too.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Overview of techniques}
+  \begin{itemize}
+  \item We use interaction plots to assess the changes due to the
+    levels of the factors and due to possible interaction.
+  \item In chapter 3 we discussed fitting models of the form
+    \begin{displaymath}
+      \rvy_{ijk}=\mu+\alpha_i+\beta_j+\alpha\beta_{ij}+\epsilon_{ijk},\quad i=1,\dots,I;\;j=1,\dots,J;\;k=1,\dots,n_{ij}
+    \end{displaymath}
+    when we have replicates.  This model allows for interactions (the
+    $\alpha\beta_{ij}$ terms).
+  \item Our first test is on the null hypothesis that all the
+    interactions are zero.  If we do not reject this hypothesis then
+    we simplify the model to the \Emph{additive model}
+    \begin{displaymath}
+      \rvy_{ijk}=\mu+\alpha_i+\beta_j+\epsilon_{ijk},\quad i=1,\dots,I;\;j=1,\dots,J;\;k=1,\dots,n_{ij}
+    \end{displaymath}
+
+  \item For an additive model we can perform multiple comparisons on
+    the levels of the factors separately (but only for experimental
+    factors, not for blocking factors) For a model with significant
+    interactions we cannot separate the effects of the factors.
+  \item For an unreplicated design we can fit a model with
+    interactions but cannot do any further analysis.  We must fit the
+    additive model even though we do not know if it is appropriate.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{R functions used in this chapter}
+  \begin{itemize}
+  \item Interaction plots are obtained with \code{dotplot}.
+  \item We use \code{aov} to fit the models, \code{summary} or
+    \code{anova} to obtain the analysis of variance table, and
+    \code{model.tables} to obtain estimates of the cell means or the
+    effects.
+  \item We use \code{TukeyHSD} to perform multiple comparisons when
+    appropriate.
+  \item We assess residual plots obtained with \code{plot(fm, which =
+      1)} and \code{plot(fm, which = 2)}
+  \end{itemize}
+\end{frame}
+
+\section{8.1 Interaction}
+\begin{frame}[fragile]
+  \frametitle{Section 8.1, Interaction}
+  \begin{itemize}
+  \item Recall that in an interaction plot a lack of interaction is
+    indicated by more-or-less parallel lines joining the averages.
+  \end{itemize}
+  \begin{center}
+<<adhesion2,fig=TRUE,echo=FALSE,height=2.5>>=
+show(dotplot(cat ~ adhesion, adhesion2, groups = pH,
+             type = c("p","a"), pch = 21, jitter.y = TRUE,
+             ylab = "Catalyst",
+             auto.key = list(space = "right", title = "pH",
+                             lines = TRUE, points = FALSE)))
+@     
+  \end{center}
+<<adhesion2>>=
+summary(fm1 <- aov(adhesion ~ cat * factor(pH), adhesion2))
+@ 
+\end{frame}
