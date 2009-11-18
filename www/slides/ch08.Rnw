@@ -38,21 +38,19 @@ options(show.signif.stars = FALSE)
     number of observations in the $(i,j)$th cell as
     $n_{ij},i=1,\dots,I;j=1,\dots,J$.
   \item In a \Emph{balanced} experiment all the $n_{ij}$ are equal so
-    we simply write the number of observations per cell as $n$.
-  \item If none of the $n_{ij}$ are zero then we have a \Emph{complete
-      layout}, which is a type of \Emph{full factorial design}.
-  \item When there is at least one of the $n_{ij}>1$ the design is
-    said to be \Emph{replicated} and any observations in the same cell
-    are said to be \Emph{replicates}.
-  \item The text provides methods for balanced designs only.  The
-    methods we will describe can be applied to unbalanced designs too.
+    we simply write the number of observations per cell as $n$. The
+    text provides methods for balanced designs only.  The methods we
+    will describe can be applied to unbalanced designs too.
   \end{itemize}
 \end{frame}
 \begin{frame}
-  \frametitle{Overview of techniques}
+  \frametitle{Replicated \emph{vs.} non-replicated designs}
   \begin{itemize}
-  \item We use interaction plots to assess the changes due to the
-    levels of the factors and due to possible interaction.
+  \item If none of the $n_{ij}$ are zero then we have a \Emph{complete
+      layout}, which is a type of \Emph{full factorial design}.
+  \item When there is at least one of the $n_{ij}>1$ the design is
+    said to be \Emph{replicated}.
+  \item Observations in the same cell are called \Emph{replicates}.
   \item In chapter 3 we discussed fitting models of the form
     \begin{displaymath}
       \rvy_{ijk}=\mu+\alpha_i+\beta_j+\alpha\beta_{ij}+\epsilon_{ijk},\quad i=1,\dots,I;\;j=1,\dots,J;\;k=1,\dots,n_{ij}
@@ -65,7 +63,18 @@ options(show.signif.stars = FALSE)
     \begin{displaymath}
       \rvy_{ijk}=\mu+\alpha_i+\beta_j+\epsilon_{ijk},\quad i=1,\dots,I;\;j=1,\dots,J;\;k=1,\dots,n_{ij}
     \end{displaymath}
-
+  \item We can fit a model with interactions to unreplicated data but
+    cannot do further analysis.   Thus we only fit the additive model.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Overview of techniques}
+  \begin{itemize}
+  \item We use interaction plots to assess the changes due to the
+    levels of the factors and due to possible interaction.
+  \item If there are replicates we fit the model with interactions and
+    test first for a significant interation term.  If the interactions
+    are not significant then we fit the additive model.
   \item For an additive model we can perform multiple comparisons on
     the levels of the factors separately (but only for experimental
     factors, not for blocking factors) For a model with significant
@@ -110,3 +119,169 @@ show(dotplot(cat ~ adhesion, adhesion2, groups = pH,
 summary(fm1 <- aov(adhesion ~ cat * factor(pH), adhesion2))
 @ 
 \end{frame}
+
+\section[8.2 $>1$ obs. per cell]{8.2 More than one observation per cell}
+
+\begin{frame}[fragile]
+  \frametitle{Section 8.2 More than one observation per cell}
+  \begin{itemize}
+  \item When we fit the model with interactions we always test first
+    for significant interactions.  The null hypothesis is
+    \begin{displaymath}
+      H_0: \alpha\beta_{ij} = 0,\text{ for all }i,j
+    \end{displaymath}
+
+  \item If we do not reject this hypothesis then we fit the additive
+    model.
+  \item For the \code{adhesion2} anova (previous slide) the p-value for
+    the interaction, labeled \code{cat:factor(pH)}, is 0.4377 so we do
+    not reject $H_0$.
+  \item The additive model fit is
+  \end{itemize}
+<<fm2>>=
+summary(fm2 <- aov(adhesion ~ cat + factor(pH), adhesion2))
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Multiple comparisons for an additive model}
+  \begin{itemize}
+  \item With an additive model it makes sense to perform multiple
+    comparisons on the levels of factors separately.
+  \item In the previous example one of the factors (\code{cat}) is a
+    two-level factor.  We do not need to perform multiple comparisons
+    for such a factor (when you have only two levels there is only one
+    possible comparison of levels).
+  \item We can use the optional argument \code{which} to
+    \code{TukeyHSD} to restrict to only the nontrivial multiple
+    comparisons.
+  \end{itemize}
+<<fm2HSD>>=
+TukeyHSD(fm2, which = "factor(pH)")
+@   
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Alternative analysis of adhesion2}
+  \begin{itemize}
+  \item This is jumping ahead a bit but for data like the
+    \code{adhesion2} data we are losing power by treating the numeric
+    \code{pH} variable as a factor.  Over the observed range the
+    adhesion is close to linear in \code{pH} for both catalysts.
+  \end{itemize}
+  \begin{center}
+<<adhesion2plt2,fig=TRUE,echo=FALSE,height=5>>=
+show(xyplot(adhesion ~ pH, adhesion2, groups = cat, type = c("g","p","a"),
+            aspect = 1.1, auto.key = list(space = "right", lines = TRUE)))
+@   
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Alternative analysis of adhesion2 (cont'd)}
+  \begin{itemize}
+  \item We could fit a model that is linear in \code{pH} allowing for
+    different slopes and intercepts for the two catalysts.
+  \end{itemize}
+<<fm3,eval=FALSE>>=
+summary(fm3 <- lm(adhesion ~ pH * cat, adhesion2))
+@   
+<<fm3show,echo=FALSE>>=
+cat(paste(capture.output(summary(fm3 <- lm(adhesion ~ pH * cat, adhesion2)))[-(1:8)], collapse = "\n"))
+@ 
+<<fm3anova>>=
+anova(fm3)
+@ 
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Alternative analysis of adhesion2 (cont'd)}
+  \begin{itemize}
+  \item Notice that each the interaction term in this model (labeled
+    \code{pH:catB} now) has only 1 degree of freedom so the
+    \code{anova} results provide exactly the same information as the
+    t-test in the summary.
+  \item Because the interaction term is not significant we reduce to
+    an additive model (corresponding to parallel lines
+    w.r.t. \code{pH} for each of the two catalysts).
+  \end{itemize}
+<<fm4,eval=FALSE>>=
+summary(fm4 <- lm(adhesion ~ pH + cat, adhesion2))
+@   
+<<fm4show,echo=FALSE>>=
+cat(paste(capture.output(summary(fm4 <- lm(adhesion ~ pH + cat, adhesion2)))[-(1:8)], collapse = "\n"))
+@ 
+\end{frame}
+\begin{frame}
+  \frametitle{Yet another analysis of adhesion2}
+  \begin{itemize}
+  \item When we have a two-level factor (like the \code{cat} factor)
+    or when we have a numeric factor observed only at a few,
+    equally-spaced levels, it can be useful to convert such factors to
+    \code{ordered} factors.
+  \item For more than two levels the ordered factor produces
+    coefficients for linear, quadratic, cubic, etc. terms.  We can
+    check if the higher order terms are not significant and reduce the
+    model accordingly (always proceeding from the highest order down).
+  \item For a two-level \code{ordered} factor the default
+    parameterization of the model has certain advantages in the
+    analysis of two-level factorial designs.
+
+  \item The analysis of variance table is the same whether we use \code{factor} or \code{ordered}
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Yet another analysis of adhesion2 (cont'd)}
+<<fm5>>=
+ad2 <- within(adhesion2, {opH <- ordered(pH); ocat <- ordered(cat)})
+anova(fm5 <- lm(adhesion ~ ocat * opH, ad2))
+@   
+
+<<fm6,eval=FALSE>>=
+summary(fm6 <- lm(adhesion ~ ocat + opH, ad2))
+@ 
+<<fm6show,echo=FALSE>>=
+cat(paste(capture.output(
+<<fm6>>
+)[-(1:8)], collapse = "\n"))
+@
+The quadratic term (\code{opH.Q}) is not significant so we reduce to
+model \code{fm4}.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example 8.2.9}
+  \begin{center}
+<<computerplt,fig=TRUE,echo=FALSE,height=3.5>>=
+show(dotplot(type ~ time, computer, groups = brand,
+             pch = 21, jitter.y = TRUE, type = c("p","a"),
+             xlab = "Repair time (minutes)",
+             auto.key = list(space = "right", lines = TRUE, title = "Brand")
+             ))
+@   
+  \end{center}
+<<fm7>>=
+## compare to anova table on p. 316
+summary(fm7 <- aov(time ~ brand * type, computer)) 
+@   
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example 8.2.9 (cont'd)}
+<<fm89>>=
+## remove insignificant interaction term
+summary(fm8 <- aov(time ~ brand + type, computer))
+## remove insignificant brand term
+summary(fm9 <- aov(time ~ type, computer))
+@   
+\end{frame}
+<<echo=FALSE>>=
+op <- options(width = 80)
+@ 
+\begin{frame}[fragile]
+  \frametitle{Example 8.2.9 (cont'd)}
+<<fm9HSD>>=
+TukeyHSD(fm9)
+@   
+\end{frame}
+<<echo=FALSE>>=
+options(op)
+@ 
