@@ -285,7 +285,9 @@ TukeyHSD(fm9)
 <<echo=FALSE>>=
 options(op)
 particle <-
-    data.frame(amt = c(6.3,6.1,5.8,5.9,5.6,5.3,6.1,5.8,5.5))
+    data.frame(amt = c(6.3,6.1,5.8,5.9,5.6,5.3,6.1,5.8,5.5),
+               rate = rep(c(85,90,95),3),
+               vacuum = rep(c(20,22,24), each = 3))
                
                
 @ 
@@ -299,6 +301,142 @@ particle <-
     unreplicated two-factor design, not because we know it is suitable
     but because a model with interactions does not provide an estimate
     of $\sigma^2$.
+  \item The \code{particle} data, given in table 8.20, are an example
+    of an unreplicated, two-factor experiment.  The response,
+    \code{amt}, is the amount of material left on a 40-mesh shaker
+    table.  The two continuous covariates, flow rate (\code{rate}) and
+    \code{vacuum}, are observed at 3 levels each and are treated as
+    factors.  We store them as numeric values.
   \end{itemize}
-  
+<<strparticle>>=
+str(particle)
+@   
 \end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Data plots for particle data}
+<<particleplot,fig=TRUE,echo=FALSE>>=
+print(xyplot(amt ~ rate, particle, groups = vacuum,
+             type = c("g","b"), xlab = "Flow Rate",
+             ylab = "Amount of material",
+             auto.key = list(space = "right", title = "Vacuum",
+             lines = TRUE, points = FALSE)),
+      pos = c(0,0,0.5,1), more = TRUE)
+print(xyplot(amt ~ vacuum, particle, groups = rate,
+             type = c("g","b"), xlab = "Vacuum",
+             ylab = "Amount of material",
+             auto.key = list(space = "right", title = "Flow rate",
+             lines = TRUE, points = FALSE)),
+      pos = c(0.5,0,1,1))
+@   
+The data plots indicate a linear trend in flow rate but not in vacuum.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Additive model, both flow and vacuum as factors}
+<<fm10>>=
+summary(fm10 <- aov(amt ~ factor(rate) + factor(vacuum), particle))
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Additive model, both flow and vacuum as ordered}
+<<fm11>>=
+part2 <- within(particle, {ora <- ordered(rate); ovac <- ordered(vacuum)})
+anova(fm11 <- lm(amt ~ ora + ovac, part2))
+@   
+<<fm11sumshow,eval=FALSE>>=
+summary(fm11)
+@ 
+<<fm11sum,echo=FALSE>>=
+cat(paste(capture.output(summary(fm11))[-(1:9)], collapse = "\n"))
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Reduced model fit}
+<<fm12>>=
+summary(fm12 <- aov(amt ~ rate + ovac, part2))
+TukeyHSD(fm12, which = "ovac")
+@   
+\end{frame}
+
+\section[8.4 Blocking]{8.4 Blocking to reduce variability}
+
+\begin{frame}[fragile]
+  \frametitle{Section 8.4: Blocking to reduce variability}
+  \begin{itemize}
+  \item To reduce variability when comparing levels of an experimental
+    factor, we sometimes run subgroups (blocks) under conditions where
+    environmental factors are more homogeneous.
+  \item We have already encountered an example of this as a
+    \Emph{paired t-test}.  The factor that determines the pairing
+    (e.g. \code{Subject}) is called a \Emph{blocking factor}.
+  \item For example, in the \code{uvcoatin} data, 10 subjects wore
+    pairs of glasses in which one lens had the standard coating and
+    one lens had the experimental coating.  We create another data
+    frame with the stacked responses and a blocking factor \code{subj}.
+  \end{itemize}
+<<uvstk>>=
+str(uvstk <- within(stack(uvcoatin[,1:2]),
+                    subj <- gl(10,1,20,labels=LETTERS[1:10])))
+@ 
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Paired t-test is equivalent to two-factor anova}
+<<t.test>>=
+with(uvcoatin, t.test(a, b, paired = TRUE))
+summary(fm13 <- aov(values ~ subj + ind, uvstk))
+@
+
+Notice that the p-values for the coating factor are the same in the
+two analysis.  The F statistic for \code{ind} in the \code{aov} model
+is the square of the paired t-statistic.
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 8.4.2}
+<<strdeink2>>=
+str(deink2)
+xtabs(bright ~ formula + newspaper, deink2)
+@   
+<<deinkplt,fig=TRUE,echo=FALSE,height=3.5>>=
+print(dotplot(reorder(formula, bright) ~ bright, deink2,
+              groups = newspaper, type = c("p","a")))
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Model fit for example 8.4.2}
+  \begin{itemize}
+  \item Whenever we have a blocking factor we list it first in the
+    model formula.  This doesn't affect the results for balanced
+    designs but it will affect results from unbalanced data.
+  \item We expect a blocking factor to be a significant source of
+    variability (that's why we block on it) but we do not do any
+    follow-up analysis for it.
+  \end{itemize}
+<<fm14>>=
+summary(fm14 <- aov(bright ~ newspaper + formula, deink2))
+@ 
+$\mbox{}$\\
+Notice that the \code{newspaper} factor is \Emph{not} a significant
+source of variability here (or, more likely, the additive model is not
+suitable).  Re-fit
+<<fm15>>=
+summary(fm15 <- aov(bright ~ formula, deink2))
+@ 
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Multiple comparisons for de-ink methods}
+  \begin{itemize}
+  \item We are now treating the \code{deink2} data as a one-factor design
+  \item The significant difference is between levels A and C; B is
+    intermediate and also shows greater variability.
+  \end{itemize}
+<<deink1fplt,fig=TRUE,echo=FALSE,height=2.5>>=
+print(dotplot(reorder(formula,bright) ~ bright, deink2, type = c("p","a"),
+              pch = 21, jitter.y = TRUE))
+@   
+<<fm15Tukey>>=
+TukeyHSD(fm15)
+@   
+\end{frame}
+
+

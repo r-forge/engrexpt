@@ -135,5 +135,119 @@ TukeyHSD(fm9)
 ### chunk number 20: 
 ###################################################
 options(op)
+particle <-
+    data.frame(amt = c(6.3,6.1,5.8,5.9,5.6,5.3,6.1,5.8,5.5),
+               rate = rep(c(85,90,95),3),
+               vacuum = rep(c(20,22,24), each = 3))
+               
+               
+
+
+###################################################
+### chunk number 21: strparticle
+###################################################
+str(particle)
+
+
+###################################################
+### chunk number 22: particleplot
+###################################################
+print(xyplot(amt ~ rate, particle, groups = vacuum,
+             type = c("g","b"), xlab = "Flow Rate",
+             ylab = "Amount of material",
+             auto.key = list(space = "right", title = "Vacuum",
+             lines = TRUE, points = FALSE)),
+      pos = c(0,0,0.5,1), more = TRUE)
+print(xyplot(amt ~ vacuum, particle, groups = rate,
+             type = c("g","b"), xlab = "Vacuum",
+             ylab = "Amount of material",
+             auto.key = list(space = "right", title = "Flow rate",
+             lines = TRUE, points = FALSE)),
+      pos = c(0.5,0,1,1))
+
+
+###################################################
+### chunk number 23: fm10
+###################################################
+summary(fm10 <- aov(amt ~ factor(rate) + factor(vacuum), particle))
+
+
+###################################################
+### chunk number 24: fm11
+###################################################
+part2 <- within(particle, {ora <- ordered(rate); ovac <- ordered(vacuum)})
+anova(fm11 <- lm(amt ~ ora + ovac, part2))
+
+
+###################################################
+### chunk number 25: fm11sumshow eval=FALSE
+###################################################
+## summary(fm11)
+
+
+###################################################
+### chunk number 26: fm11sum
+###################################################
+cat(paste(capture.output(summary(fm11))[-(1:9)], collapse = "\n"))
+
+
+###################################################
+### chunk number 27: fm12
+###################################################
+summary(fm12 <- aov(amt ~ rate + ovac, part2))
+TukeyHSD(fm12, which = "ovac")
+
+
+###################################################
+### chunk number 28: uvstk
+###################################################
+str(uvstk <- within(stack(uvcoatin[,1:2]),
+                    subj <- gl(10,1,20,labels=LETTERS[1:10])))
+
+
+###################################################
+### chunk number 29: t.test
+###################################################
+with(uvcoatin, t.test(a, b, paired = TRUE))
+summary(fm13 <- aov(values ~ subj + ind, uvstk))
+
+
+###################################################
+### chunk number 30: strdeink2
+###################################################
+str(deink2)
+xtabs(bright ~ formula + newspaper, deink2)
+
+
+###################################################
+### chunk number 31: deinkplt
+###################################################
+print(dotplot(reorder(formula, bright) ~ bright, deink2,
+              groups = newspaper, type = c("p","a")))
+
+
+###################################################
+### chunk number 32: fm14
+###################################################
+summary(fm14 <- aov(bright ~ newspaper + formula, deink2))
+
+
+###################################################
+### chunk number 33: fm15
+###################################################
+summary(fm15 <- aov(bright ~ formula, deink2))
+
+
+###################################################
+### chunk number 34: deink1fplt
+###################################################
+print(dotplot(reorder(formula,bright) ~ bright, deink2, type = c("p","a"),
+              pch = 21, jitter.y = TRUE))
+
+
+###################################################
+### chunk number 35: fm15Tukey
+###################################################
+TukeyHSD(fm15)
 
 
