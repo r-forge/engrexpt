@@ -284,4 +284,21 @@ TukeyHSD(fm9)
 \end{frame}
 <<echo=FALSE>>=
 options(op)
+particle <-
+    data.frame(amt = c(6.3,6.1,5.8,5.9,5.6,5.3,6.1,5.8,5.5))
+               
+               
 @ 
+
+\section[8.3 One obs. per cell]{8.3 Only one observation per cell}
+
+\begin{frame}[fragile]
+  \frametitle{Section 8.3 Only one observation per cell}
+  \begin{itemize}
+  \item We must use an additive model when analyzing data from an
+    unreplicated two-factor design, not because we know it is suitable
+    but because a model with interactions does not provide an estimate
+    of $\sigma^2$.
+  \end{itemize}
+  
+\end{frame}
