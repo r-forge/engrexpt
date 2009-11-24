@@ -1,0 +1,61 @@
+% NOTE -- ONLY EDIT THE .Rnw FILE!!!  The .tex file is,
+% likely to be overwritten.
+\usepackage{SweaveSlides}
+\title[Chapter 9]{Chapter 9: Multi-factor experiments}
+%\subject{Models}
+\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,width=10,height=6.5,strip.white=all,keep.source=TRUE}
+\SweaveOpts{prefix=TRUE,prefix.string=figs/ch09,include=TRUE}
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents[pausesections]
+\end{frame}
+<<preliminaries,echo=FALSE,results=hide>>=
+options(width=60)
+library(EngrExpt)
+options(show.signif.stars = FALSE)
+#lattice.options(default.theme = function() standard.theme(color=FALSE))
+@ 
+\newcommand{\rvy}{\ensuremath{\mathcal{Y}}}
+
+\begin{frame}
+  \frametitle{Chapter 9: Multi-factor experiments}
+  \begin{itemize}
+  \item We are not limited to using two factors in an experiment.
+    Especially in screening experiments, where we are seeking to
+    distinguish the ``important few'' factors from the ``trivial
+    many'', it is useful to incorporate many factors.
+  \item Incorporating many factors, each with several levels, results
+    in a large number of combinations of levels.  If we want
+    replicates the situation is even worse.
+  \item One way to reduce the number of experiments required is to use
+    a small number of levels, which is why we often use just two
+    levels.
+  \item At two levels, there is no distinction between a numeric
+    covariate, a categorical covariate or an ordered category.  For
+    technical reasons we often represent such a factor as an ordered
+    category.
+  \end{itemize}
+\end{frame}
+
+\section[9.1 Multi-factor ANOVA]{9.1 ANOVA for multi-factor experiments}
+
+\begin{frame}
+  \frametitle{Section 9.1: ANOVA for multi-factor experiments}
+  \begin{itemize}
+  \item For a replicated design we proceed as for two-factor
+    experiments and fit a model with all possible interactions.
+  \item We check the highest-order interaction first.  If it is not
+    significant we re-fit without that term and continue checking.  In
+    a balanced factorial design omitting certain interactions will not
+    change the estimates of coefficients for other interactions, but
+    it will change MS$_e$.
+  \item The formula for model with all possible interactions has
+    \code{*} between the factors.
+  \item We can modify the formula by ``subtracting'' particular terms.
+
+  \end{itemize}
+\end{frame}
