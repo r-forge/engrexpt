@@ -20,6 +20,7 @@ options(show.signif.stars = FALSE)
 #lattice.options(default.theme = function() standard.theme(color=FALSE))
 @ 
 \newcommand{\rvy}{\ensuremath{\mathcal{Y}}}
+\newcommand{\rvz}{\ensuremath{\mathcal{Z}}}
 
 \section[5.1 Central Limit Thm.]{5.1 Central Limit Theorem}
 \begin{frame}

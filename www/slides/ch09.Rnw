@@ -271,5 +271,88 @@ fitted(fm9)
 
   \item That is, the fitted values are the \code{(Intercept)} plus the
     four possible combinations of $\pm$\code{A1} and $\pm$\code{B1}.
+  \item \Emph{Yates' algorithm} is a method for determining these
+    coefficient estimates by hand calculation.  It is interesting but
+    no longer needed.
+
+  \item Notice also that the standard errors of all the coefficients
+    are identical.  This provides an alternative approach to
+    evaluating the significance of coefficients in a \Emph{saturated}
+    model (as many coefficients as there are responses).  We examine a
+    normal probability plot of the coefficient estimates (excluding
+    the intercept) which we expect to have outliers.  The non-outliers
+    are the ``trivial many''.  The outliers are the ``important few''.
   \end{itemize}
+\end{frame}
+<<opw,echo=FALSE>>=
+op <- options(width=100)
+@ 
+\begin{frame}[fragile]
+  \frametitle{QQ-plot of coefficients from the saturated model}
+<<coeffm10>>=
+(cc <- coef(fm10 <- lm(ok ~ A * B * C, dents))[-1])
+@   
+\begin{center}
+<<probplt,fig=TRUE,echo=FALSE,height=5.5>>=
+print(qqmath(~ cc, aspect = 1,
+             xlab = "Standard normal quantiles",
+             ylab = "Estimates coefficients",
+             panel = function(...){
+                 panel.grid(h = -1, v = -1)
+                 panel.qqmath(...)
+                 panel.qqmathline(...)
+             }))
+options(op)
+@   
+\end{center}
+\end{frame}
+\begin{frame}
+  \frametitle{Interpretation of the QQ plot of coefficient estimates}
+  \begin{itemize}
+  \item The plot on the previous slide indicates that 2 coefficients
+    are the ``important few''. Checking the listing of the
+    coefficients we see that these are the main effects for A and for
+    B --- the same conclusion as before.
+  \item Generally this approach is preferred to the approach of
+    testing for two-factor interactions using F tests with only 1
+    denominator degree of freedom.  F tests with very few denominator
+    degrees of freedom are not at all powerful.
+  \item One variation on this approach is to compare the absolute
+    value of the coefficients to the theoretical quantiles.  This is
+    called a ``half-normal'' plot.
+  \item It is not part of the course but the way to create such a plot
+    is shown on the next slide.  In this plot you are only interested
+    in the large magnitudes.  The ``reference line'' would be a line
+    passing through the origin.  You imagine the low magnitudes as
+    falling near such a line with the high values above the line.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Half-normal plot of saturated model coefficients}
+  \begin{center}
+<<halfnormal,fig=TRUE,height=5>>=
+print(qqmath( ~ abs(cc), aspect = 1, type = c("g","p"),
+             distribution = function(p) sqrt(qchisq(p, df = 1))))
+@     
+  \end{center}
+$\mbox{}$\\
+    Here you could make a case for 5 values near the line (and 2
+    above) or for 6 values near the line and only one above.
+\end{frame}
+
+\section{9.3 Fractional factorial designs}
+
+\begin{frame}
+  \frametitle{Section 9.3 Fractional factorial designs}
+  \begin{itemize}
+  \item 
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 9.3.2}
+<<xmp932>>=
+xmp932 <- data.frame(y = c(3.6,10,8,3.2,7.6,3.2,3.7,6.0),
+                     A = gl(2,1,8,ord=1), B = gl(2,2,8,ord=1),
+                     C = gl(2,4,ord=1))
+@   
 \end{frame}
