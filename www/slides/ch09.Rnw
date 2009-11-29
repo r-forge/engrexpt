@@ -296,13 +296,12 @@ op <- options(width=100)
 <<probplt,fig=TRUE,echo=FALSE,height=5.5>>=
 print(qqmath(~ cc, aspect = 1,
              xlab = "Standard normal quantiles",
-             ylab = "Estimates coefficients",
+             ylab = "Estimated coefficients",
              panel = function(...){
                  panel.grid(h = -1, v = -1)
                  panel.qqmath(...)
                  panel.qqmathline(...)
              }))
-options(op)
 @   
 \end{center}
 \end{frame}
@@ -345,14 +344,91 @@ $\mbox{}$\\
 \begin{frame}
   \frametitle{Section 9.3 Fractional factorial designs}
   \begin{itemize}
-  \item 
+  \item When the number of factors in a design is large or the cost
+    per observation is high, even an unreplicated $2^k$ factorial
+    design may be too expensive.  We can choose to run a fraction of
+    the full factorial design.
+  \item The most common such \Emph{fractional factorial design} is a
+    $\frac{1}{2}$ fraction of the $2^k$, sometimes written as a
+    $2^{k-1}$ design.
+  \item We must choose the fraction carefully.  We will not be able to
+    estimate all the main effects and interactions as they will be
+    \Emph{aliased}.  We don't want potentially important effects or
+    interactions to be aliased with each other.
+  \item When creating a $2^{k-1}$ design we confound the last factor
+    with the highest order interaction of the preceeding factors.
+  \item That is, we lay out a full factorial on $k-1$ two-level
+    factors then determine the highest order interaction and use it to
+    establish the low/high levels for the next factor.
   \end{itemize}
 \end{frame}
 \begin{frame}[fragile]
-  \frametitle{Example 9.3.2}
+  \frametitle{A half-fraction of a $2^k$ design}
+  \begin{itemize}
+  \item For a $2^{4-1}$ design (example 4.3.2) the first step is
+  \end{itemize}
 <<xmp932>>=
-xmp932 <- data.frame(y = c(3.6,10,8,3.2,7.6,3.2,3.7,6.0),
-                     A = gl(2,1,8,ord=1), B = gl(2,2,8,ord=1),
+xmp932 <- data.frame(A = gl(2,1,8,ord=1), B = gl(2,2,8,ord=1),
                      C = gl(2,4,ord=1))
+model.matrix(~ A * B * C, xmp932)
 @   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 9.3.2 (cont'd)}
+  \begin{itemize}
+  \item We choose the low/high levels for factor \code{D} to be the
+    same as the ABC interaction in the previous slide.  That is we
+    generate \code{D = ABC}.
+  \item The \Emph{generator} relationship is \code{I = ABCD}.  Not
+    only are all the main effects confounded with a three-factor
+    interaction but all the two-factor interactions are confounded
+    with each other.
+  \item The responses are observed and incorporated and we fit the
+    saturated model on the first $k-1$ factors
+  \end{itemize}
+<<xmp932obs>>=
+xmp932 <- within(xmp932, {
+    D <- ordered(c(1,2,2,1,2,1,1,2))
+    y <- c(3.6,10,8,3.2,7.6,3.2,3.7,6.0)
+})
+(cc2 <- coef(fm11 <- lm(y ~ A * B * C, xmp932))[-1])
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Interpretation of coefficients}
+  \begin{center}
+<<probplt2,fig=TRUE,echo=FALSE,height=4.5>>=
+print(qqmath(~ cc2, aspect = 1,
+             xlab = "Standard normal quantiles",
+             ylab = "Estimated coefficients",
+             panel = function(...){
+                 panel.grid(h = -1, v = -1)
+                 panel.qqmath(...)
+                 panel.qqmathline(...)
+             }))
+@   
+  \end{center}
+  \begin{itemize}
+  \item The interpretation is that only the largest coefficient is
+    important.  This can be the three-factor interaction \code{ABC} or
+    the main effect \code{D}.  We assume it is the main effect that is
+    important.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Resolution of fractional factorials}
+  \begin{itemize}
+  \item The defining relation (\code{I = ABCD}, in our example) is
+    composed of \Emph{words}.  In this case there is only one word but
+    for higher order fractions we use multiple words.
+  \item The \Emph{resolution} of the design is the length of the
+    shortest word in its defining relation.  Our example is a
+    \Emph{resolution IV} design.
+  \item A \Emph{resolution III} design confounds some main effects
+    with two-factor interactions.  A \Emph{resolution IV} design
+    confounds two-factor interactions with each other but not with
+    main effects.
+  \item Generally we prefer reolution IV or higher.
+  \end{itemize}
 \end{frame}
