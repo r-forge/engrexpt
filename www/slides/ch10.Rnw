@@ -25,9 +25,10 @@ options(show.signif.stars = FALSE)
 \begin{frame}
   \frametitle{Section 10.1: Inference for a regression line}
   \begin{itemize}
-  \item Recall that a simple linear regression model is
+  \item Recall that the simple linear regression model is
     \begin{displaymath}
-      \rvy_i=\beta_0+\beta_1 x_i+\epsilon_i,\quad i=1,\dots,n
+      \rvy_i=\beta_0+\beta_1 x_i+\epsilon_i,\quad i=1,\dots,n\quad
+      \epsilon_i\sim\mathcal{N}(0,\sigma^2)
     \end{displaymath}
   \item The least squares estimates, $\widehat{\beta}_0$ and
     $\widehat{\beta}_1$, of the coefficients are functions of the data
@@ -38,7 +39,7 @@ options(show.signif.stars = FALSE)
     complex models.  It is easier to simply read the standard error
     from the output.
   \item In the \code{R} output each coefficient estimate is
-    accompanied by a \code{Std. Error} (standard error), a \code{t
+    accompanied by a \code{Std.{} Error} (standard error), a \code{t
       value} (the ratio of the estimate and its standard error) and a
     \code{Pr(>|t|)}, which is the p-value for the two-sided hypothesis
     test.  The \code{confint} extractor can be used to determine
@@ -120,11 +121,226 @@ confint(fm2)
   \item Testing $H_0:\beta_1=0$ versus the appropriate alternative is
     usually of interest.  Tests on $\beta_0$ are not always of
     interest as the intercept may not represent a meaningful response.
-  \item If you want only the table of coefficients, standard errors
-    and test statistics, you can extract it using
+
+  \item For a simple linear regression the F test reported in the
+    summary compares the model that was fit to a trivial model in
+    which all the fitted values are equal to $\bar{y}$.  You can also
+    obtain this test as
+<<anovafm1>>=
+anova(fm1)
+@
+$\mbox{}$\\
+This test is equivalent to the t-test of $H_0:\beta_1=0$ \emph{vs.}
+$H_a:\beta_1\ne0$.
   \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Extracting the coefficients table only}
+  \begin{itemize}
+  \item The analysis of variance table can also be obtained by
+    explicitly comparing the model that was fit to the trivial model.
+<<explicitanova>>=
+anova(update(fm1, . ~ . - temp), fm1)
+@     
+$\mbox{}$\\
+  \item Sometimes it is convenient to extract the 
+   table of coefficients, standard errors
+    and test statistics.  You can do this by
 <<coeftab>>=
 coef(summary(fm1))
+@
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Inference for $\mu_{\rvy|x}$}
+  \begin{itemize}
+  \item In a regression model we consider the response as having a
+    normal distribution conditional on a particular value of the
+    covariate, $x=x_o$.
+  \item This distribution has an expected value, which we write as
+    $\mu_{\rvy|x=x_o}$ or $\mathrm{E}(\rvy|x=x_0)$.  Our estimate of
+    this conditional mean is $\widehat{\beta}_0+\widehat{\beta}_1x_0$.
+  \item Just as $\widehat{\beta}_0$ and $\widehat{\beta}_1$ are random
+    variables with standard errors, our estimate
+    $\widehat{\mu}_{\rvy|x=x_o}$ has a standard error.
+  \item The estimate and its standard error can be evaluated with
+    \code{predict} and the optional argument \code{se.fit = TRUE}.
+  \end{itemize}
+<<fm2pred>>=
+str(predict(fm2, list(build = 2.6), se.fit = TRUE)) # Ex 10.1.7
 @ 
 \end{frame}
+\begin{frame}[fragile]
+  \frametitle{Confidence intervals on the mean response}
+  \begin{itemize}
+  \item Typically we use the standard errors to form a confidence
+    interval on $\mu_{\rvy|x=x_0}$, which we can create with the optional
+    argument \code{interval = "conf"} to predict.
+  \item In example 10.1.7 we wish to form a 90\% confidence interval
+    on the mean gloss when the film build is 2.6 mm
+  \end{itemize}
+<<predfm2>>=
+predict(fm2, list(build = 2.6), int = "conf", level = 0.90)
+@   
+$\mbox{}$\\
+\begin{itemize}
+\item We can use the estimate and its standard error to conduct
+  hypothesis tests but generally we are more interested in the
+  confidence intervals.  Occasionally we want to test $H_0:\beta_0=0$
+  versus one of the alternatives and this is a test on the mean
+  response when $x=0$.  We can obtain the p-value for this test from
+  the table of coefficients.
+\end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Inference for a future value of $\rvy$}
+  \begin{itemize}
+  \item Note that the confidence interval on $\mu_{\rvy|x=x_0}$ refers
+    to the mean response at $x=x_0$, not the response that we will
+    observe.
+  \item If we want a prediction interval at $x=x_0$ then we must
+    formulate it as $\rvy_0=\mu_{\rvy|x=x_0}+\epsilon_0$ which we
+    estimate as
+    \begin{displaymath}
+      \mathrm{E}[\rvy_0]=\widehat{\beta_0}+\widehat{\beta_1}x_0
+    \end{displaymath}
+    with a standard error of $\sqrt{s_{\hat{\mu}}^2+s^2}$.
+  \item A 90\% prediction interval on the gloss at a build of 3 mm. is
+  \end{itemize}
+<<predfm2>>=
+predict(fm2, list(build = 3:4), int = "pred", level = 0.90)
+@   
+\end{frame}
+\begin{frame}
+  \frametitle{Testing for lack of fit}
+  \begin{itemize}
+  \item One of the assumptions in a simple linear regression is that
+    the relationship between $\rvy$ and $x$ is reasonably close to a
+    straight line over the range of interest.
+  \item If we have replicates in the data then we can check this
+    assumption by evaluating the sum of squares due to replication
+    (the pooled sum of squares of the deviations about the average
+    within replicates) and what is called the \Emph{mean square for
+      lack of fit}.
+  \item There are various ways of calculating these quantities, some
+    with unsatisfactory numerical properties.  A simple way of doing
+    this test is to compare the linear model to a model with the
+    covariate $x$ as a factor.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 10.1.10}  
+\begin{center}
+<<phplt,fig=TRUE,echo=FALSE,height=3.5>>=
+fm4 <- lm(phnew ~ phold, phmeas)
+print(xyplot(phnew ~ phold, phmeas, type = c("g","p","r"),
+             xlab = "pH by old method",
+             ylab = "pH by new method", aspect = 1),
+      split = c(1,1,3,1), more = TRUE)
+print(xyplot(resid(fm4) ~ fitted(fm4),
+             type = c("g", "p", "smooth")),
+      split = c(2,1,3,1), more = TRUE)
+print(qqmath(~resid(fm4), aspect = 1, ylab = "Residuals",
+             type = c("g", "p"), xlab = "Standard normal quantiles"),
+      split = c(3,1,3,1))
+@   
+\end{center}
+<<fm2prt,echo=FALSE>>=
+cat(paste(capture.output(summary(fm4))[-(1:9)],
+          collapse = "\n"), "\n")
+@ 
+$\mbox{}$
+To perform the lack of fit test we compare this model fit to one with
+\code{phold} treated as a factor.
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Example 10.1.10 (cont'd)}
+<<lackoffit>>=
+anova(fm4, lm(phnew ~ factor(phold), phmeas))
+@   
+\begin{itemize}
+\item Note that this result is different from the result shown in the
+  text.  In the text they use only one of the sets of replicates.
+  Here we use both.
+\item The computer is better at picking up repetitions in the
+  covariate than are humans.
+\item In either calculation there is no significant evidence of lack
+  of fit.  We prefer the calculation with more denominator degrees of
+  freedom (the one shown above).  More denominator degrees of freedom
+  produces a more powerful test.
+\end{itemize}
+\end{frame}
 
+\section{10.2 Inference for other regression models}
+
+\begin{frame}
+  \frametitle{Section 10.2: Inference for other regression models}
+  \begin{itemize}
+  \item As seen in chapter 3, regression models can incorporate many
+    different types of terms (see p. 386).
+  \item Inferences on the coefficients in such a model can be
+    performed using the information in the coefficients table.
+  \item We must, however, be careful of the interpretation of the
+    tests.  For example, if we fit a quadratic (next slide) then we
+    generally are not interested in testing $H_0:\beta_1=0$ in the
+    presence of the quadratic term.
+  \item The general rule is that the t-test in the coef table is a
+    test of removing only that term and keeping all the other terms in
+    the model.  Ask yourself if it would be a sensible model with that
+    term omitted.
+  \end{itemize}
+\end{frame}
+<<ex336,echo=FALSE,results=hide>>=
+ex336 <- data.frame(x = c(18,18,20,20,22,22,24,24,26,26),
+           y = c(4.0,4.2,5.6,6.1,6.5,6.8,5.4,5.6,3.3,3.6))
+@   
+\begin{frame}[fragile]
+  \frametitle{Example 10.2.1}
+\begin{center}
+<<partszplt,fig=TRUE,echo=FALSE,height=3.5>>=
+fm5 <- lm(y ~ x + I(x^2), ex336)
+print(xyplot(y ~ x, ex336, type = c("g","p"),
+             xlab = "Vacuum setting",
+             ylab = "Particle size", aspect = 1),
+      split = c(1,1,3,1), more = TRUE)
+print(xyplot(resid(fm5) ~ fitted(fm5),
+             type = c("g", "p", "smooth")),
+      split = c(2,1,3,1), more = TRUE)
+print(qqmath(~resid(fm5), aspect = 1, ylab = "Residuals",
+             type = c("g", "p"), xlab = "Standard normal quantiles"),
+      split = c(3,1,3,1))
+@   
+\end{center}
+<<fm5,echo=FALSE>>=
+cat(paste(capture.output(summary(fm5))[-(1:9)],
+          collapse = "\n"), "\n")
+@   
+<<confint>>=
+confint(fm5)
+@ 
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Prediction intervals and confidence intervals on $\mu_{\rvy|x=x_0}$}
+  \begin{itemize}
+  \item Prediction intervals and confidence intervals on
+    $\mu_{\rvy|x=x_0}$ are calculated as before.  We must specify
+    values for all the covariates in the model but we do not need to
+    specify both $x$ and $x^2$.  Higher-order terms are evaluated from
+    the formula.
+  \end{itemize}
+<<>>=
+predict(fm5, list(x = 21), int = "pred")
+predict(fm5, list(x = 21), int = "conf")
+@   
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Testing lack of fit}
+  \begin{itemize}
+  \item We test lack of fit as before.  If we have more than one
+    covariate we must use a cell-means model with all of the
+    covariates as factors.
+  \end{itemize}
+<<fm5lof>>=
+anova(fm5, lm(y ~ factor(x), ex336))
+@   
+\end{frame}

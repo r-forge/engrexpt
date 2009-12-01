@@ -1,6 +1,6 @@
 R_PROG = R
-DRIVERS = ch01 ch02 ch03 ch04 ch05 ch06 ch07 ch08 ch09 ch910 ch12 ch14
-RNWSRC = ch01 ch02 ch03 ch04 ch05 ch06 ch07 ch08 ch09 ch910 ch12 ch14
+DRIVERS = ch01 ch02 ch03 ch04 ch05 ch06 ch07 ch08 ch09 ch10
+RNWSRC = ch01 ch02 ch03 ch04 ch05 ch06 ch07 ch08 ch09 ch10
 TEXSRC = 
 SWEAVE = SweaveSlides.sty SweaveSlides.cfg
 
