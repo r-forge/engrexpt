@@ -91,3 +91,40 @@ cat(paste(capture.output(summary(fm2))[-(1:9)],
 confint(fm2)
 @ 
 \end{frame}
+\begin{frame}
+  \frametitle{Inference for coefficients}
+  \begin{itemize}
+  \item As seen in the previous slides, we can evaluate confidence
+    intervals on the coefficients, $\beta_0$ and $\beta_1$, with the
+    \code{confint} extractor function.
+  \item The formula for the $(1-\alpha)$ confidence interval on
+    $\beta_1$ is
+    \begin{displaymath}
+      \widehat{\beta}_1\pm t(\alpha/2, \nu)\,s_{\beta_1}
+    \end{displaymath}
+    where $\nu$ is the degrees of freedom for residuals ($n-2$ for a
+    simple linear regression) and $s_{\beta_1}$ is the standard error
+    for the coefficient.
+  \item The observed $t$ statistic, $\widehat{\beta}_1/s_{\beta_1}$,
+    is used to perform tests of the hypothesis $H_0:\beta_1=0$.  The
+    p-value for the two-sided alternative is given in the coefficient
+    table.  The p-value for the one-sided alternative that is
+    indicated by the data will be half this value.  By ``indicated by
+    the data'' I mean the alternative $H_a:\beta_1>0$, if
+    $\widehat{\beta}_1>0$ and vice versa.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{More on inference for coefficients}
+  \begin{itemize}
+  \item Testing $H_0:\beta_1=0$ versus the appropriate alternative is
+    usually of interest.  Tests on $\beta_0$ are not always of
+    interest as the intercept may not represent a meaningful response.
+  \item If you want only the table of coefficients, standard errors
+    and test statistics, you can extract it using
+  \end{itemize}
+<<coeftab>>=
+coef(summary(fm1))
+@ 
+\end{frame}
+
