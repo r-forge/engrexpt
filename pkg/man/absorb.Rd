@@ -6,8 +6,8 @@
   Oil absorption of silica
 }
 \description{
-	  Time ordered measurements of oil absorption from silica samples produced during 
-	one manufacturing shift.
+  Time ordered measurements of oil absorption from silica samples
+  produced during one manufacturing shift.
 }
 \format{
   A data frame with 102 observations on the following variable.
@@ -16,10 +16,10 @@
   }
 }
 \details{
-  As stated in Nelson, Coffin and Copeland (2003, p. 424), "One key
+  As stated in Nelson, Coffin and Copeland (2003, p. 424), \dQuote{One key
   quality parameter in the making of silica is the amount of oil that it
   can absorb since silica is often mixed with rubber and oil in various
-  applications (battery separators, tires, shoe soles, etc.)" 
+  applications (battery separators, tires, shoe soles, etc.)} 
 }
 \references{
   Peter R. Nelson, Marie Coffin and Karen A. F. Copeland (2003),
@@ -28,7 +28,7 @@
 }
 \examples{
 str(absorb)
-summary(absorb$absorb)
+with(absorb, summary(absorb))
 densityplot(~ absorb, absorb,
             xlab = "Average oil absorption of silica samples")
 qqmath(~ absorb, absorb,
